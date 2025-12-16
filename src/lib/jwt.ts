@@ -6,7 +6,7 @@ export async function signToken(payload: { userId: string; role: string }) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("5d")
+    .setExpirationTime("24h")
     .sign(secret)
 }
 

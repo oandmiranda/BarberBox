@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 import { sql } from "@/lib/db"
 import { cookies } from "next/headers"
 import { signToken } from "@/lib/jwt"
+import { redirect } from "next/navigation"
 
 export async function loginUser(formData: FormData) {
   const email = formData.get("email") as string | null
@@ -26,8 +27,6 @@ export async function loginUser(formData: FormData) {
 
   const user = users[0]
 
-  console.log(`user here baby kkk: ${user}`);
-
   const valid = await bcrypt.compare(password, user.password_hash)
   if (!valid) {
     throw new Error("Invalid credentials")
@@ -38,8 +37,6 @@ export async function loginUser(formData: FormData) {
     role: user.role,
   })
 
-  console.log(`JWT HERE BBY: ${token}`);
-
   cookies().set("auth_token", token, {
     httpOnly: true,
     sameSite: "lax",
@@ -47,5 +44,5 @@ export async function loginUser(formData: FormData) {
     path: "/",
   })
 
-  return
+  redirect("/dashboard")
 }
