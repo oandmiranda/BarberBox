@@ -4,18 +4,15 @@ import bcrypt from "bcrypt"
 import { sql } from "@/lib/db"
 import { RegisterInput } from "@/types/registerInput"
 
-export async function registerUser(data: RegisterInput) {
-  const { name, email, password, role } = data
+export async function registerBarber(data: RegisterInput) {
+  const { name, email, password } = data
 
-  if (!name || !email || !password || !role) {
+  if (!name || !email || !password) {
     throw new Error("Invalid data")
   }
 
   const existingUser = await sql`
-    SELECT id
-    FROM users
-    WHERE email = ${email}
-    LIMIT 1
+    SELECT id FROM users WHERE email = ${email} LIMIT 1
   `
 
   if (existingUser.length > 0) {
@@ -26,7 +23,7 @@ export async function registerUser(data: RegisterInput) {
 
   await sql`
     INSERT INTO users (name, email, password_hash, role)
-    VALUES (${name}, ${email}, ${hashedPassword}, ${role})
+    VALUES (${name}, ${email}, ${hashedPassword}, 'barber')
   `
 
   return { success: true }
