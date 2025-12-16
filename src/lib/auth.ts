@@ -11,7 +11,7 @@ export async function getCurrentUser() {
     const payload = await verifyToken(token)
     return {
       id: payload.userId as string,
-      role: payload.role as "client" | "barber",
+      role: payload.role as "CLIENT" | "BARBER",
 
     }
   } catch {
