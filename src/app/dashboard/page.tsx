@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import BarberDashboard from "../barberDashboard/page"
-import ClientDashboard from "../barberDashboard/clientDashboard/page"
+import ClientDashboard from "../clientDashboard/page"
 
 export default async function Dashboard() {
   const user = await getCurrentUser()
@@ -10,7 +10,7 @@ export default async function Dashboard() {
     redirect("/login")
   }
 
-  if (user.role === "barber") {
+  if (user.role === "BARBER") {
     return <BarberDashboard />
   }
 
