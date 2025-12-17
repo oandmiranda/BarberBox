@@ -1,32 +1,29 @@
-"use server"
+"use server";
 
-import bcrypt from "bcrypt"
-import { sql } from "@/lib/db"
-import { redirect } from "next/navigation"
+import { sql } from "@/lib/db";
+import { registerUser } from "@/lib/services/registerUser";
+import { redirect } from "next/navigation";
 
 export async function registerBarber(formData: FormData) {
-const name = formData.get("name") as string | null
-const email = formData.get("email") as string | null
-const password = formData.get("password") as string | null
+  const name = formData.get("name") as string | null;
+  const email = formData.get("email") as string | null;
+  const password = formData.get("password") as string | null;
 
   if (!name || !email || !password) {
-    throw new Error("Invalid data")
+    throw new Error("Invalid data");
   }
 
-  const existingUser = await sql`
-    SELECT id FROM users WHERE email = ${email} LIMIT 1
-  `
-
-  if (existingUser.length > 0) {
-    throw new Error("User already exists")
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10)
+  const user = await registerUser({
+    name,
+    email,
+    password,
+    role: "BARBER",
+  });
 
   await sql`
     INSERT INTO users (name, email, password_hash, role)
-    VALUES (${name}, ${email}, ${hashedPassword}, 'BARBER')
-  `
+    VALUES (${user.name}, ${user.email}, ${user.passwordHash}, ${user.role})
+  `;
 
-  redirect("/login")
+  redirect("/login");
 }

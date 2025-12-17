@@ -1,16 +1,16 @@
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getCurrentUser();
 
-  return (
-    <>
-    {/* pagina home */}
-    <ul>
-      <li>descrição da barbearia</li>
-      <li>serviços oferecidos</li>
-      <li>endereço / contato</li>
-      <li>botão “Agendar horário”</li>
-      <li>botão “Entrar”</li>
-    </ul>
-    </>
-  )
+  if (!user) {
+    redirect("/home");
+  }
+
+  if (user.role === "BARBER" || user.role === "ADMIN") {
+    redirect("/dashboard");
+  }
+
+  redirect("/home");
 }

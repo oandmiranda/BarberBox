@@ -13,7 +13,7 @@ export default function LoginPage() {
       </form>
 
       <p>
-        Ainda não tem conta?{" "}
+        Ainda não tem conta?
         <Link href="/register/client">
           Criar conta
         </Link>
