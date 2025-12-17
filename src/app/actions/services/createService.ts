@@ -1,42 +1,52 @@
-"use server" // declara que é um server action
+"use server";
 
-import { sql } from "@/lib/db"
+import { sql } from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-type CreateServiceInput = {
-  name: string
-  description?: string
-  durationMinutes: number
-  price: number
-  barberId?: string
-}
+export async function createService(formData: FormData) {
+  const user = await getCurrentUser();
 
-export async function createService(input: CreateServiceInput) {
-  const { name, description, durationMinutes, price } = input
-  const barberId = "48367dfe-6489-4b52-83bd-45482dce6b7e";
+  if (!user || user.role !== "ADMIN") {
+    throw new Error("Forbidden");
+  }
 
-  const [service] = await sql`
+  const name = formData.get("name") as string | null;
+
+  const descriptionRaw = formData.get("description") as string | null;
+  // // normaliza string vazia para null (description é opcional)
+  const description =
+    descriptionRaw && descriptionRaw.trim() !== "" ? descriptionRaw : null;
+
+  const duration = Number(formData.get("duration"));
+
+  const priceRaw = formData.get("price");
+  const price = Number(priceRaw)
+
+  if (!name || Number.isNaN(duration) || duration <= 0) {
+    throw new Error("Invalid data");
+  }
+
+   if (Number.isNaN(price) || price <= 0) {
+    throw new Error("Invalid price");
+  }
+
+  await sql`
     INSERT INTO services (
-      id,
       name,
       description,
       duration_minutes,
       price,
-      is_active,
-      barber_id,
-      created_at
+      is_active
     )
     VALUES (
-      gen_random_uuid(),
       ${name},
-      ${description ?? null},
-      ${durationMinutes},
+      ${description},
+      ${duration},
       ${price},
-      true,
-      ${barberId},
-      now()
+      true
     )
-    RETURNING *
-  `
+  `;
 
-  return service
+  redirect("/dashboard");
 }
