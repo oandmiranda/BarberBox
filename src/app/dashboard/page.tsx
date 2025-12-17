@@ -10,7 +10,7 @@ export default async function Dashboard() {
     redirect("/login")
   }
 
-  if (user.role === "BARBER") {
+  if (user.role === "BARBER" || user.role === "ADMIN") {
     return <BarberDashboard />
   }
 
