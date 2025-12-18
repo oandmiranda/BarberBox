@@ -1,5 +1,6 @@
 import { getServiceById } from "@/lib/services/getServiceById";
 import { redirect } from "next/navigation";
+import ScheduleDateClient from "./scheduleDateClient";
 
 type PageProps = {
   searchParams: {
@@ -29,7 +30,7 @@ export default async function ScheduleDatePage({ searchParams }: PageProps) {
         <p>Descrição do serviço: {service.description}</p>
       )}
 
-      {/* aqui entra o calendário */}
+      <ScheduleDateClient serviceId={service.id}/>
     </div>
   );
 }
