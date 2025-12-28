@@ -25,6 +25,10 @@ export default async function Services() {
                 <div>Preço: {service.price}</div>
                 <div>Descrição: {service.description ?? ""}</div>
 
+                {service.image_url && (
+                  <img src={service.image_url} alt={service.name} className="w-20 h-20"/>
+                )}
+
                 {user && user.role === "ADMIN" && (
                   <div>
                     <Link
@@ -48,36 +52,46 @@ export default async function Services() {
 
       {user && user.role === "ADMIN" && (
         <>
-        <form action={createService} className="text-black">
-          <div>
-            <input name="name" placeholder="Nome do serviço" required />
-          </div>
+          <form action={createService} className="text-black">
+            <div>
+              <input name="name" placeholder="Nome do serviço" required />
+            </div>
+
+            <div>
+              <input name="description" placeholder="Descrição (opcional)" />
+            </div>
+
+            <div>
+              <input
+                name="duration"
+                type="number"
+                placeholder="Duração em minutos"
+                required
+              />
+            </div>
+
+            <div>
+              <input name="price" type="number" placeholder="Preço" required />
+            </div>
+
+            <div>
+              <input
+                name="image_url"
+                type="text"
+                placeholder="URL da imagem (opcional)"
+              />
+            </div>
+
+            <button type="submit" className="bg-amber-400 p-2">
+              Criar serviço
+            </button>
+          </form>
 
           <div>
-            <input name="description" placeholder="Descrição (opcional)" />
+            <Link href={"/services/inactive"} className="bg-slate-600">
+              Serviços inativos
+            </Link>
           </div>
-
-          <div>
-            <input
-              name="duration"
-              type="number"
-              placeholder="Duração em minutos"
-              required
-            />
-          </div>
-
-          <div>
-            <input name="price" type="number" placeholder="Preço" required />
-          </div>
-
-          <button type="submit" className="bg-amber-400 p-2">
-            Criar serviço
-          </button>
-        </form>
-
-        <div>
-          <Link href={"/services/inactive"} className="bg-slate-600">Serviços inativos</Link>
-        </div>
         </>
       )}
     </>
