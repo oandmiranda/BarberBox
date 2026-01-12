@@ -6,11 +6,46 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // classes
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
+        default: "var(--default)",
+        surface: "var(--surface)",
         foreground: "var(--foreground)",
+        text: "var(--text)",
+        brandPrimary: "var(--brand-primary)",
+      },
+      fontFamily: {
+        fontContent: "var(--font-content)",
+      },
+      fontSize: {
+        xs: "var(--text-xs)",
+        sm: "var(--text-sm)",
+        base: "var(--text-base)",
+        lg: "var(--text-lg)",
+        xl: "var(--text-xl)",
+        "2xl": "var(--text-2xl)",
+      },
+      maxWidth: {
+        container: "var(--container-max)",
+        content: "var(--content-max)",
+        section: "var(--section-max)",
+      },
+      spacing: {
+        1: "var(--space-1)",
+        2: "var(--space-2)",
+        3: "var(--space-3)",
+        4: "var(--space-4)",
+        5: "var(--space-5)",
+        6: "var(--space-6)",
+        7: "var(--space-7)",
+        8: "var(--space-8)",
+      },
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
       },
     },
   },
