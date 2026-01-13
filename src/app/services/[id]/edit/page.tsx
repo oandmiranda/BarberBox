@@ -20,7 +20,8 @@ export default async function EditService({ params }: Props) {
       name,
       description,
       duration_minutes,
-      price
+      price,
+      image_url
     FROM services
     WHERE id = ${params.id}
     LIMIT 1
@@ -40,7 +41,8 @@ export default async function EditService({ params }: Props) {
         <p>Nome: {s.name}</p>
         <p>Duração: {s.duration_minutes} min</p>
         <p>Preço: {s.price}</p>
-        <p>Descrição: {s.description ?? "—"}</p>
+        <p>Descrição: {s.description ?? ""}</p>
+        <p>URL da imagem: {s.image_url ?? ""}</p>
       </div>
 
       {user.role === "ADMIN" && (
@@ -56,9 +58,16 @@ export default async function EditService({ params }: Props) {
             defaultValue={s.duration_minutes}
           />
           <input
+            placeholder="price"
             name="price"
             type="number"
             defaultValue={s.price}
+          />
+          <input
+            placeholder="image-url"
+            name="image_url"
+            type="text"
+            defaultValue={s.image_url ?? ""}
           />
 
           <button type="submit" className="bg-yellow-500">

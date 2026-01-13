@@ -23,6 +23,8 @@ export async function createService(formData: FormData) {
   const priceRaw = formData.get("price");
   const price = Number(priceRaw)
 
+  const image_url = formData.get("image_url") as string | null;
+
   if (!name || Number.isNaN(duration) || duration <= 0) {
     throw new Error("Invalid data");
   }
@@ -37,14 +39,16 @@ export async function createService(formData: FormData) {
       description,
       duration_minutes,
       price,
-      is_active
+      is_active,
+      image_url
     )
     VALUES (
       ${name},
       ${description},
       ${duration},
       ${price},
-      true
+      true,
+      ${image_url}
     )
   `;
 

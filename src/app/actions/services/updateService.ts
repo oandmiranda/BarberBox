@@ -24,6 +24,8 @@ export async function updateService(
 
   const duration = Number(formData.get("duration"));
   const price = Number(formData.get("price"));
+  
+  const image_url = formData.get("image_url") as string | null;
 
   if (
     !name ||
@@ -41,7 +43,8 @@ export async function updateService(
       name = ${name},
       description = ${description},
       duration_minutes = ${duration},
-      price = ${price}
+      price = ${price},
+      image_url = ${image_url}
     WHERE id = ${serviceId}
   `;
 
