@@ -1,4 +1,5 @@
-import Navbar from "../components/Navbar/navbar";
+import { loginUser } from "@/actions/login";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
