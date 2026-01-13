@@ -1,10 +1,8 @@
-"use server";
-
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { Service } from "@/types/listServices";
 
-export async function listInactiveServices(): Promise<Service[]> {
+export async function getInactiveServices(): Promise<Service[]> {
   const user = await getCurrentUser();
 
   if (!user || user.role !== "ADMIN") {

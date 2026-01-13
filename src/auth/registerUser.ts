@@ -1,4 +1,3 @@
-// regra de negócio reutilizável
 import bcrypt from "bcrypt";
 import { sql } from "@/lib/db";
 import { RegisterUserInput } from "@/types/registerInput";

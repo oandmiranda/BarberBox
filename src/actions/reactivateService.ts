@@ -1,14 +1,14 @@
 "use server";
 
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { redirect } from "next/navigation";
 
 export async function reactivateService(serviceId: string) {
   const user = await getCurrentUser();
 
   if (!user || user.role !== "ADMIN") {
-    throw new Error("Forbidden");
+    throw new Error("Não permitido");
   }
 
   await sql`

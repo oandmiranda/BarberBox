@@ -1,7 +1,7 @@
 "use server"
 
 import { sql } from "@/lib/db"
-import { registerUser } from "@/lib/services/registerUser";
+import { registerUser } from "@/auth/registerUser";
 import { redirect } from "next/navigation";
 
 export async function registerClient(formData: FormData) {

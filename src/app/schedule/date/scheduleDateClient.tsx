@@ -2,8 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import Calendar from "@/app/components/Calendar/calendar";
-import TimeSlots from "@/app/components/timeSlot/timeSlot";
+import Calendar from "@/components/Calendar/calendar";
+import TimeSlots from "@/components/timeSlot/timeSlot";
 import { useRouter } from "next/navigation";
 
 export default function ScheduleDateClient({serviceId}: {serviceId: string}) {

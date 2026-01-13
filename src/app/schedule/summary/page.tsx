@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getServiceById } from "@/lib/services/getServiceById";
-import { getCurrentUser } from "@/lib/auth";
+import { getServiceById } from "@/services/getServiceById";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 
 type PageProps = {
   searchParams: {

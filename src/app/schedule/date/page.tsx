@@ -1,4 +1,4 @@
-import { getServiceById } from "@/lib/services/getServiceById";
+import { getServiceById } from "@/services/getServiceById";
 import { redirect } from "next/navigation";
 import ScheduleDateClient from "./scheduleDateClient";
 

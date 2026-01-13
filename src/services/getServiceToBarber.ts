@@ -1,10 +1,8 @@
-"use server";
-
-import { getCurrentUser } from "@/lib/auth";
-import { getActiveServices } from "@/lib/services/getServices";
+import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getActiveServices } from "@/services/getActiveServices";
 import { Service } from "@/types/listServices";
 
-export async function listServicesToBarber(): Promise<Service[]> {
+export async function getServicesToBarber(): Promise<Service[]> {
   const user = await getCurrentUser();
 
   // Se não houver usuário, ou se o role não for BARBER e não for ADMIN, bloqueia.

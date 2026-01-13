@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { loginUser } from "@/app/actions/auth/login";
+import { loginUser } from "@/actions/login";
 
 type Props = {
   searchParams: {

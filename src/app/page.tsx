@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { redirect } from "next/navigation";
 
 export default async function Page() {

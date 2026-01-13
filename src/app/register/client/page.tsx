@@ -1,5 +1,5 @@
-import { registerClient } from "@/app/actions/auth/client/register";
-import { loginUser } from "@/app/actions/auth/login";
+import { registerClient } from "@/actions/registerClient";
+import { loginUser } from "@/actions/login";
 
 export default function RegisterClientPage() {
   return (

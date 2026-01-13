@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { redirect } from "next/navigation";
 
 export async function updateService(
