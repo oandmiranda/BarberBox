@@ -1,5 +1,3 @@
-// pega usuário autenticado
-
 import { cookies } from "next/headers"
 import { verifyToken } from "@/lib/jwt"
 

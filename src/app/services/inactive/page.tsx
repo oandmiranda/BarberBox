@@ -1,7 +1,7 @@
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { redirect } from "next/navigation";
-import { listInactiveServices } from "../../actions/services/inactivateServices";
-import { reactivateService } from "../../actions/services/reactivateService";
+import { getInactiveServices } from "../../../services/getInactiveServices";
+import { reactivateService } from "../../../actions/reactivateService";
 
 export default async function InactiveServices() {
   const user = await getCurrentUser();
@@ -10,7 +10,7 @@ export default async function InactiveServices() {
     redirect("/services");
   }
 
-  const services = await listInactiveServices();
+  const services = await getInactiveServices();
 
   return (
     <div>

@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { createService } from "../actions/services/createService";
-import { listServicesByBarber } from "../actions/services/listServiceByBarber";
-import { getCurrentUser } from "@/lib/auth";
-import { deactivateService } from "../actions/services/deactivateService";
+import { createService } from "../../actions/createService";
+import { getCurrentUser } from "@/auth/getCurrentUser";
+import { deactivateService } from "../../actions/deactivateService";
+import { getActiveServices } from "@/services/getActiveServices";
 
 export default async function Services() {
-  const currentServices = await listServicesByBarber();
-
+  const currentServices = await getActiveServices();
   const user = await getCurrentUser();
 
   return (

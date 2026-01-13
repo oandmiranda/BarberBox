@@ -1,7 +1,7 @@
-import { registerBarber } from "@/app/actions/auth/barber/register";
-import { loginUser } from "@/app/actions/auth/login";
+import { registerBarber } from "@/actions/registerBarber";
+import { loginUser } from "@/actions/login";
 
-export default function RegisterBarber() {
+export default function RegisterBarberPage() {
   return (
     <>
       <div>

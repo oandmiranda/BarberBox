@@ -1,4 +1,4 @@
-import { getActiveServices } from "@/lib/services/getServices";
+import { getActiveServices } from "@/services/getActiveServices";
 import Link from "next/link";
 
 export default async function ChooseService() {

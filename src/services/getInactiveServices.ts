@@ -1,14 +1,11 @@
-"use server";
-
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { Service } from "@/types/listServices";
 
-export async function listServicesByBarber(): Promise<Service[]> {
+export async function getInactiveServices(): Promise<Service[]> {
   const user = await getCurrentUser();
 
-  // Se não houver usuário, ou se o role não for BARBER e não for ADMIN, bloqueia.
-  if (!user || (user.role !== "BARBER" && user.role !== "ADMIN")) {
+  if (!user || user.role !== "ADMIN") {
     throw new Error("Forbidden");
   }
 
@@ -22,7 +19,7 @@ export async function listServicesByBarber(): Promise<Service[]> {
       is_active,
       created_at
     FROM services
-    WHERE is_active = true
+    WHERE is_active = false
     ORDER BY created_at DESC
   `) as Service[];
 

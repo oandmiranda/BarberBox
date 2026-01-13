@@ -1,7 +1,7 @@
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/auth/getCurrentUser";
 import { sql } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { updateService } from "@/app/actions/services/updateService";
+import { updateService } from "@/actions/updateService";
 
 type Props = {
   params: { id: string };
