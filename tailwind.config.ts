@@ -25,12 +25,15 @@ const config: Config = {
         base: "var(--text-base)",
         lg: "var(--text-lg)",
         xl: "var(--text-xl)",
-        "2xl": "var(--text-2xl)",
+        xxl: "var(--text-xxl)",
       },
       maxWidth: {
         container: "var(--container-max)",
         content: "var(--content-max)",
         section: "var(--section-max)",
+      },
+      height: {
+        containerHeight: "var(--container-height)"
       },
       spacing: {
         1: "var(--space-1)",
@@ -41,11 +44,14 @@ const config: Config = {
         6: "var(--space-6)",
         7: "var(--space-7)",
         8: "var(--space-8)",
+        9: "var(--space-9)",
+        10: "var(--space-10)",
       },
       borderRadius: {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
       },
     },
   },
