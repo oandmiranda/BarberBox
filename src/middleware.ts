@@ -2,21 +2,16 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 
-const PUBLIC_PREFIXES = [
-  "/",
-  "/home",
-  "/login",
-  "/register",
-  "/schedule",
-];
+const PUBLIC_PREFIXES = ["/home", "/login", "/register", "/schedule"];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // rotas públicas (prefixo)
-  const isPublic = PUBLIC_PREFIXES.some((prefix) =>
-    pathname === prefix || pathname.startsWith(prefix + "/")
-  );
+  const isPublic =
+    pathname === "/" ||
+    PUBLIC_PREFIXES.some(
+      (prefix) => pathname === prefix || pathname.startsWith(prefix + "/")
+    );
 
   if (isPublic) {
     return NextResponse.next();
@@ -37,5 +32,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico).*)"],
+  matcher: [
+    "/((?!_next|api|favicon.ico|.*\\.(?:jpg|jpeg|png|webp|svg|gif)).*)",
+  ],
 };

@@ -1,20 +1,21 @@
 import Link from "next/link";
 
-export default function Navbar() {
+const  Navbar = () => {
   return (
-    <nav>
-        <ul>
+    <nav className="flex justify-center gap-10 pb-5">
+        <ul className="flex gap-6">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/services">Serviços</Link></li>
             <li><Link href="/barbers">Barbeiros</Link></li>
-            <li><Link href="/barbers">Quem somos</Link></li>
+            <li><Link href="/about">Quem somos</Link></li>
             <li><Link href="/contact">Contato</Link></li>
-            <li><Link href="/schedule/choose-service">Meus agendamentos</Link></li>
         </ul>
-        <div>
+        <div className="flex gap-6">
             <button>Sign up</button>
             <button>Log in</button>
         </div>
     </nav>
   );
 }
+
+export default Navbar;
