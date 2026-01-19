@@ -1,31 +1,54 @@
 import bcrypt from "bcrypt";
 import { sql } from "@/lib/db";
-import { RegisterUserInput } from "@/types/registerInput";
+import { RegisterUserForm } from "@/types/registerUserForm";
+
+// normalizing 
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
+}
+// format validation
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPassword(password: string) {
+  if (password.length < 8) return false;
+
+  const hasLowercase = /[a-z]/.test(password);
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+
+  return hasLowercase && hasUppercase && hasNumber;
+}
 
 export async function registerUser({
   name,
   email,
   password,
   role,
-}: RegisterUserInput) {
+}: RegisterUserForm) {
   if (!name || !email || !password) {
     throw new Error("Invalid data");
   }
 
-  const existingUser = await sql`
-    SELECT id FROM users WHERE email = ${email} LIMIT 1
-  `;
+  const normalizedEmail = normalizeEmail(email);
 
-  if (existingUser.length > 0) {
-    throw new Error("User already exists");
+  if (!isValidEmail(normalizedEmail)) {
+    throw new Error("Invalid email");
+  }
+
+  if (!isValidPassword(password)) {
+    throw new Error("Invalid password");
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  return {
-    name,
-    email,
-    passwordHash,
-    role,
-  };
+  try {
+    await sql`
+      INSERT INTO users (name, email, password_hash, role)
+      VALUES (${name.trim()}, ${normalizedEmail}, ${passwordHash}, ${role})
+    `;
+  } catch {
+    throw new Error("Não foi possível criar a conta. E-mail já cadastrado.");
+  }
 }
