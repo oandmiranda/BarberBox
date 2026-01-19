@@ -1,6 +1,6 @@
-export type RegisterUserInput = {
+export type CurrentUser = {
+  id: string;
   name: string;
   email: string;
-  password: string;
   role: "CLIENT" | "BARBER" | "ADMIN";
 };
