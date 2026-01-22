@@ -4,8 +4,9 @@ export type Service = {
   name: string;
   description: string | null;
   duration_minutes: number;
-  price: number;
+  price: string;
   is_active?: boolean;
-  image_url?: string | null;
+  image_url: string;
   created_at?: Date;
+  tag?: string;
 };

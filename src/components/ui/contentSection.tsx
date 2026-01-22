@@ -14,6 +14,7 @@ type ContentSection = {
   stats?: StatItem[];
   imageSrc?: string;
   imageAlt?: string;
+  imageLeft?: boolean;
 };
 
 const ContentSection = ({
@@ -23,11 +24,14 @@ const ContentSection = ({
   stats,
   imageSrc,
   imageAlt,
+  imageLeft,
 }: ContentSection) => {
   const hasImage = imageSrc;
 
   return (
-    <section className="flex gap-2 mx-auto max-w-3xl">
+    <section
+      className={`flex gap-3 mx-auto max-w-3xl ${imageLeft ? "flex-row-reverse" : "flex-row"}`}
+    >
       <div className="flex flex-col gap-3">
         <Heading as="h3" size="base">
           {badge}
@@ -45,8 +49,16 @@ const ContentSection = ({
       </div>
 
       {hasImage && imageAlt && (
-        <div className="shrink-0">
-          <Image src={imageSrc} alt={imageAlt} width={200} height={200} />
+        <div className="relative shrink-0 w-[300px]">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 640px) 128px,
+             (max-width: 1024px) 160px,
+             180px"
+            className="object-cover rounded-lg"
+          />
         </div>
       )}
     </section>

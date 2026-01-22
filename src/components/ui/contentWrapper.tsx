@@ -1,18 +1,22 @@
+import { TitleSizes } from "@/types/ui/titleSizes";
 import Heading from "./heading";
 import Text from "./text";
+import { TitleAs } from "@/types/ui/titleAs";
 
 type ContentWrapperProps = {
   title: string;
+  titleAs?: TitleAs;
+  titleSize?: TitleSizes;
   subtitle?: string;
   isColumn?: boolean;
   children?: React.ReactNode;
 }
 
-const ContentWrapper = ({title, subtitle, isColumn, children}: ContentWrapperProps) => {
+const ContentWrapper = ({title, titleAs, titleSize, subtitle, isColumn, children}: ContentWrapperProps) => {
   return (
     <section className="w-full flex flex-col items-center justify-center">
         <div className="flex flex-col">
-          <Heading>{title}</Heading>
+          <Heading as={titleAs} size={titleSize}>{title}</Heading>
           <Text>{subtitle}</Text>
         </div>
 
@@ -24,4 +28,3 @@ const ContentWrapper = ({title, subtitle, isColumn, children}: ContentWrapperPro
 };
 
 export default ContentWrapper;
-// sdfndsfnmdf

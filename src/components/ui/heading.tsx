@@ -1,8 +1,9 @@
-type HeadingElement = "h1"| "h2" | "h3" | "h4";
+import { TitleAs } from "@/types/ui/titleAs";
+import { TitleSizes } from "@/types/ui/titleSizes";
 
 type HeadingProps = {
-  as?: HeadingElement;
-  size?: "xs" | "sm" | "base" | "lg" | "xl" | "xxl";
+  as?: TitleAs;
+  size?: TitleSizes;
   children: React.ReactNode;
   className?: string;
 };

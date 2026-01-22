@@ -11,6 +11,7 @@ export async function getActiveServices(): Promise<Service[]> {
       price,
       is_active,
       image_url,
+      tag,
       created_at
     FROM services
     WHERE is_active = true

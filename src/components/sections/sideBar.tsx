@@ -1,60 +1,16 @@
-"use client";
-
-import ServicePreview from "@/components/ui/servicePreview";
 import Heading from "../ui/heading";
+import { getActiveServices } from "@/services/getActiveServices";
+import SideBarClient from "./sideBarClient";
 
-const services = [
-  {
-    id: "barba",
-    src: "/assets/images/services/barba.jpg",
-    alt: "image",
-    heading: "Cabelo e barba",
-    duration: 30,
-    price: "50",
-  },
-  {
-    id: "coloracao",
-    src: "/assets/images/services/coloracao.jpg",
-    alt: "image",
-    heading: "Coloração",
-    duration: 60,
-    price: "80",
-  },
-  {
-    id: "corte-barba",
-    src: "/assets/images/services/corte_barba.jpg",
-    alt: "image",
-    heading: "Corte + Barba",
-    duration: 45,
-    price: "70",
-  },
-  {
-    id: "corte-barba",
-    src: "/assets/images/services/corte_barba.jpg",
-    alt: "image",
-    heading: "Corte + Barba",
-    duration: 45,
-    price: "70",
-  },
-];
+const SideBar = async () => {
+  const services = await getActiveServices();
 
-const SideBar = () => {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-72 border-r">
-      <div className="flex flex-col gap-3 h-full overflow-y-auto p-4">
-        <Heading className="mb-1.5">Serviços</Heading>
-          {services.map((service) => (
-            <ServicePreview
-              key={service.id}
-              src={service.src}
-              alt={service.alt}
-              heading={service.heading}
-              duration={service.duration}
-              price={service.price}
-              onClick={() => alert(`Selected ${service.id}`)}
-            />
-          ))}
-        </div>
+    <aside className="fixed left-0 top-[110px] px-4 w-72 h-[calc(100vh-72px)] bg-surface rounded-t-xl">
+      <div className="flex flex-col items-center gap-2 h-full my-6">
+        <Heading size="lg">Serviços</Heading>
+        <SideBarClient services={services} />
+      </div>
     </aside>
   );
 };

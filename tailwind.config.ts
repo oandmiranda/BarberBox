@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         default: "var(--default)",
         surface: "var(--surface)",
+        secondary: "var(--secondary)",
         foreground: "var(--foreground)",
         text: "var(--text)",
         brandPrimary: "var(--brand-primary)",
