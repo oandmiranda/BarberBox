@@ -18,12 +18,14 @@
     - before / after (if possible)
     - recent cuts
 
-<!-- bloco pendente -->
-
-<!-- # Why choose us?:
+# Why choose us?:
     - Expertise 
     - Cliente satisfaction + Trusted by 2,000+ clients
-    - Mordern barbershop space -->
+    - Mordern barbershop space
+
+# Footer
+
+<!-- bloco pendente -->
 
 <!-- # Location & atmosphere:
     - Address + opening hours
@@ -33,8 +35,3 @@
 
 # Need help choosing a service?
     - AI to suggest haircut styles based on the user prompt
-
-# Strong final CTA section:
-    - Big headline: “Ready for your next cut?” → Book appointment -->
-
-# Footer

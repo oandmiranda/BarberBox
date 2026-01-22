@@ -5,7 +5,8 @@
 :root {
   /* background colors */
   --default: #ffffff;
-  --surface: #d3d3d3;
+  --surface: #edededeb;
+  --secondary: #c7dee4;
 
   /* text color */
   --text: #101010;
@@ -21,7 +22,7 @@
   --text-sm: 14px;
   --text-base: 16px;
   --text-lg: 18px;
-  --text-xl: 24px;
+  --text-xl: 26px;
   --text-xxl: 48px;
 
   /* layout sizes */
@@ -49,7 +50,7 @@
   --radius-xl: 20px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --default: #0a0a0a;
     --text: #ffffff;
@@ -60,7 +61,7 @@ body {
   color: var(--text);
   background: var(--default);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 @layer utilities {
   .text-balance {

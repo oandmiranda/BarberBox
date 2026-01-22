@@ -1,5 +1,4 @@
 import Hero from "../ui/hero";
-import Navbar from "./navbar";
 import { HeroProps } from "../ui/hero";
 
 type HeaderProps = HeroProps;
@@ -7,8 +6,7 @@ type HeaderProps = HeroProps;
 const Header = ({imageBackground, title, subtitle}: HeaderProps) => {
   return (
     <header>
-        <Navbar />
-        <Hero imageBackground={imageBackground} title={title} subtitle={subtitle} />
+        <Hero imageBackground={imageBackground} title={title} subtitle={subtitle} className="mt-8"/>
     </header>
   )
 };

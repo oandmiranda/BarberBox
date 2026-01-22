@@ -1,37 +1,40 @@
 import Image from "next/image";
 import ContentWrapper from "../ui/contentWrapper";
 
-// skdjfjkdfksjdfkd
+const images = [
+  {
+    src: "/assets/images/services/barba.jpg",
+    alt: "Barba",
+  },
+  {
+    src: "/assets/images/services/corte_masculino.jpg",
+    alt: "Corte masculino",
+  },
+  {
+    src: "/assets/images/services/eyebrow.jpg",
+    alt: "Sobrancelha",
+  },
+];
+
 const BarberImagesSection = () => {
   return (
-    <ContentWrapper title="Barber section">
-      <div className="p-1 bg-surface rounded-xl">
-        <Image
-          src={"/assets/images/services/barba.jpg"}
-          alt="image"
-          className="rounded-xl"
-          width={250}
-          height={250}
-        />
-      </div>
-      <div className="p-1 bg-surface rounded-xl">
-        <Image
-          src={"/assets/images/services/corte_masculino.jpg"}
-          alt=""
-          className="rounded-xl"
-          width={250}
-          height={250}
-        />
-      </div>
-      <div className="p-1 bg-surface rounded-xl">
-        <Image
-          src={"/assets/images/services/eyebrow.png"}
-          alt=""
-          className="rounded-xl"
-          width={250}
-          height={250}
-        />
-      </div>
+    <ContentWrapper title="Barber section" titleSize="xl">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className="relative p-1 bg-surface w-[300px] h-[320px] shrink-0 rounded-xl"
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            className="object-cover rounded-xl"
+            sizes="(max-width: 640px) 128px,
+                   (max-width: 1024px) 160px,
+                   180px"
+          />
+        </div>
+      ))}
     </ContentWrapper>
   );
 };
