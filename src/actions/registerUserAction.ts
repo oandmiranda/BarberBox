@@ -7,10 +7,11 @@ export async function registerUserAction (data: RegisterUserForm): Promise<{ suc
   try {
     await registerUser(data);
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Email ou senha inválidos";
     return {
       success: false,
-      error: error.message || "Email ou senha inválidos",
+      error: errorMessage,
     };
   }
 }

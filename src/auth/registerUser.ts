@@ -2,11 +2,10 @@ import bcrypt from "bcrypt";
 import { sql } from "@/lib/db";
 import { RegisterUserForm } from "@/types/registerUserForm";
 
-// normalizing 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
-// format validation
+// format validations
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -25,9 +24,10 @@ export async function registerUser({
   name,
   email,
   password,
+  confirmPassword,
   role,
 }: RegisterUserForm) {
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !confirmPassword) {
     throw new Error("Invalid data");
   }
 
@@ -39,6 +39,11 @@ export async function registerUser({
 
   if (!isValidPassword(password)) {
     throw new Error("Invalid password");
+  }
+
+
+  if (password !== confirmPassword) {
+    throw new Error("Passwords do not match");
   }
 
   const passwordHash = await bcrypt.hash(password, 10);

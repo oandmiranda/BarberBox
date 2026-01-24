@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/auth/getCurrentUser";
 import { redirect } from "next/navigation";
-import { getInactiveServices } from "../../../services/getInactiveServices";
+import { getInactiveServices } from "../../../queries/getInactiveServices";
 import { reactivateService } from "../../../actions/reactivateService";
 
 export default async function InactiveServices() {

@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/auth/getCurrentUser";
-import { getActiveServices } from "@/services/getActiveServices";
+import { getActiveServices } from "@/queries/getActiveServices";
 import { Service } from "@/types/listServices";
 
 export async function getServicesToBarber(): Promise<Service[]> {

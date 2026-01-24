@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { registerUserAction } from "@/actions/registerUserAction";
-import { RegisterUserInput } from "@/types/registerUserForm";
+import { RegisterUserForm } from "@/types/registerUserForm";
 import Text from "@/components/ui/text";
 
 type SignupFormProps = {
@@ -18,14 +18,14 @@ const SignupForm = ({ role }: SignupFormProps) => {
     formState: { errors },
     reset,
     watch,
-  } = useForm<RegisterUserInput>();
+  } = useForm<RegisterUserForm>();
   const router = useRouter();
   const password = watch("password");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const onSubmit = async (data: RegisterUserInput) => {
+  const onSubmit = async (data: RegisterUserForm) => {
     setLoading(true);
     setError("");
     setSuccess("");

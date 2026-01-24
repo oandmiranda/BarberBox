@@ -18,7 +18,7 @@ const GridImagesSection = () => {
 
         <div className="col-span-2 relative h-80">
           <Image
-            src="/assets/images/services/eyebrow.png"
+            src="/assets/images/services/eyebrow.jpg"
             alt=""
             fill
             className="object-cover rounded-lg"
@@ -47,7 +47,7 @@ const GridImagesSection = () => {
         <div className="col-span-2 flex flex-col gap-3">
           <div className="col-span-2 relative h-40">
             <Image
-              src="/assets/images/services/corte_luzes.png"
+              src="/assets/images/services/corte_luzes.jpg"
               alt=""
               fill
               className="object-cover rounded-lg"
@@ -78,18 +78,18 @@ const GridImagesSection = () => {
             <Image
               fill
               className="object-cover rounded-lg"
-              src="/assets/images/services/corte_infantil.png"
+              src="/assets/images/services/corte_infantil.jpg"
               alt=""
             />
           </div>
-          <div className="relative h-40">
+          {/* <div className="relative h-40">
             <Image
               fill
               className="object-cover rounded-lg"
               src="/assets/images/services/grisalho.jpg"
               alt=""
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="col-span-1 relative h-80">

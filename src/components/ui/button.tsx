@@ -3,16 +3,19 @@ import Link from "next/link";
 // concept Discriminated Union
 type ButtonProps =
   | {
-    variant: "primary";
-    onClick: () => void;
-    // disabled?: boolean
-    children: React.ReactNode
-  }
+      variant: "primary";
+      type?: "button" | "submit";
+      onClick?: () => void;
+      disabled?: boolean;
+      children: React.ReactNode;
+      widthFull?: boolean;
+    }
   | {
-    variant: "link",
-    href: string;
-    children: React.ReactNode
-  };
+      variant: "link";
+      href: string;
+      children: React.ReactNode;
+      widthFull?: boolean;
+    };
 
 const baseClasses =
   "bg-brandPrimary text-white flex items-center justify-center rounded-full";
@@ -26,7 +29,7 @@ const variants = {
 const Button = (props: ButtonProps) => {
   if (props.variant === "link") {
     return (
-      <Link href={props.href} className={`${baseClasses} ${variants.link}`}>
+      <Link href={props.href} className={`${baseClasses} ${variants.link} ${props.widthFull ? 'w-full' : ''}`}>
         {props.children}
       </Link>
     );
@@ -34,9 +37,9 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      type="button"
+      type={props.type ?? "button"}
       onClick={props.onClick}
-      // disabled={props.disabled}
+      disabled={props.disabled}
       className={`${baseClasses} ${variants.primary}`}
     >
       {props.children}

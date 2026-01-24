@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
-import { getServiceById } from "@/services/getServiceById";
+import { getServiceById } from "@/queries/getServiceById";
 import { getCurrentUser } from "@/auth/getCurrentUser";
+import ScheduleSummaryClient from "./scheduleSummaryClient";
 
 type PageProps = {
   searchParams: {
@@ -10,51 +11,29 @@ type PageProps = {
   };
 };
 
-export default async function ScheduleSummaryPage({ searchParams }: PageProps) {
+const ScheduleSummaryPage = async ({ searchParams }: PageProps) => {
   const { serviceId, date, time } = searchParams;
-
+    
   if (!serviceId || !date || !time) {
-    redirect("/schedule/choose-service");
+    redirect(`/schedule/date?serviceId=${serviceId}`);
   }
 
   const service = await getServiceById(serviceId);
   if (!service) {
-    redirect("/schedule/choose-service");
+    redirect(`/schedule/date?serviceId=${serviceId}`);
   }
 
-  const parsedDate = new Date(date);
-
-  if (isNaN(parsedDate.getTime())) {
-    redirect("/schedule/choose-service");
-  }
-
-  const user = await getCurrentUser();
-
-if (!user) {
-  const callbackUrl = encodeURIComponent(
-    `/schedule/summary?serviceId=${serviceId}&date=${date}&time=${time}`
-  );
-
-  redirect(`/login?callbackUrl=${callbackUrl}`);
-}
+  const currentUser = await getCurrentUser();
+  const isAuthenticated = !!currentUser;
 
   return (
-    <div>
-      <div>
-        <h2>Confirme seu agendamento</h2>
-
-        <p>Serviço: {service.name}</p>
-        <p>Data: {new Date(date).toLocaleDateString()}</p>
-        <p>Horário: {time}</p>
-
-        <form action="/api/appointments" method="POST">
-          <input type="hidden" name="serviceId" value={serviceId} />
-          <input type="hidden" name="date" value={date} />
-          <input type="hidden" name="time" value={time} />
-
-          <button type="submit">Confirmar agendamento</button>
-        </form>
-      </div>
-    </div>
+    <ScheduleSummaryClient
+      isAuthenticated={isAuthenticated}
+      service={service}
+      date={date}
+      time={time}
+    />
   );
-}
+};
+
+export default ScheduleSummaryPage;

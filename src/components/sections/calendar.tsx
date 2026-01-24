@@ -4,8 +4,8 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 
 interface CalendarProps {
-  selectedDate?: Date;
-  onSelectDate: (date?: Date) => void;
+  selectedDate: Date | null;
+  onSelectDate: (date: Date | null) => void;
 }
 
 export default function Calendar({
@@ -16,8 +16,10 @@ export default function Calendar({
     <DayPicker
       animate
       mode="single"
-      selected={selectedDate}
-      onSelect={onSelectDate}
+      selected={selectedDate ?? undefined}
+      onSelect={(date) => {
+        onSelectDate(date ?? null);
+      }}
       disabled={{ before: new Date() }}
     />
   );
