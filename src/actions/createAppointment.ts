@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { sql } from "@/lib/db";
 
 function parseDateTime(date: string, time: string): Date | null {
@@ -29,18 +29,6 @@ function parseDateTime(date: string, time: string): Date | null {
   return parsedDate;
 }
 
-// Função para pegar um barbeiro aleatório
-async function getRandomBarberId(): Promise<string | null> {
-  const barbers = await sql`
-    SELECT id FROM users
-    WHERE role = 'BARBER'
-  `;
-
-  if (barbers.length === 0) return null;
-
-  const randomIndex = Math.floor(Math.random() * barbers.length);
-  return barbers[randomIndex].id;
-}
 
 export async function createAppointment(formData: FormData) {
   const currentUser = await getCurrentUser();
@@ -52,8 +40,9 @@ export async function createAppointment(formData: FormData) {
   const serviceId = formData.get("serviceId") as string;
   const date = formData.get("date") as string;
   const time = formData.get("time") as string;
+  const barberId = formData.get("barberId") as string;
 
-  if (!serviceId || !date || !time) {
+  if (!serviceId || !date || !time || !barberId) {
     redirect(`/schedule/date?serviceId=${serviceId}`);
   }
 
@@ -68,8 +57,6 @@ export async function createAppointment(formData: FormData) {
   }
 
   const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
-
-  const barberId = await getRandomBarberId();
 
   if (!barberId) {
     redirect("/schedule/date?error=no_barbers_available");
