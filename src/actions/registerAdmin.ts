@@ -1,6 +1,6 @@
 "use server";
 
-import { registerUser } from "@/auth/registerUser";
+import { registerUser } from "@/domain/auth/registerUser";
 import { redirect } from "next/navigation";
 
 export async function registerAdmin(formData: FormData) {

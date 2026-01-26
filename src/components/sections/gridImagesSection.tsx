@@ -56,7 +56,7 @@ const GridImagesSection = () => {
 
           <div className="col-span-2 relative h-40">
             <Image
-              src="/assets/images/services/corte_relaxamento_hidratadao.jpg"
+              src="/assets/images/services/corte_relaxamento_hidratacao.jpg"
               alt=""
               fill
               className="object-cover rounded-lg"

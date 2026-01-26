@@ -1,6 +1,6 @@
 "use server";
 
-import { registerUser } from "@/auth/registerUser";
+import { registerUser } from "@/domain/auth/registerUser";
 import { RegisterUserForm } from "@/types/registerUserForm";
 
 export async function registerUserAction (data: RegisterUserForm): Promise<{ success: true } | { success: false; error: string }> {

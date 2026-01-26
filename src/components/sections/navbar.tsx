@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Button from "../ui/button";
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import Logo from "../domain/logo";
 
 const Navbar = async () => {
