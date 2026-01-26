@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { sql } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { updateService } from "@/actions/updateService";

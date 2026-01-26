@@ -3,7 +3,7 @@ import ContentWrapper from "../ui/contentWrapper";
 
 const images = [
   {
-    src: "/assets/images/services/barba.jpg",
+    src: "/assets/images/barbers/lucas.jpg",
     alt: "Barba",
   },
   {

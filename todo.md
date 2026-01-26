@@ -1,37 +1,9 @@
-#structure
+# business rules
 
-# navbar
-    - links + signup/login
+- Após escolher serviço:
+[X] - os dias que estiverem com agendamento em todos os horários devem ficar indisponíveis para o user e impedir click
 
-# explore our services: (<sideBar />)
-    - service cards with images, informations and action button to appoitment
-
-# header (image with some description)
-    - CTA with two buttons: view services & appointments
-
-# barbers section: 
-    - with informations about them
-
-# About us
-
-# images gallery:
-    - before / after (if possible)
-    - recent cuts
-
-# Why choose us?:
-    - Expertise 
-    - Cliente satisfaction + Trusted by 2,000+ clients
-    - Mordern barbershop space
-
-# Footer
-
-<!-- bloco pendente -->
-
-<!-- # Location & atmosphere:
-    - Address + opening hours
-    - Photos of the space
-
-# Social Media and contacts
-
-# Need help choosing a service?
-    - AI to suggest haircut styles based on the user prompt
+- Após escolher data:
+[X] - um barbeiro não pode ter > 1 agendamento no mesmo horário 
+[X] - os horários que estiverem com agendamento para todos os barbeiros devem ficar indisponíveis após o cliente escolher uma data
+[X] - retornar objeto barber ao inves de só o ID para alimentar ui 

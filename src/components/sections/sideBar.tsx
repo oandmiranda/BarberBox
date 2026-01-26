@@ -1,5 +1,5 @@
 import Heading from "../ui/heading";
-import { getActiveServices } from "@/services/getActiveServices";
+import { getActiveServices } from "@/domain/getActiveServices";
 import SideBarClient from "./sideBarClient";
 
 const SideBar = async () => {

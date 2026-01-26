@@ -1,5 +1,5 @@
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { Service } from "@/types/listServices";
 
 export async function getInactiveServices(): Promise<Service[]> {

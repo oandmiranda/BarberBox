@@ -1,4 +1,3 @@
-// /auth/getCurrentUser.ts
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { sql } from "@/lib/db";

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { loginUser } from "@/auth/loginUser";
+import { loginUser } from "@/domain/auth/loginUser";
 import { LoginUserForm } from "@/types/loginUserForm";
 
 export async function loginUserAction(

@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/auth/getCurrentUser"
+import { getCurrentUser } from "@/domain/auth/getCurrentUser"
 import { redirect } from "next/navigation"
 import BarberDashboard from "../barberDashboard/page"
 import ClientDashboard from "../clientDashboard/page"

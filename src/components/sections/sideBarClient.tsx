@@ -1,6 +1,7 @@
 "use client";
 
 import ServicePreview from "@/components/ui/servicePreview";
+import { useRouter } from "next/navigation";
 
 type Props = {
   services: {
@@ -13,10 +14,11 @@ type Props = {
 };
 
 const SideBarClient = ({ services }: Props) => {
-  const handleSelectService = (id: string) => {
-    alert(`Selected ${id}`);
-  };
+  const router = useRouter();
 
+  function handleSchedule(serviceId: string) {
+    router.push(`/schedule/date?serviceId=${serviceId}`);
+  }
   return (
     <>
       {services.map((service) => (
@@ -27,7 +29,7 @@ const SideBarClient = ({ services }: Props) => {
           heading={service.name}
           duration={service.duration_minutes}
           price={service.price}
-          onClick={() => handleSelectService(service.id)}
+          onClick={() => handleSchedule(service.id)}
         />
       ))}
     </>

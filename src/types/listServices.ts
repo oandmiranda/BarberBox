@@ -1,4 +1,3 @@
-// type apenas de retorno
 export type Service = {
   id: string; // UUID
   name: string;

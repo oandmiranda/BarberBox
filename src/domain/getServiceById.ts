@@ -8,7 +8,9 @@ export async function getServiceById(id: string): Promise<Service | null> {
       name,
       description,
       price,
-      duration_minutes
+      duration_minutes,
+      image_url,
+      tag
     FROM services
     WHERE id = ${id} AND is_active = true
     LIMIT 1
@@ -28,6 +30,7 @@ export async function getServiceById(id: string): Promise<Service | null> {
     description: data.description,
     price: data.price,
     duration_minutes: data.duration_minutes,
+    image_url: data.image_url,
   };
 
   return service;
