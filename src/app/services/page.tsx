@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { createService } from "../../actions/createService";
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { deactivateService } from "../../actions/deactivateService";
-import { getActiveServices } from "@/services/getActiveServices";
+import { getActiveServices } from "@/domain/getActiveServices";
 
 export default async function Services() {
   const currentServices = await getActiveServices();

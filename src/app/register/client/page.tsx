@@ -1,31 +1,9 @@
-import { registerClient } from "@/actions/registerClient";
-import { loginUser } from "@/actions/login";
+import SignupForm from "@/components/auth/signupForm";
 
-export default function RegisterClientPage() {
+const SignupClientPage = () => {
   return (
-    <>
-      <div>
-        Client vem pra cá registrar
-      </div>
-      <div>
-        <form action={loginUser} className="text-black">
-          <input name="email" placeholder="email" />
-          <input name="password" type="password" placeholder="password" />
-          <button type="submit" className="text-white bg-orange-300">
-            Login
-          </button>
-        </form>
+    <SignupForm role="CLIENT" />
+  )
+};
 
-        <h2>cadastro</h2>
-        <form action={registerClient} className="text-black">
-          <input name="name" placeholder="name" />
-          <input name="email" placeholder="email" />
-          <input name="password" type="password" placeholder="password" />
-          <button type="submit" className="text-white bg-orange-300">
-            Criar conta (Client)
-          </button>
-        </form>
-      </div>
-    </>
-  );
-}
+export default SignupClientPage;

@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@/lib/db";
-import { getCurrentUser } from "@/auth/getCurrentUser";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { redirect } from "next/navigation";
 
 export async function deactivateService(serviceId: string) {
