@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Overlay from "@/components/ui/overlay";
 import LoginForm from "@/components/auth/loginForm";
-import { Service } from "@/types/listServices";
 import { createAppointment } from "@/actions/createAppointment";
 import { Barber } from "@/types/barber";
+import Button from "@/components/ui/button";
+import { ServiceUiWithID } from "@/types/ui/serviceProps";
 
 type Props = {
   isAuthenticated: boolean;
-  service: Service;
+  service: ServiceUiWithID;
   date: string;
   time: string;
   barber: Barber;
@@ -32,21 +33,12 @@ const ScheduleSummaryClient = ({
   }
 
   return (
-    <>
+    <div className="z-20">
       {showLogin && (
         <Overlay>
           <LoginForm onSuccess={() => setShowLogin(false)}/>
         </Overlay>
       )}
-
-      <div>
-        <div>
-          <p>Serviço: {service.name}</p>
-          <p>Data: {date}</p>
-          <p>Horário: {time}</p>
-          <p>Barbeiro: {barber.name}</p>
-        </div>
-      </div>
 
       <form onSubmit={handleSubmit} action={createAppointment}>
         <input type="hidden" name="serviceId" value={service.id} />
@@ -54,11 +46,11 @@ const ScheduleSummaryClient = ({
         <input type="hidden" name="time" value={time} />
         <input type="hidden" name="barberId" value={barber.id} />
 
-        <button type="submit" className="bg-secondary p-4">
-          Confirmar agendamento
-        </button>
+        <Button variant="primary" type="submit" widthFull>
+          Confirmar Agendamento
+        </Button>
       </form>
-    </>
+    </div>
   );
 };
 

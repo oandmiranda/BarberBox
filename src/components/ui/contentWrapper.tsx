@@ -20,7 +20,7 @@ const ContentWrapper = ({title, titleAs, titleSize, subtitle, isColumn, children
           <Text>{subtitle}</Text>
         </div>
 
-        <div className={`flex gap-3 ${isColumn ? 'flex-col' : ''}`}>
+        <div className={`flex flex-wrap justify-center gap-3 px-3 ${isColumn ? 'flex-col' : ''}`}>
           {children}
         </div>
     </section>

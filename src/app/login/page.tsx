@@ -4,9 +4,11 @@
 //   };
 // };
 
+import LoginForm from "@/components/auth/loginForm";
+
 export default function LoginPage() {
   // const callbackUrl = searchParams.callbackUrl
   //   ? decodeURIComponent(searchParams.callbackUrl)
   //   : "/dashboard";
-  return <div>Login here</div>;
+  return <div><LoginForm /></div>;
 }

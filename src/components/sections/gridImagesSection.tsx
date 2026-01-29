@@ -4,7 +4,7 @@ import Heading from "../ui/heading";
 const GridImagesSection = () => {
   return (
     <section className="flex flex-col">
-      <Heading>Nossa galeria</Heading>
+      <Heading className="font-subtitle">Nossa galeria</Heading>
 
       <div className="grid grid-cols-6 gap-3">
         <div className="col-span-2 relative h-80">
@@ -82,14 +82,14 @@ const GridImagesSection = () => {
               alt=""
             />
           </div>
-          {/* <div className="relative h-40">
+          <div className="relative h-40">
             <Image
               fill
               className="object-cover rounded-lg"
-              src="/assets/images/services/grisalho.jpg"
+              src="/assets/images/services/corte_luzes.jpg"
               alt=""
             />
-          </div> */}
+          </div>
         </div>
 
         <div className="col-span-1 relative h-80">

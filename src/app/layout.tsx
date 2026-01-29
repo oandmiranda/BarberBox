@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Bebas_Neue } from "next/font/google";
+import { Oswald } from "next/font/google";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -11,6 +13,18 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bebas",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-oswald",
 });
 
 export const metadata: Metadata = {
@@ -26,9 +40,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} ${oswald.variable} antialiased bg-black`}
       >
-        {children}
+        <section className="bg-default">{children}</section>
       </body>
     </html>
   );

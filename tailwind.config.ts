@@ -18,6 +18,8 @@ const config: Config = {
         brandPrimary: "var(--brand-primary)",
       },
       fontFamily: {
+        title: "var(--font-bebas)",
+        subtitle: "var(--font-oswald)",
         fontContent: "var(--font-content)",
       },
       fontSize: {
