@@ -1,7 +1,9 @@
+"use server"
+
 import { unstable_noStore as noStore } from "next/cache";
-import { TIME_SLOTS } from "./timeSlots";
-import { allBarbers } from "./allBarbers";
-import { getAllAppointmentsBetweenPeriod } from "./auth/getAllApointmentsBetweenPeriod";
+import { TIME_SLOTS } from "../domain/timeSlots";
+import { allBarbers } from "../domain/allBarbers";
+import { getAllAppointmentsBetweenPeriod } from "../domain/auth/getAllApointmentsBetweenPeriod";
 
 function formatDay(date: Date) {
   return date.toISOString().split("T")[0]; // YYYY-MM-DD

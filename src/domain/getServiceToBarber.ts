@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { getActiveServices } from "@/domain/getActiveServices";
-import { Service } from "@/types/listServices";
+import { ServiceEntity } from "@/types/serviceEntity";
 
-export async function getServicesToBarber(): Promise<Service[]> {
+export async function getServicesToBarber(): Promise<ServiceEntity[]> {
   const user = await getCurrentUser();
 
   // Se não houver usuário, ou se o role não for BARBER e não for ADMIN, bloqueia.

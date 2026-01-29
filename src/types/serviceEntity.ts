@@ -1,4 +1,4 @@
-export type Service = {
+export type ServiceEntity = {
   id: string; // UUID
   name: string;
   description: string | null;
