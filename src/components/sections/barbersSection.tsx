@@ -24,7 +24,7 @@ const barberDatas = [
     experienceTime: "5 anos de experiência",
   },
   {
-    src: "/assets/images/barbers/leo.jpg",
+    src: "/assets/images/barbers/leonardo.jpg",
     alt: "Corte masculino",
     name: "Leonardo Almeida",
     about: "Especialista em cortes clássicos e barba estilizada.",
@@ -35,7 +35,7 @@ const barberDatas = [
 const BarbersSection = () => {
   return (
     <section className="flex flex-col mx-auto gap-2 flex-wrap">
-      <Heading className="font-subtitle">Os melhores barbeiros a sua disposição</Heading>
+      <Heading>Os melhores barbeiros a sua disposição</Heading>
       <div className="flex gap-4">
         {barberDatas.map((barber, index) => (
           <VerticalContentSection

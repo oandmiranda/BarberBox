@@ -20,7 +20,7 @@ const VerticalContentSection = ({
 }: VerticalContentSectionProps) => {
   return (
     <section
-      className={`flex flex-col items-center gap-3 max-w-[240px] p-1.5 rounded-xl bg-surface`}
+      className={`flex flex-col items-center gap-3 max-w-[240px] p-1.5 rounded-xl bg-surface shadow-md`}
     >
       {/* image  */}
       <div className={`relative shrink-0 w-full h-[240px]`}>
@@ -45,7 +45,7 @@ const VerticalContentSection = ({
         <Text size="sm">{subtitle}</Text>
         <div className="flex items-center gap-2">
           <Award color="var(--brand-primary)"/>
-          <Text>{details}</Text>
+          <Text className="">{details}</Text>
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ const BackgroundSection = async ({ image, children }: BackgroundImageProps) => {
       style={{ backgroundImage: `url(${image})` }}
     >
       {/* overlay */}
-      <div className="absolute inset-0 bg-black/10 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-black/30" />
       <div className="z-20">{children}</div>
     </section>
   );

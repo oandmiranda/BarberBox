@@ -3,7 +3,6 @@ import AppointmentCard from "@/components/domain/appointmentCard";
 import BackgroundSection from "@/components/ui/backgroundSection";
 import Button from "@/components/ui/button";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
-import { ArrowLeft } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function ScheduleSuccessPage() {
@@ -22,16 +21,23 @@ export default async function ScheduleSuccessPage() {
   });
 
   return (
-    <BackgroundSection image="/assets/images/barbershop/cover.png">
+    <BackgroundSection image="/assets/images/barbershop/barbershop6.png">
       <AppointmentCard
+        icon="/assets/icons/check.svg"
         heading="Agendamento Confirmado"
-        date={`Data: ${formattedDate}`}
-        time={`Horário: ${formattedTime}`}
+        date={formattedDate}
+        time={formattedTime}
         serviceName={appointment.service_name}
         barberName={appointment.barber_name}
       >
-        <Button variant="link" href="/" widthFull>Ver meus agendamentos</Button>
-        <Button variant="link" href="/home" widthFull>Voltar para Home</Button>
+        <div className="flex flex-col gap-3 items-center">
+          <Button variant="link" href="/" widthFull>
+            Ver meus agendamentos
+          </Button>
+          <Button variant="link" href="/home" widthFull>
+            Voltar para Home
+          </Button>
+        </div>
       </AppointmentCard>
     </BackgroundSection>
   );

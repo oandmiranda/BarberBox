@@ -1,4 +1,5 @@
 import { Barber } from "@/types/barber";
+import Image from "next/image";
 
 type BarberSelectorProps = {
   barbers: Barber[];
@@ -12,28 +13,38 @@ export default function BarberSelector({
   onSelectBarber,
 }: BarberSelectorProps) {
   return (
-    <div>
-      <h3>Escolha um barbeiro</h3>
+    <div className="flex flex-wrap items-center gap-2 font-details">
+      {barbers.map((barber) => {
+        const isSelected = selectedBarber === barber.id;
 
-      <div style={{ display: "flex", gap: 8 }}>
-        {barbers.map((barber) => (
-          <button
-            key={barber.id}
-            type="button"
-            onClick={() => onSelectBarber(barber.id)}
-            style={{
-              padding: 8,
-              border:
-                selectedBarber === barber.id
-                  ? "2px solid black"
-                  : "1px solid gray",
-              cursor: "pointer",
-            }}
-          >
-            {barber.name}
-          </button>
-        ))}
-      </div>
+        return (
+          <div key={barber.id}>
+            <button
+              type="button"
+              onClick={() => onSelectBarber(barber.id)}
+              className={`
+                px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                border shadow-sm flex items-center gap-2
+
+                ${
+                  isSelected
+                    ? "bg-brandPrimary text-white border-brandPrimary shadow-md scale-105"
+                    : "bg-white text-gray-800 border-gray-300 hover:border-brandPrimary hover:text-brandPrimary"
+                }
+
+                cursor-pointer hover:shadow-md
+              `}
+            >
+              <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden">
+                {barber.imageUrl && (
+                  <Image src={barber.imageUrl} alt={barber.name} className="rounded-full object-cover" fill/>
+                )}
+              </div>
+              {barber.name}
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }

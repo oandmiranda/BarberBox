@@ -3,6 +3,7 @@ import { createService } from "../../actions/createService";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { deactivateService } from "../../actions/deactivateService";
 import { getActiveServices } from "@/domain/getActiveServices";
+import Image from "next/image";
 
 export default async function Services() {
   const currentServices = await getActiveServices();
@@ -25,7 +26,7 @@ export default async function Services() {
                 <div>Descrição: {service.description ?? ""}</div>
 
                 {service.image_url && (
-                  <img src={service.image_url} alt={service.name} className="w-20 h-20"/>
+                  <Image src={service.image_url} alt={service.name} className="w-20 h-20"/>
                 )}
 
                 {user && user.role === "ADMIN" && (

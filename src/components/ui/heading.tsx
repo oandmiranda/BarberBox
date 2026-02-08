@@ -18,7 +18,7 @@ const sizeClasses = {
 };
 
 const Heading = ({as: Component = "h1", size = "xl", children, className}: HeadingProps) => {
-  return <Component className={`${sizeClasses[size]} ${className}`}>{children}</Component>;
+  return <Component className={`font-subtitle ${sizeClasses[size]} ${className}`}>{children}</Component>;
 };
 
 export default Heading;

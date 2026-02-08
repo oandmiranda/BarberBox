@@ -5,7 +5,7 @@ export type ServiceUiProps = {
   description?: string;
   durationMinutes: number;
   price: string;
-  tag?: string;
+  tag?: "premium";
   onClick?: () => void;
 };
 

@@ -17,6 +17,7 @@ export default function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      className="font-details border-b-2 pb-2"
       animate
       mode="single"
       locale={ptBR}
@@ -29,6 +30,14 @@ export default function Calendar({
         { dayOfWeek: [0] },
         ...unavailableDays,
       ]}
+      classNames={{
+        selected: `bg-brandPrimary rounded-full text-white flex items-center justify-center`,
+        day: `w-[60px] h-[60px]`,
+        day_button:
+          "w-full h-full flex items-center justify-center p-0 rounded-full",
+        disabled:
+          "text-gray-400 opacity-50",
+      }}
     />
   );
 }

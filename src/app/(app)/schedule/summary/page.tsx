@@ -8,7 +8,7 @@ import Text from "@/components/ui/text";
 import Image from "next/image";
 import AppointmentCard from "@/components/domain/appointmentCard";
 import BackgroundSection from "@/components/ui/backgroundSection";
-import Button from "@/components/ui/button";
+import { Check } from "lucide-react";
 
 type PageProps = {
   searchParams: {
@@ -23,34 +23,30 @@ const ScheduleSummaryPage = async ({ searchParams }: PageProps) => {
   const { serviceId, date, time, barberId } = searchParams;
 
   if (!serviceId || !date || !time || !barberId) {
-    redirect(`/schedule/home`);
+    redirect(`/home`);
   }
 
   const service = await getServiceById(serviceId);
   if (!service) {
-    redirect(`/schedule/home`);
+    redirect(`/home`);
   }
 
   const barber = await getBarberById(barberId);
   if (!barber) {
-    redirect(`/schedule/home`);
+    redirect(`/home`);
   }
 
   const currentUser = await getCurrentUser();
   const isAuthenticated = !!currentUser;
 
   return (
-    <BackgroundSection image="/assets/images/barbershop/cover.png">
-      <div className="flex flex-col gap-8 text-white">
+    <BackgroundSection image="/assets/images/barbershop/barbershop4.png">
+      <div className="mt-2 flex flex-col gap-4 text-white font-details">
         <div className="flex flex-col items-center justify-center">
-          <Heading>Resume de agendamento</Heading>
-          <Heading as="h2" size="base">
-            Confira os detalles da sua reserva
-          </Heading>
+          <Heading>Confira os detalhes da sua reserva</Heading>
         </div>
 
         <div className="flex items-center gap-6">
-
           {/* box 1 */}
           <AppointmentCard>
             <div className="relative w-[200px] h-[200px] rounded-full">
@@ -63,7 +59,10 @@ const ScheduleSummaryPage = async ({ searchParams }: PageProps) => {
                 />
               )}
             </div>
-            <Text>Você será atendido por {barber.name}</Text>
+            <div className="flex items-center gap-1">
+              <Text>Você será atendido por <strong>{barber.name}</strong></Text>
+              <Check />
+            </div>
           </AppointmentCard>
 
           {/* box 2 */}
@@ -72,7 +71,6 @@ const ScheduleSummaryPage = async ({ searchParams }: PageProps) => {
             date={date}
             time={time}
             serviceName={service.name}
-            barberName={barber.name}
           >
             {/* submit button */}
             <ScheduleSummaryClient
@@ -82,9 +80,6 @@ const ScheduleSummaryPage = async ({ searchParams }: PageProps) => {
               time={time}
               barber={barber}
             />
-            <Button variant="link" href="/">
-              Voltar
-            </Button>
           </AppointmentCard>
         </div>
       </div>

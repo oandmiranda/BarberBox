@@ -1,3 +1,4 @@
+import Footer from "@/components/sections/footer";
 import Navbar from "@/components/sections/navbar";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 

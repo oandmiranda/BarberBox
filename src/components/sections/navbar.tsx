@@ -1,67 +1,91 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/button";
 import Logo from "../domain/logo";
 import { CurrentUser } from "@/types/currentUser";
+import LoginModal from "./loginModal";
+import SignupModal from "./signupModal";
 
 type Props = {
   currentUser: CurrentUser | null;
 };
 
 const Navbar = ({ currentUser }: Props) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
+  const params = useSearchParams();
+  const redirect = params.get("redirect") ?? "/";
 
-  useEffect(() => {
-    function handleScroll() {
-      setIsScrolled(window.scrollY >= 300);
-    }
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openSignupModal, setOpenSignupModal] = useState(false);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const pathname = usePathname();
+  const isHome = pathname === "/home";
+  const servicesLink = isHome ? "#services" : "/#services";
+  const aboutLink = isHome ? "#about_us" : "/#about_us";
+  const contactLink = isHome ? "#contacts" : "/#contacts";
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full py-3 px-4 flex justify-between items-center text-white z-10 transition-colors duration-300
-      ${isScrolled ? "bg-black/50 backdrop-blur-md" : "bg-transparent"}`}
-    >
-      <Logo />
+    <>
+      <nav
+        className={`absolute top-0 left-0 w-full py-3 px-4 flex justify-between items-center text-white z-10 ${isHome ? "bg-transparent" : "bg-black/90 backdrop-blur-md"}`}
+      >
+        <Logo />
 
-      <ul className="flex gap-6">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/services">Serviços</Link>
-        </li>
-        <li>
-          <Link href="/about">Quem somos</Link>
-        </li>
-        <li>
-          <Link href="/contact">Contato</Link>
-        </li>
-      </ul>
+        <ul className="flex gap-7">
+          <li>
+            <Link href="/home">Home</Link>
+          </li>
+          <li>
+            <Link href={servicesLink}>Serviços</Link>
+          </li>
+          <li>
+            <Link href={aboutLink}>Quem somos</Link>
+          </li>
+          <li>
+            <Link href={contactLink}>Contato</Link>
+          </li>
+        </ul>
 
-      {!currentUser ? (
-        <div className="flex gap-6">
-          <Button variant="link" href="/login">
-            Entrar
-          </Button>
-          <Button variant="link" href="/register/client">
-            Cadastre-se
-          </Button>
-        </div>
-      ) : (
-        <div className="flex gap-6">
-          <Button variant="link" href="/profile">
-            {`Olá ${currentUser.name}`}
-          </Button>
-        </div>
+        {!currentUser ? (
+          <div className="flex gap-4">
+            <Button
+              variant="primary"
+              onClick={() => setOpenLoginModal(true)}
+              hasSmallFontSize
+              autoWidth
+            >
+              Login
+            </Button>
+
+            <Button
+              variant="primary"
+              onClick={() => setOpenSignupModal(true)}
+              hasSmallFontSize
+              autoWidth
+            >
+              Signup
+            </Button>
+          </div>
+        ) : (
+          <div className="flex gap-4">
+            <Button variant="link" href="/profile" hasSmallFontSize autoWidth>
+              {currentUser.name}
+            </Button>
+          </div>
+        )}
+      </nav>
+
+      {openLoginModal && (
+        <LoginModal onClose={() => setOpenLoginModal(false)} />
       )}
-    </nav>
+
+      {openSignupModal && (
+        <SignupModal redirect={redirect} onClose={() => router.push(redirect)} />
+      )}
+    </>
   );
 };
 

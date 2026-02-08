@@ -9,6 +9,7 @@ type ButtonProps =
       disabled?: boolean;
       children: React.ReactNode;
       widthFull?: boolean;
+      autoWidth?: boolean;
       hasSmallFontSize?: boolean;
     }
   | {
@@ -16,19 +17,36 @@ type ButtonProps =
       href: string;
       children: React.ReactNode;
       widthFull?: boolean;
+      autoWidth?: boolean;
       hasSmallFontSize?: boolean;
     };
 
 const Button = (props: ButtonProps) => {
-  
-  const baseClasses = `bg-brandPrimary text-white flex items-center justify-center rounded-full p-3 ${props.hasSmallFontSize ? "text-xs" : "text-base"} hover:bg-brandSecondary transition-colors`;
+  const baseClasses = `
+  bg-brandPrimary 
+  text-white 
+  font-details 
+  flex items-center justify-center 
+  rounded-full 
+  p-3 
+  ${props.hasSmallFontSize ? "text-xs" : "text-base"} 
+  transition-all duration-200 ease-in-out
+  hover:bg-brandPrimary/90
+  hover:shadow-md
+  hover:translate-y-[1px]
+  active:scale-[0.98]
+  focus:outline-none focus:ring-2 focus:ring-brandPrimary/40
+`;
+
+  const widthClass = props.widthFull
+    ? "w-full"
+    : props.autoWidth
+      ? "w-auto"
+      : "w-[120px]";
 
   if (props.variant === "link") {
     return (
-      <Link
-        href={props.href}
-        className={`${baseClasses} ${props.widthFull ? "w-full" : "w-[120px]"}`}
-      >
+      <Link href={props.href} className={`${baseClasses} ${widthClass}`}>
         {props.children}
       </Link>
     );
@@ -39,7 +57,7 @@ const Button = (props: ButtonProps) => {
       type={props.type ?? "button"}
       onClick={props.onClick}
       disabled={props.disabled}
-      className={`${baseClasses} ${props.widthFull ? "w-full" : "w-[120px]"}`}
+      className={`${baseClasses} ${widthClass}`}
     >
       {props.children}
     </button>
