@@ -11,8 +11,10 @@ const getActiveServicesForUI = async () => {
     imageUrl: service.image_url,
     imageAlt: service.name,
     name: service.name,
+    description: service.description,
     durationMinutes: service.duration_minutes,
     price: service.price,
+    tag: service.tag
   }));
 };
 

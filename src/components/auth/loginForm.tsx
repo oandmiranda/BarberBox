@@ -2,19 +2,27 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { loginUserAction } from "@/actions/loginUserAction";
 import Text from "../ui/text";
 import { LoginUserForm } from "@/types/loginUserForm";
 import Input from "../ui/input";
 import Heading from "../ui/heading";
 import Button from "../ui/button";
+import { X } from "lucide-react";
+import Spinner from "../ui/spinner";
 
-type LoginFormProps = {
+export type LoginFormProps = {
+  hasSignupButtonForm?: boolean;
   onSuccess?: () => void;
+  onClose: () => void;
 };
 
-const LoginForm = ({ onSuccess }: LoginFormProps) => {
+const LoginForm = ({
+  hasSignupButtonForm,
+  onSuccess,
+  onClose,
+}: LoginFormProps) => {
   const {
     register,
     handleSubmit,
@@ -23,31 +31,47 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
-  const errorClassStyle = "text-red-500";
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const currentUrl =
+    pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+
+  const errorClassStyle = "text-red-500 font-details";
 
   const onSubmit = async (data: LoginUserForm) => {
     setLoading(true);
+    setError("");
 
-    const result = await loginUserAction(data);
+    try {
+      const result = await loginUserAction(data);
 
-    if (!result.success) {
-      setError(result.error);
+      if (!result.success) {
+        setError(result.error);
+        return;
+      }
+
+      onSuccess?.();
+      onClose?.();
+
+      router.refresh(); // força re-render de server state (navbar etc)
+    } finally {
       setLoading(false);
-      return;
-    }
-
-    if(onSuccess) {
-      onSuccess();
-    } else {
-      router.push("/home");
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="flex flex-col items-center bg-secondary p-5 gap-2 w-[450px] rounded-lg">
+      <section className="relative flex flex-col items-center bg-surface text-text font-details p-5 gap-4 w-full rounded-lg">
         <Heading className="mb-2">Faça login para continuar</Heading>
+
+        <X
+          onClick={onClose}
+          className="absolute top-2 right-2 cursor-pointer w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"
+        />
+
         <Input
           type="email"
           {...register("email", {
@@ -74,9 +98,26 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
           <Text className={errorClassStyle}>{errors.password.message}</Text>
         )}
 
-        <Button variant="primary" type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
-        </Button>
+        <div className="flex items-center gap-3 justify-around">
+          <Button variant="primary" type="submit" disabled={loading}>
+            Entrar
+          </Button>
+
+          {loading && <Spinner />}
+
+          {hasSignupButtonForm && (
+            <>
+              <Text size="xs">ou</Text>
+
+              <Button
+                variant="link"
+                href={`/signup?redirect=${encodeURIComponent(currentUrl)}`}
+              >
+                Cadastre-se
+              </Button>
+            </>
+          )}
+        </div>
 
         {error && <Text className={errorClassStyle}>{error}</Text>}
       </section>

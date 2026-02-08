@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Overlay from "@/components/ui/overlay";
-import LoginForm from "@/components/auth/loginForm";
 import { createAppointment } from "@/actions/createAppointment";
 import { Barber } from "@/types/barber";
 import Button from "@/components/ui/button";
 import { ServiceUiWithID } from "@/types/ui/serviceProps";
+import SubmitButton from "@/components/ui/submitButton";
+import LoginModal from "@/components/sections/loginModal";
 
 type Props = {
   isAuthenticated: boolean;
@@ -33,11 +33,10 @@ const ScheduleSummaryClient = ({
   }
 
   return (
-    <div className="z-20">
+    <div className="z-20 flex flex-col gap-3 items-center">
       {showLogin && (
-        <Overlay>
-          <LoginForm onSuccess={() => setShowLogin(false)}/>
-        </Overlay>
+
+        <LoginModal onSuccess={() => setShowLogin(false)} onClose={() => setShowLogin(false)} hasSignupButtonForm/>
       )}
 
       <form onSubmit={handleSubmit} action={createAppointment}>
@@ -46,10 +45,11 @@ const ScheduleSummaryClient = ({
         <input type="hidden" name="time" value={time} />
         <input type="hidden" name="barberId" value={barber.id} />
 
-        <Button variant="primary" type="submit" widthFull>
-          Confirmar Agendamento
-        </Button>
+        <SubmitButton>Confirmar Agendamento</SubmitButton>
       </form>
+        <Button variant="link" href="/#services" widthFull>
+          Voltar
+        </Button>
     </div>
   );
 };

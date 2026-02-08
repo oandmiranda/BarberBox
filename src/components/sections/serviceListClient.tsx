@@ -10,10 +10,19 @@ type Props = {
 
 const ServiceListClient = ({ services, onSelectService }: Props) => {
 
+  // ordena os dados alfabéticamente
+  function sortServicesAlphabetically(services: ServiceUiWithID[]) {
+    return [...services].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  const orderedServices = sortServicesAlphabetically(services);
+
   return (
-    <section className="grid grid-cols-3 gap-4">
-      {services.map((service) => (
-        <ServiceCard key={service.id} {...service} onClick={() => onSelectService(service.id)} />
+    <section className="grid grid-cols-3 gap-4" id="services">
+      {orderedServices.map((service) => (
+        <ServiceCard key={service.id} {...service} onClick={() => onSelectService(service.id)} isPremium={service.tag === 'premium'} />
       ))}
     </section>
   );

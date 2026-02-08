@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
 import { X } from "lucide-react";
+import Spinner from "../ui/spinner";
 
 type ModalProps = {
   selectedServiceId: string;
@@ -111,6 +112,7 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
 
   return (
     <>
+      {loading && <Spinner />}
       {selectedServiceId && (
         <div className="fixed inset-0 z-30 flex items-center justify-center">
           {/* Overlay */}
@@ -118,20 +120,20 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
 
           {/* Modal */}
           <div className="relative z-20 bg-white rounded-lg p-6 transition-all duration-300">
-            {loading && <p>Loading...</p>}
-
             {!loading && (
               <div
-                className={`flex  gap-6 ${
+                className={`flex flex-col gap-4 max-h-screen ${
                   selectedDate ? "flex-row" : "flex-col items-center"
                 }`}
               >
                 <div className="absolute top-2 right-2 cursor-pointer">
-                  <X onClick={onClose} />
+                  <X onClick={onClose} className="w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"/>
                 </div>
                 {/* Calendar */}
-                <div className="flex flex-col items-center gap-6">
-                  <Heading>Qual dia você gostaria de agendar?</Heading>
+                <div className="flex flex-col items-center gap-2">
+                  <Heading size="lg">
+                    Qual dia você gostaria de agendar?
+                  </Heading>
                   <Calendar
                     selectedDate={selectedDate}
                     onSelectDate={setSelectedDate}
@@ -139,9 +141,8 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                   />
                 </div>
 
-                {/* Painel direito só aparece depois da data */}
                 {selectedDate && (
-                  <div className="flex flex-col gap-4 min-w-[260px]">
+                  <div className="flex flex-col items-center justify-center text-center gap-7">
                     <TimeSlots
                       availability={availability}
                       selectedTime={selectedTime}
@@ -158,13 +159,15 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                     )}
 
                     {selectedTime && selectedBarber && (
-                      <Button
-                        variant="primary"
-                        type="button"
-                        onClick={handleGoToSummary}
-                      >
-                        Agendar
-                      </Button>
+                      <div>
+                        <Button
+                          variant="primary"
+                          type="button"
+                          onClick={handleGoToSummary}
+                        >
+                          Agendar
+                        </Button>
+                      </div>
                     )}
                   </div>
                 )}
