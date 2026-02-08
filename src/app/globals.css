@@ -4,8 +4,8 @@
 
 :root {
   /* background colors */
-  --default: #ffffff;
-  --surface: #edededeb;
+  --default: #fbfbfb;
+  --surface: #f4f3f3eb;
   --secondary: #c7dee4;
 
   /* text color */
@@ -23,7 +23,7 @@
   --text-base: 16px;
   --text-lg: 18px;
   --text-xl: 26px;
-  --text-xxl: 48px;
+  --text-xxl: 62px;
 
   /* layout sizes */
   --container-max: 1200px;
@@ -62,6 +62,10 @@ body {
   background: var(--default);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+html {
+  scroll-behavior: smooth;
+}
 
 @layer utilities {
   .text-balance {

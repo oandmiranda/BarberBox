@@ -20,7 +20,9 @@ const config: Config = {
       fontFamily: {
         title: "var(--font-bebas)",
         subtitle: "var(--font-oswald)",
-        fontContent: "var(--font-content)",
+        body: "var(--font-playfair)",
+        details: "var(--font-inter)",
+        brand: "var(--font-shrikhand)"
       },
       fontSize: {
         xs: "var(--text-xs)",

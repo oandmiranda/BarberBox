@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { Bebas_Neue } from "next/font/google";
 import { Oswald } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Shrikhand } from "next/font/google";
 import "./globals.css";
+import SignupSuccessModal from "@/components/ui/signupSuccessModal";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
 });
 
 const bebasNeue = Bebas_Neue({
@@ -25,6 +23,18 @@ const oswald = Oswald({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-oswald",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
+});
+
+export const shrikhand = Shrikhand({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-shrikhand",
 });
 
 export const metadata: Metadata = {
@@ -40,9 +50,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} ${oswald.variable} antialiased bg-black`}
+        className={`${bebasNeue.variable} ${oswald.variable} ${playfair.variable} ${inter.variable} ${shrikhand.variable} antialiased bg-black`}
       >
-        <section className="bg-default">{children}</section>
+        <section className="bg-default font-body">
+          <SignupSuccessModal />
+          {children}
+        </section>
       </body>
     </html>
   );
