@@ -1,7 +1,7 @@
 import { sql } from "@/lib/db";
-import { Service } from "@/types/listServices";
+import { ServiceEntity } from "@/types/serviceEntity";
 
-export async function getServiceById(id: string): Promise<Service | null> {
+export async function getServiceById(id: string): Promise<ServiceEntity | null> {
   const dbResult = await sql`
     SELECT
       id,
@@ -24,10 +24,11 @@ export async function getServiceById(id: string): Promise<Service | null> {
   const data = dbResult[0];
 
   // Mapeia o resultado do banco
-  const service: Service = {
+  const service: ServiceEntity = {
     id: data.id,
     name: data.name,
     description: data.description,
+    details: data.details,
     price: data.price,
     duration_minutes: data.duration_minutes,
     image_url: data.image_url,

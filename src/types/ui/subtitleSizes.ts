@@ -1,0 +1,1 @@
+export type SubTitleSizes = "xs" | "sm" | "base" | "lg";

@@ -1,15 +1,15 @@
 import Image from "next/image";
-import Heading from "../ui/heading";
+import Link from "next/link";
 
-const Logo = () => {
+export default function LogoIcon({className}: {className?: string;}) {
   return (
-    <div className="flex items-center">
-      <div className="relative w-8 h-8 flex items-center">
-        <Image src={"/assets/images/logo.png"} alt="logo" fill />
-      </div>
-      <Heading size="xl">BarberShop</Heading>
-    </div>
+      <Link href={"/"} className={`${className}`}>
+        <Image
+          src={"/assets/images/barbershop/brand_logo.webp"}
+          alt="logo"
+          width={85}
+          height={85}
+        />
+      </Link>
   );
-};
-
-export default Logo;
+}

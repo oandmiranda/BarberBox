@@ -1,18 +1,19 @@
-import SideBar from "@/components/sections/sideBar";
+import Footer from "@/components/sections/footer";
 import Navbar from "@/components/sections/navbar";
-import Container from "@/components/ui/container";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <section className="px-5 min-h-screen">
-      <SideBar />
-      <Navbar />
-
-      <main className="ml-72 pt-[110px]">
-        <Container>{children}</Container>
-      </main>
-    </section>
-  );
+type Props = {
+  children: React.ReactNode;
 };
 
-export default AppLayout;
+export default async function AppLayout({ children }: Props) {
+  const currentUser = await getCurrentUser();
+
+  return (
+    <>
+      <Navbar currentUser={currentUser} />
+      {children}
+      <Footer />
+    </>
+  );
+}

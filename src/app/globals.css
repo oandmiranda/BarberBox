@@ -4,9 +4,9 @@
 
 :root {
   /* background colors */
-  --default: #ffffff;
-  --surface: #edededeb;
-  --secondary: #c7dee4;
+  --default: #fbfbfb;
+  --surface: #f4f3f3eb;
+  --secondary: #a2cfda;
 
   /* text color */
   --text: #101010;
@@ -20,10 +20,11 @@
   /* text sizes */
   --text-xs: 12px;
   --text-sm: 14px;
-  --text-base: 16px;
-  --text-lg: 18px;
-  --text-xl: 26px;
-  --text-xxl: 48px;
+  --text-base: 18px;
+  --text-lg: 22px;
+  --text-xl: 30px;
+  --text-xxl: 40px;
+  --text-xxxl: 60px;
 
   /* layout sizes */
   --container-max: 1200px;
@@ -50,18 +51,17 @@
   --radius-xl: 20px;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --default: #0a0a0a;
-    --text: #ffffff;
-  }
-}
-
+html,
 body {
-  color: var(--text);
-  background: var(--default);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background-color: black;
+  scroll-behavior: smooth;
+}
 
 @layer utilities {
   .text-balance {
