@@ -29,6 +29,10 @@ export async function getUnavailableDays(
 
   // busca todos os agendamentos do período de uma vez
   const appointments = await getAllAppointmentsBetweenPeriod(startDate, endDate);
+  for (const appt of appointments) {
+  console.log("RAW FROM DB:", appt.startTime);
+  console.log("AS DATE:", new Date(appt.startTime));
+}
 
   // mapa: { "2026-01-24": { "09:00": 2, "10:00": 3 } }
   const slotsMap: Record<string, Record<string, number>> = {};
