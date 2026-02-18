@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 import { RegisterUserForm } from "@/types/registerUserForm";
 
