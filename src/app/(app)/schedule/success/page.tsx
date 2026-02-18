@@ -1,3 +1,4 @@
+import { toZonedTime } from "date-fns-tz";
 import { getLastAppointmentByUserId } from "@/actions/getLastAppointmentByUserId";
 import AppointmentCard from "@/components/domain/appointmentCard";
 import BackgroundSection from "@/components/ui/backgroundSection";
@@ -12,10 +13,11 @@ export default async function ScheduleSuccessPage() {
   const appointment = await getLastAppointmentByUserId(user.id);
   if (!appointment) redirect("/schedule/home");
 
-  const startDate = new Date(appointment.start_time);
+  const zonedDate = toZonedTime(appointment.start_time, "America/Sao_Paulo");
 
-  const formattedDate = startDate.toLocaleDateString("pt-BR");
-  const formattedTime = startDate.toLocaleTimeString("pt-BR", {
+  const formattedDate = zonedDate.toLocaleDateString("pt-BR");
+
+  const formattedTime = zonedDate.toLocaleTimeString("pt-BR", {
     hour: "2-digit",
     minute: "2-digit",
   });
