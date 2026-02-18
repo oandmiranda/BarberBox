@@ -18,11 +18,10 @@ const config: Config = {
         brandPrimary: "var(--brand-primary)",
       },
       fontFamily: {
-        title: "var(--font-bebas)",
+        title: "var(--font-spicy-rice)",
         subtitle: "var(--font-oswald)",
-        body: "var(--font-playfair)",
-        details: "var(--font-inter)",
-        brand: "var(--font-shrikhand)"
+        details: "var(--font-playfair)",
+        body: "var(--font-inter)",
       },
       fontSize: {
         xs: "var(--text-xs)",
@@ -31,6 +30,7 @@ const config: Config = {
         lg: "var(--text-lg)",
         xl: "var(--text-xl)",
         xxl: "var(--text-xxl)",
+        xxxl: "var(--text-xxxl)",
       },
       maxWidth: {
         container: "var(--container-max)",
