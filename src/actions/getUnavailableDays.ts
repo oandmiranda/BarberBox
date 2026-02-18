@@ -6,11 +6,16 @@ import { allBarbers } from "../domain/allBarbers";
 import { getAllAppointmentsBetweenPeriod } from "../domain/auth/getAllApointmentsBetweenPeriod";
 
 function formatDay(date: Date) {
-  return date.toISOString().split("T")[0]; // YYYY-MM-DD
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`; // dia LOCAL
 }
 
 function formatTime(date: Date) {
-  return date.toTimeString().slice(0, 5); // HH:mm
+  const h = String(date.getHours()).padStart(2, "0");
+  const m = String(date.getMinutes()).padStart(2, "0");
+  return `${h}:${m}`;
 }
 
 export async function getUnavailableDays(

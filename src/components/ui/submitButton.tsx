@@ -3,6 +3,7 @@
 import { useFormStatus } from "react-dom";
 import Button from "@/components/ui/button";
 import Spinner from "./spinner";
+import { CalendarCheck } from "lucide-react";
 
 const SubmitButton = ({ children }: { children: React.ReactNode }) => {
   const { pending } = useFormStatus();
@@ -10,7 +11,7 @@ const SubmitButton = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {pending && <Spinner />}
-      <Button type="submit" variant="primary" widthFull disabled={pending}>
+      <Button type="submit" variant="primary" icon={<CalendarCheck  size={15}/>} disabled={pending} widthFull>
         {children}
       </Button>
     </>

@@ -1,4 +1,4 @@
-import { CalendarCheck, Clock, Target, User } from "lucide-react";
+import { CalendarCheck, Check, Clock, Target, User } from "lucide-react";
 import Heading from "../ui/heading";
 import Text from "../ui/text";
 import Image from "next/image";
@@ -9,6 +9,7 @@ type AppointmentCardProps = {
   date?: string;
   time?: string;
   serviceName?: string;
+  description?: string | null;
   barberName?: string;
   children: React.ReactNode;
 };
@@ -19,15 +20,18 @@ export default function AppointmentCard({
   date,
   time,
   serviceName,
+  description,
   barberName,
   children,
 }: AppointmentCardProps) {
   const dataStyles = "flex items-center gap-2 font-default";
 
   return (
-    <div className="relative font-details flex flex-col justify-center items-center gap-7 p-7 bg-black/90 rounded-xl w-[380px] h-[500px]">
+    <div
+      className={`relative flex flex-col justify-center items-center gap-4 bg-surface text-text rounded-xl min-w-0 w-full h-auto p-5 sm:gap-7 sm:min-h-[250px]`}
+    >
       {icon && (
-        <div className="absolute -top-[40px] w-[90px] h-[90px]">
+        <div className="absolute -top-[47px] w-[90px] h-[90px]">
           <Image src={icon} alt="icone" fill />
         </div>
       )}
@@ -51,12 +55,22 @@ export default function AppointmentCard({
               </Text>
             </div>
 
-            <div className={dataStyles}>
-              <Target />
-              <Text>
-                Serviço: <strong>{serviceName}</strong>
-              </Text>
-            </div>
+            {serviceName && (
+              <div className={dataStyles}>
+                <Target />
+                <Text>
+                  Serviço agendado: <strong className="text-brandPrimary">{serviceName}</strong>
+                </Text>
+              </div>
+            )}
+
+            {description && (
+              <div className={dataStyles}>
+                <Check />
+                <p style={{ fontStyle: "italic", fontSize: "12px" }}>{description}</p>
+              </div>
+            )}
+
             {barberName && (
               <div className={dataStyles}>
                 <User />
