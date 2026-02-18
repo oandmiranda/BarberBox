@@ -3,17 +3,16 @@
 import { useEffect, useState } from "react";
 import { getUnavailableDays } from "@/actions/getUnavailableDays";
 import Calendar from "./calendar";
-import { Barber } from "@/types/barber";
 import { getAvailableBarbersByDate } from "@/actions/getAvailableBarbersByDate";
 import TimeSlots from "./timeSlot";
 import { buildDateTime } from "@/domain/buildDateTime";
-import { getAvailableBarbersByDateTime } from "@/actions/getAvailableBarbers";
+import { getBarbersStatusByDateTime } from "@/actions/getBarbersStatusByDateTime";
 import BarberSelector from "../domain/barberSelector";
 import { useRouter } from "next/navigation";
 import Button from "../ui/button";
-import Heading from "../ui/heading";
-import { X } from "lucide-react";
+import { CalendarCheck, X } from "lucide-react";
 import Spinner from "../ui/spinner";
+import { BarberStatus } from "@/types/barberStatus";
 
 type ModalProps = {
   selectedServiceId: string;
@@ -26,7 +25,7 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [availableBarbers, setAvailableBarbers] = useState<Barber[] | null>(
+  const [availableBarbers, setAvailableBarbers] = useState<BarberStatus[] | null>(
     null,
   );
   const [selectedBarber, setSelectedBarber] = useState<string | null>(null);
@@ -87,7 +86,7 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
 
     async function fetchAvailableBarbers() {
       const dateTime = buildDateTime(date, time);
-      const barbers = await getAvailableBarbersByDateTime(dateTime);
+      const barbers = await getBarbersStatusByDateTime(dateTime);
 
       setSelectedBarber(null);
       setAvailableBarbers(barbers);
@@ -114,36 +113,35 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
     <>
       {loading && <Spinner />}
       {selectedServiceId && (
-        <div className="fixed inset-0 z-30 flex items-center justify-center">
+        <div className="fixed inset-0 min-w-[240px] px-2 z-30 flex items-center justify-center">
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/60" />
 
           {/* Modal */}
-          <div className="relative z-20 bg-white rounded-lg p-6 transition-all duration-300">
+          <div className="overflow-auto w-full relative z-20 bg-white rounded-lg p-6 transition-all duration-300 sm:w-auto">
             {!loading && (
               <div
-                className={`flex flex-col gap-4 max-h-screen ${
+                className={`flex flex-col gap-2 max-h-screen ${
                   selectedDate ? "flex-row" : "flex-col items-center"
                 }`}
               >
                 <div className="absolute top-2 right-2 cursor-pointer">
-                  <X onClick={onClose} className="w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"/>
+                  <X
+                    onClick={onClose}
+                    className="w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"
+                  />
                 </div>
-                {/* Calendar */}
-                <div className="flex flex-col items-center gap-2">
-                  <Heading size="lg">
-                    Qual dia você gostaria de agendar?
-                  </Heading>
+
                   <Calendar
                     selectedDate={selectedDate}
                     onSelectDate={setSelectedDate}
                     unavailableDays={unavailableDays}
                   />
-                </div>
 
                 {selectedDate && (
-                  <div className="flex flex-col items-center justify-center text-center gap-7">
+                  <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-7">
                     <TimeSlots
+                      selectedDate={selectedDate}
                       availability={availability}
                       selectedTime={selectedTime}
                       onSelectTime={setSelectedTime}
@@ -159,15 +157,15 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                     )}
 
                     {selectedTime && selectedBarber && (
-                      <div>
                         <Button
                           variant="primary"
                           type="button"
                           onClick={handleGoToSummary}
+                          widthFull
+                          icon={<CalendarCheck size={18}/>}
                         >
                           Agendar
                         </Button>
-                      </div>
                     )}
                   </div>
                 )}

@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { loginUserAction } from "@/actions/loginUserAction";
 import Text from "../ui/text";
 import { LoginUserForm } from "@/types/loginUserForm";
@@ -16,12 +16,14 @@ export type LoginFormProps = {
   hasSignupButtonForm?: boolean;
   onSuccess?: () => void;
   onClose: () => void;
+  onOpenSignup?: () => void;
 };
 
 const LoginForm = ({
   hasSignupButtonForm,
   onSuccess,
   onClose,
+  onOpenSignup
 }: LoginFormProps) => {
   const {
     register,
@@ -33,13 +35,8 @@ const LoginForm = ({
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const currentUrl =
-    pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
-
-  const errorClassStyle = "text-red-500 font-details";
+  const errorClassStyle = "text-red-500";
 
   const onSubmit = async (data: LoginUserForm) => {
     setLoading(true);
@@ -56,7 +53,8 @@ const LoginForm = ({
       onSuccess?.();
       onClose?.();
 
-      router.refresh(); // força re-render de server state (navbar etc)
+      // atualiza server components (navbar, summary etc)
+      router.refresh();
     } finally {
       setLoading(false);
     }
@@ -64,12 +62,12 @@ const LoginForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="relative flex flex-col items-center bg-surface text-text font-details p-5 gap-4 w-full rounded-lg">
-        <Heading className="mb-2">Faça login para continuar</Heading>
+      <section className="relative flex flex-col items-center bg-surface text-text p-4 gap-4 w-full rounded-lg">
+        <Heading className="mb-1">Login</Heading>
 
         <X
           onClick={onClose}
-          className="absolute top-2 right-2 cursor-pointer w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"
+          className="absolute cursor-pointer transition-transform duration-200 hover:rotate-[90deg] top-1 right-1 w-5 h-5 md:w-6 md:h-6 md:top-2 md:right-2"
         />
 
         <Input
@@ -98,7 +96,7 @@ const LoginForm = ({
           <Text className={errorClassStyle}>{errors.password.message}</Text>
         )}
 
-        <div className="flex items-center gap-3 justify-around">
+        <div className="flex flex-col text-center items-center gap-3 justify-around sm:flex-row">
           <Button variant="primary" type="submit" disabled={loading}>
             Entrar
           </Button>
@@ -110,8 +108,8 @@ const LoginForm = ({
               <Text size="xs">ou</Text>
 
               <Button
-                variant="link"
-                href={`/signup?redirect=${encodeURIComponent(currentUrl)}`}
+                variant="primary"
+                onClick={onOpenSignup}
               >
                 Cadastre-se
               </Button>

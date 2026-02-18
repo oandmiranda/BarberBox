@@ -1,8 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState } from "react";
 import { registerUserAction } from "@/actions/registerUserAction";
 import { RegisterUserForm } from "@/types/registerUserForm";
 import Text from "@/components/ui/text";
@@ -10,15 +10,16 @@ import Input from "../ui/input";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
 import Spinner from "../ui/spinner";
-import { X } from "lucide-react";
+import { Undo2, X } from "lucide-react";
 
 type SignupFormProps = {
-  role: "CLIENT" | "BARBER";
+  role?: "CLIENT" | "BARBER";
+  redirect?: string;
   onClose?: () => void;
-  redirect: string;
+  onSuccess?: () => void;
 };
 
-const SignupForm = ({ role, onClose, redirect }: SignupFormProps) => {
+const SignupForm = ({ redirect, role, onClose, onSuccess }: SignupFormProps) => {
   const {
     register,
     handleSubmit,
@@ -26,27 +27,21 @@ const SignupForm = ({ role, onClose, redirect }: SignupFormProps) => {
     reset,
     watch,
   } = useForm<RegisterUserForm>();
+
   const router = useRouter();
   const params = useSearchParams();
+  const pathname = usePathname();
 
   const password = watch("password");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const errorClassStyle = "text-red-500 font-details";
+  const errorClassStyle = "text-red-500";
 
+  // destino apenas para casos onde realmente existe fluxo externo (ex: agendamento)
   const redirectFromUrl = params.get("redirect");
-
-  const redirectUrl = useMemo(() => {
-    const safeRedirect = redirect || redirectFromUrl;
-    if (!safeRedirect) return null;
-
-    const url = new URL(safeRedirect, window.location.origin);
-    url.searchParams.set("login", "true");
-
-    return url.pathname + url.search;
-  }, [redirect, redirectFromUrl]);
+  const destination = redirect ?? redirectFromUrl ?? pathname;
 
   const onSubmit = async (data: RegisterUserForm) => {
     setLoading(true);
@@ -63,31 +58,29 @@ const SignupForm = ({ role, onClose, redirect }: SignupFormProps) => {
       return;
     }
 
-    sessionStorage.setItem(
-      "signupSuccess",
-      JSON.stringify({
-        message: "Registro feito com sucesso",
-        expires: Date.now() + 4000,
-      }),
-    );
-
     reset();
     setLoading(false);
 
-    router.push(redirectUrl || "/");
+    // avisa o Navbar: cadastro concluído
+    onSuccess?.();
+
+    // só navega se realmente for outra rota
+    if (destination && destination !== pathname) {
+      router.push(destination);
+    }
   };
 
-const showBackButton =
-  redirectUrl?.startsWith("/schedule") ?? false;
+  const showBackButton = !!destination && destination.startsWith("/schedule");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="relative flex flex-col items-center bg-surface text-text font-details p-5 gap-4 w-full rounded-lg">
-        <Heading className="mb-2">Cadastre-se</Heading>
+      <section className="relative flex flex-col items-center bg-surface text-text p-5 gap-3 w-full rounded-lg">
+        <Heading className="mb-1">Cadastre-se</Heading>
+
         {onClose && (
           <X
             onClick={onClose}
-            className="absolute top-2 right-2 cursor-pointer w-6 h-6 transition-transform duration-200 hover:rotate-[90deg]"
+            className="absolute cursor-pointer transition-transform duration-200 hover:rotate-[90deg] top-1 right-1 w-5 h-5 md:w-6 md:h-6 md:top-2 md:right-2"
           />
         )}
 
@@ -105,6 +98,7 @@ const showBackButton =
         {errors.name && (
           <Text className={errorClassStyle}>{errors.name.message}</Text>
         )}
+
         <Input
           type="email"
           {...register("email", {
@@ -119,6 +113,7 @@ const showBackButton =
         {errors.email && (
           <Text className={errorClassStyle}>{errors.email.message}</Text>
         )}
+
         <Input
           type="password"
           {...register("password", {
@@ -134,6 +129,7 @@ const showBackButton =
         {errors.password && (
           <Text className={errorClassStyle}>{errors.password.message}</Text>
         )}
+
         <Input
           type="password"
           {...register("confirmPassword", {
@@ -148,12 +144,18 @@ const showBackButton =
             {errors.confirmPassword?.message}
           </Text>
         )}
-        <div className="flex items-center gap-3">
+
+        <div className="w-full flex flex-col justify-center items-center gap-3 sm:flex-row">
           <Button variant="primary" type="submit" disabled={loading}>
             Cadastrar
           </Button>
+
           {showBackButton && (
-            <Button variant="link" href={redirectUrl}>
+            <Button
+              variant="link"
+              href={destination}
+              icon={<Undo2 size={15} />}
+            >
               Voltar
             </Button>
           )}

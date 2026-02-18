@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/button";
@@ -8,6 +8,9 @@ import Logo from "../domain/logo";
 import { CurrentUser } from "@/types/currentUser";
 import LoginModal from "./loginModal";
 import SignupModal from "./signupModal";
+import MessageModal from "../ui/messageModal";
+import BurgerMenu from "../ui/burgerMenu";
+import { UserCheck } from "lucide-react";
 
 type Props = {
   currentUser: CurrentUser | null;
@@ -15,46 +18,115 @@ type Props = {
 
 const Navbar = ({ currentUser }: Props) => {
   const router = useRouter();
-  const params = useSearchParams();
-  const redirect = params.get("redirect") ?? "/";
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
+  // sempre derive valores do searchParams
+  const redirect = searchParams.get("redirect") ?? undefined;
+  const authFlow = useMemo(() => {
+    return searchParams.get("auth");
+  }, [searchParams]);
+
+  const [scrolled, setScrolled] = useState(false);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [showLoginSuccess, setShowLoginSuccess] = useState(false);
 
-  const pathname = usePathname();
   const isHome = pathname === "/home";
   const servicesLink = isHome ? "#services" : "/#services";
   const aboutLink = isHome ? "#about_us" : "/#about_us";
   const contactLink = isHome ? "#contacts" : "/#contacts";
 
+  const handleSignupSuccess = () => {
+    setOpenSignupModal(false);
+    setOpenLoginModal(true);
+  };
+
+  // open LoginModal after register
+  useEffect(() => {
+    if (authFlow !== "signup-success") return;
+    if (currentUser) return;
+
+    setOpenLoginModal(true);
+
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete("auth");
+
+    const query = newParams.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname);
+  }, [authFlow, currentUser, pathname, router, searchParams]);
+
+  useEffect(() => {
+    const shouldOpen = sessionStorage.getItem("afterSignupOpenLogin");
+
+    if (shouldOpen === "true") {
+      setOpenLoginModal(true);
+      sessionStorage.removeItem("afterSignupOpenLogin");
+    }
+  }, [pathname]);
+
+  // handle scroll
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(true);
+      return;
+    }
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 200);
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  useEffect(() => {
+    if (!showLoginSuccess) return;
+
+    const timer = setTimeout(() => {
+      setShowLoginSuccess(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [showLoginSuccess]);
+
   return (
     <>
       <nav
-        className={`absolute top-0 left-0 w-full py-3 px-4 flex justify-between items-center text-white z-10 ${isHome ? "bg-transparent" : "bg-black/90 backdrop-blur-md"}`}
+        className={`fixed top-0 left-0 w-full min-w-[210px] grid grid-cols-3 items-center font-details text-white z-50 transition-colors duration-300 py-4 sm:py-2 px-4 lg:px-6 ${
+          scrolled ? "bg-black" : "bg-transparent"
+        }`}
       >
-        <Logo />
+        <div className="justify-self-start">
+          <ul className="hidden gap-7 lg:flex">
+            <li>
+              <Link href="/home">Home</Link>
+            </li>
+            <li>
+              <Link href={servicesLink}>Serviços</Link>
+            </li>
+            <li>
+              <Link href={aboutLink}>Sobre</Link>
+            </li>
+            <li>
+              <Link href={contactLink}>Contato</Link>
+            </li>
+          </ul>
 
-        <ul className="flex gap-7">
-          <li>
-            <Link href="/home">Home</Link>
-          </li>
-          <li>
-            <Link href={servicesLink}>Serviços</Link>
-          </li>
-          <li>
-            <Link href={aboutLink}>Quem somos</Link>
-          </li>
-          <li>
-            <Link href={contactLink}>Contato</Link>
-          </li>
-        </ul>
+          <BurgerMenu />
+        </div>
+
+        <div className="justify-self-center">
+          <Logo className="hidden sm:flex" />
+        </div>
 
         {!currentUser ? (
-          <div className="flex gap-4">
+          <div className="justify-self-end flex gap-4 font-body">
             <Button
               variant="primary"
               onClick={() => setOpenLoginModal(true)}
-              hasSmallFontSize
               autoWidth
             >
               Login
@@ -62,28 +134,51 @@ const Navbar = ({ currentUser }: Props) => {
 
             <Button
               variant="primary"
-              onClick={() => setOpenSignupModal(true)}
-              hasSmallFontSize
+              onClick={() => {
+                const current =
+                  window.location.pathname + window.location.search;
+                setOpenSignupModal(true);
+                sessionStorage.setItem("signupReturnTo", current);
+              }}
               autoWidth
             >
               Signup
             </Button>
           </div>
         ) : (
-          <div className="flex gap-4">
-            <Button variant="link" href="/profile" hasSmallFontSize autoWidth>
-              {currentUser.name}
-            </Button>
+          <div className="justify-self-end flex items-center gap-2 font-body">
+            <UserCheck color="#c7dee4"/>
+            Olá,
+            <strong>{`${currentUser.name}`}</strong>
           </div>
         )}
       </nav>
 
       {openLoginModal && (
-        <LoginModal onClose={() => setOpenLoginModal(false)} />
+        <LoginModal
+          onClose={() => setOpenLoginModal(false)}
+          onSuccess={() => {
+            setOpenLoginModal(false);
+            setShowLoginSuccess(true);
+          }}
+        />
+      )}
+
+      {showLoginSuccess && (
+        <MessageModal
+          message="Login realizado com sucesso!"
+          backgroundColor="bg-green-600"
+          icon="/assets/icons/check.svg"
+        />
       )}
 
       {openSignupModal && (
-        <SignupModal redirect={redirect} onClose={() => router.push(redirect)} />
+        <SignupModal
+          redirect={redirect}
+          onClose={() => setOpenSignupModal(false)}
+          onSuccess={handleSignupSuccess}
+          role="CLIENT"
+        />
       )}
     </>
   );
