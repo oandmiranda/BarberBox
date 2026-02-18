@@ -14,9 +14,9 @@ type StatItem = {
 type ContentSectionProps = {
   badge?: string;
   badgeIcon?: LucideIcon;
-  title: string;
+  title?: string;
   titleSize?: TitleSizes;
-  subtitle?: string | null;
+  subtitle?: string | React.ReactNode | null;
   subtitleSize?: SubTitleSizes;
   stats?: StatItem[];
   imageSrc?: string;
@@ -46,10 +46,10 @@ const ContentSection = ({
 
   return (
     <section
-      className={`flex gap-4 mx-auto max-w-3xl ${imageLeft ? "flex-row-reverse" : "flex-row"}`}
+      className={`flex flex-col gap-4 mx-auto w-full md:max-w-3xl md:flex-row md:justify-between ${imageLeft ? "flex-row-reverse" : "flex-row"}`}
     >
       {/* text */}
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between gap-1">
         <div className="flex items-center gap-2 bg-surface px-3 py-1 w-fit rounded-full">
           {Icon && <Icon size={20} color="var(--brand-primary)" />}
           <Heading as="h2" size="xs" className="text-brandPrimary">
@@ -60,19 +60,19 @@ const ContentSection = ({
         <Heading as="h1" size={titleSize ?? "xl"}>
           {title}
         </Heading>
-        <Text size={subtitleSize ?? "base"}>{subtitle}</Text>
+        <Text size={subtitleSize ?? "base"} className="font-body">{subtitle}</Text>
         <div className="flex gap-5">
           {stats?.map((stat, index) => (
             <div key={index} className="flex flex-col">
-              <Heading size="xl">{stat.value}</Heading>
+              <Heading size="lg">{stat.value}</Heading>
               <Text as="span" size="xs">
                 {stat.subtitle}
               </Text>
             </div>
           ))}
         </div>
-        {hasButton && (
-          <Button variant="link" href={href} hasSmallFontSize>
+        {hasButton && href && (
+          <Button variant="link" href={href}>
             Ver mais
           </Button>
         )}
@@ -81,13 +81,12 @@ const ContentSection = ({
       {/* image */}
       {hasImage && imageAlt && (
         <div
-          className={`relative shrink-0 ${imageSizes ?? "w-[128px] h-[128px] sm:w-[160px] sm:h-[160px] md:w-[200px] md:h-[200px] lg:w-[400px] lg:h-[400px]"} `}
+          className={`relative shrink-0 ${imageSizes ?? "flex-none sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px]"} `}
         >
           <Image
             src={imageSrc}
             alt={imageAlt}
             fill
-            sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, (max-width: 1280px) 200px, 400px"
             className="object-cover rounded-lg"
           />
         </div>

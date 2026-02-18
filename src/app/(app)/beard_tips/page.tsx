@@ -1,201 +1,142 @@
+import Button from "@/components/ui/button";
+import ContentSection from "@/components/ui/contentSection";
 import Heading from "@/components/ui/heading";
 import Hero from "@/components/ui/hero";
 import Text from "@/components/ui/text";
-import Image from "next/image";
-
-const styledTitle = `border-b-2 border-secondary pb-2`;
 
 export default async function BeardTipsPage() {
+  const imagesSize = "sm:w-[240px] h-[240px] md:w-[260px] md:h-[260px]";
+  const baseStyle = "flex flex-col items-center gap-2"
+
   return (
-    <section className="py-[125px] flex flex-col items-center justify-center font-details">
-      <div className="w-[60%] mb-5">
+    <section className="py-[100px] w-full min-w-0 flex flex-col items-center justify-center px-4 font-details">
+      <div className="w-full md:w-[60%] mb-5 flex flex-col flex-wrap">
         <Hero
-          imageBackground="/assets/images/barbershop/barbershop4.png"
-          title="Guia de pós-barba: o toque final para uma barba saudável"
-          subtitle="Confira nossas dicas de como cuidar da sua barba para fazê-la crescer mais cheia e saudável"
-          hasTitleCenter
+          imageBackground="/assets/images/barbershop/shaving_man.png"
+          height="h-[400px]"
+          title="Dicas para fazer a barba"
+          subtitle="Tire suas dúvidas com essas super dicas de cuidados com a barba"
+          hasTitleCenter={true}
+          titleSize="xl"
         />
-        <div className="flex flex-col items-center justify-center gap-6 mt-8">
+        <div className="flex flex-col font-body items-center justify-center gap-[100px] mt-8">
           <Text>
-            Fazer a barba é uma daquelas tarefas que ou você ama ou odeia. Mas,
-            se você quer uma barba bonita, cheia e saudável, não adianta fugir:
-            um dos grandes segredos é usar um bom produto de pós-barba para pele
-            sensível.
+            Temos algumas dicas sobre como conseguir um barbear mais confortável
+            e suave, seja você um iniciante ou um profissional. É simples:
+            fazemos isso quase todo dia, e ainda assim é algo que inspira
+            intermináveis debates.{" "}
+            <strong>
+              Então, assumimos o trabalho mental pesado em nome dos homens e
+              voltamos com um simples guia em oito passos sobre o barbear.
+            </strong>
           </Text>
 
-          <Text>
-            Mas você sabe como escolher a melhor opção para a sua barba e a sua
-            necessidade? Acredite: isso faz toda a diferença no resultado final
-            para você ter aquela barba cheia e saudável. Mas pode ficar
-            tranquilo! <strong>Neste guia de pós-barba você vai encontrar informações
-            sobre os produtos</strong> e como escolher a melhor opção para você. Confira!
-          </Text>
+          <ContentSection
+            title="PASSO 1: Hidratar"
+            subtitle="Primeiro, hidrate a pele para minimizar puxões, cortes e irritação enquanto estiver se barbeando. Recomendamos que você faça a barba assim que sair do banho ou até mesmo no chuveiro. A hidratação suaviza os pelos, permitindo que a lâmina deslize com mais facilidade. Use um esfoliante facial ou lave o rosto para remover a oleosidade, sujeira e pele morta, preparando sua pele para um barbear confortável."
+            imageSrc="/assets/images/barbershop/washing_face.jpg"
+            imageAlt="Barbeiro adulto jovem lavando o rosto"
+            imageSizes={imagesSize}
+          />
 
-          <Heading className={styledTitle}>Quais são os tipos de loção pós-barba?</Heading>
+          <ContentSection
+            title="PASSO 2: Aplique espuma de barbear"
+            subtitle="Aplique um gel ou espuma de barbear - faça espuma e espalhe para ajudar a hidratar os pelos, melhorar o deslizamento da lâmina e ajudar a proteger contra irritação e a vermelhidão enquanto você faz a barba. Saiba mais aqui sobre por que você precisa de um creme de barbear e quais as diferenças entre gel e espuma de barbear."
+            imageSrc="/assets/images/barbershop/shaving.jpg"
+            imageAlt="Barbeiro atendendo cliente na barbearia"
+            imageSizes={imagesSize}
+          />
 
           <Text>
-            Antes de escolher qual o seu produto ideal, você conhece os
-            diferentes produtos pós-barba? Isso faz toda a diferença no
-            resultado final, por isso, a primeira coisa é entender quais são os
-            tipos de pós-barba.
-          </Text>
-          <Heading>Balm Pós-barba</Heading>
-          <div className="relative w-[650px] h-[450px]">
-            <Image
-              src={"/assets/images/products/product1.jpg"}
-              alt="imagem de um balm para barba"
-              fill
-            />
-          </div>
-          <Text>
-            <strong>O balm pós-barba</strong>, como o Balm Pós-Barba Homem,
-            <strong> tem uma consistência mais cremosa e firme</strong>, ideal
-            para homens que sofrem com irritação e sensibilidade na pele após o
+            <strong>Aplique um gel ou espuma de barbear</strong> - faça espuma e
+            espalhe para ajudar a hidratar os pelos, melhorar o deslizamento da
+            lâmina e ajudar a proteger contra irritação e a vermelhidão enquanto
+            você faz a barba. Saiba mais aqui sobre por que você precisa de um
+            creme de barbear e quais as diferenças entre gel e espuma de
             barbear.
           </Text>
-          <Text>
-            E por ser mais densa, ajuda na hidratação da pele, reduzindo a
-            vermelhidão e proporcionando hidratação profunda. Além disso, os
-            balms possuem <strong>propriedades antissépticas</strong> que deixam
-            a pele mais protegida e garantem uma cicatrização mais rápida.
-          </Text>
-          <Heading>Gel Pós-barba</Heading>
-          <div className="relative w-[650px] h-[450px]">
-            <Image
-              src={"/assets/images/products/product2.jpg"}
-              alt="imagem de um balm para barba"
-              fill
-            />
+
+          <div className={baseStyle}>
+            <Heading>PASSO 3: Verifique se a lâmina está cega</Heading>
+            <Text>
+              Verifique as fitas de lubrificação, se estiverem apagadas ou
+              gastas ou se as lâminas estiverem cegas, talvez seja hora de
+              trocar por um novo refil.
+            </Text>
           </div>
-          <Text>
-            O gel pós-barba é uma boa escolha para aqueles que preferem uma
-            <strong>sensação mais refrescante</strong> após o barbear e não gostam da sensação
-            hidratante, como o Gel Pós-barba Sr N. <strong>A sua textura leve e não
-            oleosa é rapidamente absorvida pela pele</strong>, proporcionando alívio
-            imediato contra a irritação. Os géis também contêm ingredientes que
-            ajudam a acalmar a pele, deixando uma sensação de frescor, mas sem
-            abrir mão de uma hidratação mais leve.
-          </Text>
-          <Heading className={styledTitle}>Óleo Para Barba</Heading>
-          <Text>
-            O óleo pós-barba é uma opção principalmente para quem gosta de
-            cuidar dos fios da barba. <strong>Este produto ajuda a criar uma película de
-            proteção nos fios</strong>, mantendo a barba hidratada e alinhada a longo
-            prazo.
-          </Text>
-          <Text>
-            Essa hidratação previne coceira, descamação, pelos encravados, além
-            de condicionar a barba, tornando os fios mais macios e fáceis de
-            modelar.
-          </Text>
-          <Text>
-            O óleo para barba frequentemente contém uma mistura natural, como
-            jojoba e argan, que nutrem profundamente os fios.
-          </Text>
-          <Heading className={styledTitle}>Spray Pós-barba</Heading>
-          <Text>
-            <strong>O mais prático de todos, o spray pós-barba</strong> é fácil de aplicar, sendo
-            uma ótima opção para quem busca conveniência sem abrir mão dos
-            cuidados com a pele.
-          </Text>
-          <Text>
-            Ele é especialmente útil para acalmar a pele imediatamente após o
-            barbear, graças à sua aplicação uniforme e rápida absorção. Também é
-            ideal para o dia a dia, já que não deixa a pele oleosa.
-          </Text>
-          <Text>
-            Muitos sprays são formulados com ingredientes calmantes e anti
-            sépticos que ajudam a prevenir irritações e infecções em pequenos
-            cortes.
-          </Text>
-          <Heading className={styledTitle}>Para que servem os produtos pós-barba?</Heading>
-          <Text>
-            <strong>
-              Os produtos pós-barba têm como principal função acalmar e hidratar
-              a pele,
-            </strong>
-            proporcionando alívio imediato e prevenindo desconfortos comuns como
-            ardor, coceira e pequenos cortes que surgem na hora de barbear. Mas
-            será que os produtos pós-barba fazem tanta diferença assim? Bom,
-            quem tem o costume de cuidar bem da barba sabe que eles podem
-            transformar a saúde da sua pele e a aparência dos fios. Í
-          </Text>
-          <Text>
-            <strong>
-              Os produtos pós-barba fazem parte de uma rotina de autocuidado
-              masculino.
-            </strong>
-            O ato de barbear remove não apenas os pelos indesejados, mas também
-            uma camada superficial da pele, deixando-a vulnerável a irritações,
-            vermelhidão e infecções.
-          </Text>
-          <Text>
-            A longo prazo, todo esse cuidado tem um resultado: uma barba mais
-            bonita e encorpada, além de uma pele macia e sem pelos encravados.
-          </Text>
-          <Heading className={styledTitle}>Como acalmar a pele pós-barba?</Heading>
-          <Text>
-            Se você sofre com irritação na pele depois de fazer a barba, o
-            primeiro passo é: enxágue bem o rosto com água fria para fechar os
-            poros e reduzir a irritação.
-          </Text>
-          <Text>
-            Em seguida, aplique um produto pós-barba adequado ao seu tipo de
-            pele, como um balm ou gel com ingredientes calmantes. Finalize
-            hidratando a pele com uma loção leve.
-          </Text>
-          <Text>
-            <strong>Atenção:</strong>Atenção: evite produtos com álcool, pois
-            podem ressecar e irritar ainda mais a pele.
-          </Text>
-          <Heading className={styledTitle}>Como fazer para manter a barba saudável?</Heading>
-          <Text>
-            Uma barba saudável cresce mais bonita e alinhada, além de muito mais
-            rápido. Também diminui os pelos encravados e ajuda a preencher os
-            locais mais falhados. Mas, para tudo isso, é preciso ter uma rotina
-            de autocuidado com o rosto.
-          </Text>
-          <Text>
-            Mas não precisa se preocupar:
-            <strong>
-              3 passos simples e rápidos já fazem muita diferença!
-            </strong>
-          </Text>
-          <Heading className={styledTitle}>Faça a limpeza diária da barba</Heading>
-          <Text>
-            <strong>
-              Manter a barba limpa é o primeiro passo - e primordial
-            </strong>
-            . Lave a barba diariamente com um sabonete facial ou shampoo para
-            barba. Massageie para remover sujeira e resíduos acumulados ao longo
-            do dia. Enxágue bem e seque a barba com uma toalha limpa.
-          </Text>
-          <Heading className={styledTitle}>Mantenha o rosto hidratado</Heading>
-          <Text>
-            Como vimos,
-            <strong>
-              o hidratante é um aliado na hora de cuidar da barba.
-            </strong>
-            Isso evita coceira, descamação, irritação, pelos encravados e muito
-            mais. Use um óleo ou balm pós-barba. Aplique o produto diariamente,
-            de manhã e antes de dormir.
-          </Text>
-          <Heading className={styledTitle}>Não esqueça de pentear os pelos da barba</Heading>
-          <Text>
-            Um cuidado simples, mas que muitos homens deixam de lado:
-            <strong>pentear a barba regularmente</strong> ajuda a desembaraçar
-            os fios, distribuir os óleos naturais e promover um crescimento
-            saudável.
-          </Text>
-          <Text>
-            Por isso, pentear a barba também ajuda a manter a barba alinhada e
-            facilita a aplicação de produtos como os de pós-barba.
-          </Text>
-          <Text>
-            O que achou deste guia de pós-barba? Ah, e não deixe de conferir
-            nossas recomendações de produtos e cuidados masculinos para colocar
-            em prática nossas dicas na sua rotina!
-          </Text>
+
+          <div className={baseStyle}>
+            <Heading>PASSO 4: Faça gestos leves e suaves</Heading>
+            <Text>
+              Faça gestos leves, suaves, deixando a lâmina fazer o trabalho - a
+              Gillette® Fusion5™ ProShield™ possui tecnologia Flexball que se
+              adapta aos contornos do rosto.
+            </Text>
+          </div>
+
+          <div className={baseStyle}>
+            <Heading>PASSO 5: Enxágue suas lâminas frequentemente</Heading>
+            <Text>
+              Enxágue suas lâminas frequentemente. Lembre-se:{" "}
+              <strong>
+                não faça a barba sem creme de barbear ou passe a lâmina
+                repetidas vezes no mesmo lugar
+              </strong>
+              , pois isso pode causar irritação. Bater o aparelho na pia pode
+              danificar seriamente as peças fabricadas com precisão do seu
+              aparelho de barbear.
+            </Text>
+          </div>
+
+          <div className={baseStyle}>
+            <Heading>
+              PASSO 6: Fazer a barba no sentido do pelo e contra o pelo
+            </Heading>
+
+            <Text>
+              Então, no sentido do pelo ou contra o pelo? A resposta é nos dois
+              sentidos. O pelo facial cresce em muitas direções, por isso você
+              vai ter de raspar tanto no sentido de crescimento quanto contra o
+              crescimento em diversos momentos da sua rotina.{" "}
+              <strong>Raspe na direção que achar mais confortável.</strong> Um
+              aparelho com múltiplas lâminas como o ProShield irá ajudar a
+              conseguir um barbear confortável mesmo contra o crescimento do
+              pelo.
+            </Text>
+          </div>
+
+          <div className={baseStyle}>
+            <Heading>
+              PASSO 7: Dê o acabamento com o aparador de precisão
+            </Heading>
+            <Text>
+              Use o Aparador de Precisão na parte de trás de qualquer aparelho
+              Fusion5™ para alcançar lugares difíceis como a área embaixo do
+              nariz e para definir suas costeletas.
+            </Text>
+          </div>
+
+          <ContentSection
+            title="PASSO 8: Aplique hidratante ou loção pós-barba"
+            subtitle="Lave o rosto com água fria e seque-o com tapinhas leves. Use uma
+            loção pós-barba hidratante para acalmar e hidratar a pele."
+            imageSrc="/assets/images/barbershop/shaving_cream.jpg"
+            imageAlt="Barbeiro adulto jovem lavando o rosto"
+            imageSizes={imagesSize}
+          />
+
+          <div className={baseStyle}>
+            <Heading>Você acabou de dominar a arte de fazer a barba!</Heading>
+            <Text>
+              <strong>
+                Que tal conhecer mais sobre produtos?! Temos algumas
+                recomendações pra você conferir!
+              </strong>
+            </Text>
+          </div>
+          <Button variant="link" href="/recommendations">
+            Conferir
+          </Button>
         </div>
       </div>
     </section>

@@ -13,14 +13,14 @@ const barberDatas = [
     src: "/assets/images/barbers/daniel.jpg",
     alt: "Corte masculino",
     name: "Daniel Silva",
-    about: "Especialista em cortes clássicos e barba estilizada.",
+    about: "Especialista em cortes clássicos, degradê e barba estilizada.",
     experienceTime: "4 anos de experiência",
   },
   {
     src: "/assets/images/barbers/guilherme.jpg",
     alt: "Corte masculino",
     name: "Guilherme Santos",
-    about: "Especialista em cortes clássicos e barba estilizada.",
+    about: "Especialista em cortes gerais, clássicos e design de barba ",
     experienceTime: "5 anos de experiência",
   },
   {
@@ -34,9 +34,9 @@ const barberDatas = [
 
 const BarbersSection = () => {
   return (
-    <section className="flex flex-col mx-auto gap-2 flex-wrap">
-      <Heading>Os melhores barbeiros a sua disposição</Heading>
-      <div className="flex gap-4">
+    <section className="flex flex-col mx-auto w-full gap-2 flex-wrap">
+      <Heading size="xl">Os melhores barbeiros a sua disposição</Heading>
+      <div className="gap-y-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-4 sm:gap-y-7">
         {barberDatas.map((barber, index) => (
           <VerticalContentSection
             key={index}

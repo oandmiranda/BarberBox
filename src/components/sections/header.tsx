@@ -1,9 +1,8 @@
-import Button from "../ui/button";
 import Heading from "../ui/heading";
 
 export type HeaderProps = {
   imageBackground?: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   className?: string;
 };
@@ -24,10 +23,9 @@ const Header = ({
           : undefined
       }
     >
-      <div className="flex flex-col items-center text-center gap-4 text-white">
-        <Heading size="xxl" className="font-title">{title}</Heading>
-        {subtitle && <Heading className="text-lg">{subtitle}</Heading>}
-        <Button variant="link" href="#services" widthFull>Ver Serviços</Button>
+      <div className="flex flex-col justify-around items-center gap-1 text-center text-white px-4">
+        <Heading size="xxxl" fontFamily="font-title">{title}</Heading>
+        {subtitle && <Heading size="base">{subtitle}</Heading>}
       </div>
     </section>
   );

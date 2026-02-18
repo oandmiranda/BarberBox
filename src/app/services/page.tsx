@@ -26,7 +26,7 @@ export default async function Services() {
                 <div>Descrição: {service.description ?? ""}</div>
 
                 {service.image_url && (
-                  <Image src={service.image_url} alt={service.name} className="w-20 h-20"/>
+                  <Image src={service.image_url} alt={service.name} className="w-20 h-20" width={20} height={20}/>
                 )}
 
                 {user && user.role === "ADMIN" && (

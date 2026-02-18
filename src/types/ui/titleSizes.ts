@@ -1,1 +1,1 @@
-export type TitleSizes = "xs" | "sm" | "base" | "lg" | "xl" | "xxl";
+export type TitleSizes = "xs" | "sm" | "base" | "lg" | "xl" | "xxl" | "xxxl";

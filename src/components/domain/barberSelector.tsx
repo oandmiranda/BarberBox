@@ -1,8 +1,9 @@
-import { Barber } from "@/types/barber";
+import { BarberStatus } from "@/types/barberStatus";
 import Image from "next/image";
+import Text from "../ui/text";
 
 type BarberSelectorProps = {
-  barbers: Barber[];
+  barbers: BarberStatus[];
   selectedBarber: string | null;
   onSelectBarber: (barberId: string) => void;
 };
@@ -13,34 +14,48 @@ export default function BarberSelector({
   onSelectBarber,
 }: BarberSelectorProps) {
   return (
-    <div className="flex flex-wrap items-center gap-2 font-details">
-      {barbers.map((barber) => {
+    <div className="grid grid-cols-2 items-center gap-3 sm:grid-cols-2 lg:grid-cols-4 ">
+      {barbers.map(({ barber, available }) => {
         const isSelected = selectedBarber === barber.id;
 
         return (
           <div key={barber.id}>
             <button
               type="button"
-              onClick={() => onSelectBarber(barber.id)}
+              disabled={!available}
+              onClick={() => available && onSelectBarber(barber.id)}
               className={`
-                px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                border shadow-sm flex items-center gap-2
+                w-full min-w-[72px] rounded-lg text-xs font-medium transition-all duration-200
+                border shadow-sm flex items-center justify-center text-center gap-2 p-1 hover:shadow-md md:text-sm
 
                 ${
                   isSelected
                     ? "bg-brandPrimary text-white border-brandPrimary shadow-md scale-105"
-                    : "bg-white text-gray-800 border-gray-300 hover:border-brandPrimary hover:text-brandPrimary"
+                    : "bg-transparent text-gray-800 border-gray-300 hover:border-brandPrimary"
                 }
-
-                cursor-pointer hover:shadow-md
+                ${
+                  available ? "cursor-pointer" : "opacity-30 cursor-not-allowed"
+                }
               `}
             >
-              <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden">
+              <div className="relative flex rounded-full overflow-hidden w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]" >
                 {barber.imageUrl && (
-                  <Image src={barber.imageUrl} alt={barber.name} className="rounded-full object-cover" fill/>
+                  <Image
+                    src={barber.imageUrl}
+                    alt={barber.name}
+                    className="rounded-full object-cover"
+                    fill
+                  />
                 )}
               </div>
-              {barber.name}
+              <div className="flex flex-col">
+                {barber.name}
+                {!available && (
+                  <Text size="xs" className="text-red-600">
+                    Indisponível
+                  </Text>
+                )}
+              </div>
             </button>
           </div>
         );

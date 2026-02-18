@@ -1,13 +1,10 @@
 import Image from "next/image";
-import Heading from "../ui/heading";
 
 const GridImagesSection = () => {
 const baseImageStyles = `object-cover rounded-lg transition-transform duration-700 ease-out hover:scale-110`;
   return (
     <section className="flex flex-col gap-2">
-      <Heading className="font-subtitle">Nossa galeria</Heading>
-
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:md:grid-cols-6 gap-3">
         <div className="col-span-2 relative h-80 overflow-hidden">
           <Image
             src="/assets/images/services/barba.jpg"

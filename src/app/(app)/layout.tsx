@@ -13,6 +13,7 @@ export default async function AppLayout({ children }: Props) {
     <>
       <Navbar currentUser={currentUser} />
       {children}
+      <Footer />
     </>
   );
 }

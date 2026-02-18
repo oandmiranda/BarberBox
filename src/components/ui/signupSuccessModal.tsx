@@ -31,13 +31,13 @@ const SignupSuccessModal = () => {
     }, data.expires - Date.now());
 
     return () => clearTimeout(timeout);
-  }, [pathname]); // 🔥 chave aqui
+  }, [pathname]);
 
   if (!visible) return null;
 
   return (
     <div className="fixed inset-0 z-[50] flex items-center justify-center pointer-events-none">
-      <div className="flex items-center justify-center gap-2 bg-default text-text shadow-xl rounded-lg p-5 border border-border">
+      <div className="flex items-center justify-center gap-2 bg-green-600 text-white shadow-xl rounded-lg p-5 border border-border">
         <Image
           src={"/assets/icons/check.svg"}
           alt="icone de check"

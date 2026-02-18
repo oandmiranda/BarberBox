@@ -5,6 +5,7 @@ import Button from "./button";
 
 type DetailsCardProps = {
   title: string;
+  details?: string | null;
   description?: string | null;
   duration?: number;
   price?: string;
@@ -18,6 +19,7 @@ type DetailsCardProps = {
 
 const DetailsCard = ({
   title,
+  details,
   description,
   duration,
   price,
@@ -33,44 +35,56 @@ const DetailsCard = ({
   return (
     <section
       className={`
-        relative group flex justify-between overflow-hidden rounded-2xl
+        relative group flex flex-col justify-between overflow-hidden rounded-2xl
         bg-gradient-to-br from-surface to-surface/80
-        p-4 md:p-6 shadow-lg hover:shadow-xl
-        transition-all duration-500 ease-out
+        shadow-lg hover:shadow-xl
+        transition-all duration-500 ease-out p-6 md:p-6 lg:flex-row
         ${imageLeft ? "flex-row-reverse" : "flex-row"}
       `}
     >
-      <Image
-        src={"/assets/images/barbershop/premium_service.png"}
-        alt="gold star"
-        width={50}
-        height={50}
-        className="absolute top-1 left-1"
-      />
+      <div className="absolute inset-0 w-[85px] h-[85px] rotate-[-20deg]">
+        <Image
+          src={"/assets/images/barbershop/premium.png"}
+          alt="gold star"
+          fill
+        />
+      </div>
 
       {/* text */}
       <div className="flex flex-col justify-between gap-4 p-4">
-        <div className="space-y-2">
+        <div className="space-y-4">
           <Heading as="h1" className="tracking-tight">
             {title}
           </Heading>
 
-          <Text size="lg" className="text-muted-foreground leading-relaxed">
-            {description}
+          <div className="flex items-center gap-1">
+            <div>
+              <Image
+                src={"/assets/icons/about.svg"}
+                alt="icone de sobre nós"
+                width={23}
+                height={23}
+              />
+            </div>
+            <p style={{ fontStyle: "italic" }}>{description}</p>
+          </div>
+
+          <Text size="base" className="text-muted-foreground leading-relaxed">
+            {details}
           </Text>
         </div>
 
         <div className="flex items-center justify-between border-t pt-4">
           <div>
             <Text className="text-sm text-muted-foreground">Tempo médio</Text>
-            <Text size="lg" className="font-semibold">
+            <Text size="base" className="font-semibold">
               {duration} minutos
             </Text>
           </div>
 
           <div>
             <Text className="text-sm text-muted-foreground">Preço</Text>
-            <Text size="lg" className="font-semibold text-primary">
+            <Text size="base" className="font-semibold text-primary">
               R${price}
             </Text>
           </div>
@@ -78,7 +92,7 @@ const DetailsCard = ({
 
         {hasButton && (
           <div className="pt-2">
-            <Button variant="primary" onClick={onClick} hasSmallFontSize>
+            <Button variant="primary" onClick={onClick}>
               Agendar →
             </Button>
           </div>

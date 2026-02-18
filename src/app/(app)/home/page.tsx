@@ -1,7 +1,6 @@
 import BarberImagesSection from "@/components/sections/barbersSection";
 import GridImagesSection from "@/components/sections/gridImagesSection";
 import ContentSection from "@/components/ui/contentSection";
-import Footer from "@/components/sections/footer";
 import Header from "@/components/sections/header";
 import Container from "@/components/ui/container";
 import Highlights from "@/components/sections/highlights";
@@ -13,7 +12,12 @@ export default function HomePage() {
     <>
       <Header
         imageBackground="/assets/images/barbershop/cover.png"
-        title="Mais que um corte, uma experiência"
+        title={
+          <>
+            Mais que um corte,{" "}
+            <span className="text-secondary">uma experiência.</span>
+          </>
+        }
         subtitle="Cortes modernos e atendimento de qualidade em cada detalhe do seu visual"
       />
       <Container>
@@ -23,11 +27,16 @@ export default function HomePage() {
         <section id="about_us">
           <ContentSection
             badge="Sobre nós"
+            titleSize="xl"
             badgeIcon={Store}
             title="Nossa história"
-            subtitle="Somos uma barbearia criada para quem valoriza cuidado, estilo e boa experiência. Mais do que cortes e barba, acreditamos em atendimento próximo, ambiente confortável e atenção aos detalhes. Ao longo dos anos, construímos nossa história com dedicação, técnica e respeito por cada cliente que passa pela nossa cadeira, sempre buscando evoluir sem perder nossa identidade."
+            subtitle={
+              <>
+                Somos uma barbearia criada para quem valoriza cuidado, estilo e boa experiência. Mais do que cortes e barba, acreditamos em atendimento próximo, ambiente confortável e atenção aos detalhes. Ao longo dos anos, construímos nossa história com <strong>dedicação, técnica e respeito por cada cliente</strong> que passa pela nossa cadeira, sempre buscando evoluir sem perder nossa identidade.
+              </>
+            }
             stats={[
-              { value: "6+", subtitle: "Anos de experiência" },
+              { value: "7+", subtitle: "Anos de experiência" },
               { value: "4.9 ★", subtitle: "Avaliação média" },
               { value: "3.000+", subtitle: "Clientes atendidos" },
             ]}
@@ -40,12 +49,16 @@ export default function HomePage() {
         <ContentSection
           badge="Sobre nós"
           title="Por que nos escolher?"
-          subtitle="Somos uma barbearia criada para quem valoriza cuidado, estilo e boa experiência. Mais do que cortes e barba, acreditamos em atendimento próximo, ambiente confortável e atenção aos detalhes. Ao longo dos anos, construímos nossa história com dedicação, técnica e respeito por cada cliente que passa pela nossa cadeira, sempre buscando evoluir sem perder nossa identidade."
+          titleSize="xl"
+          subtitle={
+            <>
+              <strong>Equipe qualificada, atendimento pontual e atenção real aos detalhes</strong>. Trabalhamos para entender seu estilo e entregar um resultado consistente em todas as visitas, mantendo corte e barba sempre alinhados. Mais do que um serviço rápido, você encontra um cuidado contínuo com sua imagem e uma experiência confortável do início ao fim.
+            </>
+          }
           imageSrc="/assets/images/barbershop/barbershop3.jpg"
           imageAlt="Barbeiro atendendo cliente na barbearia"
           imageLeft
         />
-        <Footer />
       </Container>
     </>
   );

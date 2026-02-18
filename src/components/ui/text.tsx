@@ -10,9 +10,9 @@ type TextProps = {
 };
 
 const sizeClasses = {
-  xs: "text-xs",
+  xs: "text-xs md:text-sm",
   sm: "text-sm",
-  base: "text-base",
+  base: "text-xs sm:text-base ",
   lg: "text-lg",
 };
 

@@ -27,20 +27,23 @@ export default function PremiumServicesPageClient({
   }
 
   return (
-    <section className="py-[125px] flex flex-col items-center justify-center">
-      <div className="w-[70%] mb-5">
+    <section className="py-[100px] px-4 flex flex-col items-center justify-center">
+      <div className="w-full md:w-[70%] mb-5">
         <Hero
-          imageBackground="/assets/images/barbershop/barbershop4.png"
+          imageBackground="/assets/images/barbershop/barbershop.png"
+          height="h-[400px]"
           title="Serviços prêmium para você"
-          subtitle="Os melhores serviços disponíveis para você e para toda sua família"
-          hasTitleCenter
+          subtitle="Uma experiência completa e inesquecível do começo ao fim"
+          hasTitleCenter={true}
+          titleSize="xxl"
         />
       </div>
       <Container>
         {services.map((service) => (
-          <div key={service.id} className="mx-auto py-4 w-[80%]">
+          <div key={service.id} className="mx-auto py-4 w-full md:w-[80%]">
             <DetailsCard
               title={service.name}
+              details={service.details}
               description={service.description}
               imageSrc={service.imageUrl}
               imageAlt={service.name}

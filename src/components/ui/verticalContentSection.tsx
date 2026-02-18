@@ -20,32 +20,36 @@ const VerticalContentSection = ({
 }: VerticalContentSectionProps) => {
   return (
     <section
-      className={`flex flex-col items-center gap-3 max-w-[240px] p-1.5 rounded-xl bg-surface shadow-md`}
+      className={`flex flex-col items-start gap-3 w-full rounded-xl bg-surface shadow-md lg:max-w-[240px]`}
     >
       {/* image  */}
-      <div className={`relative shrink-0 w-full h-[240px]`}>
+      <div
+        className={`relative shrink-0 w-full overflow-hidden h-[300px] lg:h-[240px]`}
+      >
         <Image
           src={imageSrc}
           alt={imageAlt}
           fill
-          sizes={"(max-width: 640px) 128px, (max-width: 1024px) 160px, 180px"}
-          className="object-cover rounded-xl"
+          sizes="(max-width: 1024px) 100vw, 33vw"
+          className="object-cover rounded-xl transition-transform duration-700 ease-out hover:scale-110"
         />
       </div>
 
       {/* text */}
-      <div className="flex flex-col justify-start p-4 gap-2">
+      <div className="flex flex-col justify-start items-start text-start p-4 gap-3">
         <div className="flex items-center gap-2">
-          <Heading as="h1" size="lg">
+          <Heading as="h1" size="sm">
             {title}
           </Heading>
           <Check color="var(--brand-primary)" />
         </div>
 
-        <Text size="sm">{subtitle}</Text>
+        <Text size="sm" className="font-details">
+          {subtitle}
+        </Text>
         <div className="flex items-center gap-2">
-          <Award color="var(--brand-primary)"/>
-          <Text className="">{details}</Text>
+          <Award color="var(--brand-primary)" />
+          <Text size="xs">{details}</Text>
         </div>
       </div>
     </section>

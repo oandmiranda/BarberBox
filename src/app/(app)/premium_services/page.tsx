@@ -1,7 +1,7 @@
 import { unstable_noStore } from "next/cache";
 
-import getPremiumServicesForUI from "@/domain/getPremiumServices";
 import PremiumServicesPageClient from "./premiumServicesClient";
+import getPremiumServicesForUI from "@/application/getPremiumServicesForUI";
 
 export default async function PremiumServicesPage() {
     unstable_noStore();
