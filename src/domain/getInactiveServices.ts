@@ -1,8 +1,8 @@
 import { sql } from "@/lib/db";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
-import { Service } from "@/types/listServices";
+import { ServiceEntity } from "@/types/serviceEntity";
 
-export async function getInactiveServices(): Promise<Service[]> {
+export async function getInactiveServices(): Promise<ServiceEntity[]> {
   const user = await getCurrentUser();
 
   if (!user || user.role !== "ADMIN") {
@@ -21,7 +21,7 @@ export async function getInactiveServices(): Promise<Service[]> {
     FROM services
     WHERE is_active = false
     ORDER BY created_at DESC
-  `) as Service[];
+  `) as ServiceEntity[];
 
   return services;
 }

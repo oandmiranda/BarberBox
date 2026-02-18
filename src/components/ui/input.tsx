@@ -9,7 +9,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         {...props}
-        className={`p-3 rounded-md w-full ${className ?? ""}`}
+        className={`p-3 rounded-md w-full h-[32px] md:h-[48px] ${className ?? ""}`}
       />
     );
   },

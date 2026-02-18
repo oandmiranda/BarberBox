@@ -11,7 +11,7 @@ export default async function EditService({ params }: Props) {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/login");
+    redirect("/home");
   }
 
   const service = await sql`
@@ -21,6 +21,7 @@ export default async function EditService({ params }: Props) {
       description,
       duration_minutes,
       price,
+      details,
       image_url
     FROM services
     WHERE id = ${params.id}
@@ -42,6 +43,7 @@ export default async function EditService({ params }: Props) {
         <p>Duração: {s.duration_minutes} min</p>
         <p>Preço: {s.price}</p>
         <p>Descrição: {s.description ?? ""}</p>
+        <p>Detalhes: {s.details ?? ""}</p>
         <p>URL da imagem: {s.image_url ?? ""}</p>
       </div>
 
@@ -62,6 +64,12 @@ export default async function EditService({ params }: Props) {
             name="price"
             type="number"
             defaultValue={s.price}
+          />
+          <input
+            placeholder="details"
+            name="details"
+            type="text"
+            defaultValue={s.details}
           />
           <input
             placeholder="image-url"

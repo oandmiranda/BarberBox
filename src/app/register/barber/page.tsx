@@ -1,4 +1,5 @@
-import SignupForm from "@/components/auth/signupForm";
+import { Suspense } from "react";
+import SignupModal from "@/components/sections/signupModal";
 
 export default function RegisterBarberPage() {
   return (
@@ -8,7 +9,9 @@ export default function RegisterBarberPage() {
         home, somente será cedida internamente)
       </div>
       <div>
-          <SignupForm role="BARBER"/>
+        <Suspense fallback={null}>
+          <SignupModal role="BARBER" />
+        </Suspense>
       </div>
     </>
   );

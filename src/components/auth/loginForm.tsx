@@ -9,12 +9,22 @@ import { LoginUserForm } from "@/types/loginUserForm";
 import Input from "../ui/input";
 import Heading from "../ui/heading";
 import Button from "../ui/button";
+import { X } from "lucide-react";
+import Spinner from "../ui/spinner";
 
-type LoginFormProps = {
+export type LoginFormProps = {
+  hasSignupButtonForm?: boolean;
   onSuccess?: () => void;
+  onClose: () => void;
+  onOpenSignup?: () => void;
 };
 
-const LoginForm = ({ onSuccess }: LoginFormProps) => {
+const LoginForm = ({
+  hasSignupButtonForm,
+  onSuccess,
+  onClose,
+  onOpenSignup
+}: LoginFormProps) => {
   const {
     register,
     handleSubmit,
@@ -23,31 +33,43 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
   const errorClassStyle = "text-red-500";
 
   const onSubmit = async (data: LoginUserForm) => {
     setLoading(true);
+    setError("");
 
-    const result = await loginUserAction(data);
+    try {
+      const result = await loginUserAction(data);
 
-    if (!result.success) {
-      setError(result.error);
+      if (!result.success) {
+        setError(result.error);
+        return;
+      }
+
+      onSuccess?.();
+      onClose?.();
+
+      // atualiza server components (navbar, summary etc)
+      router.refresh();
+    } finally {
       setLoading(false);
-      return;
-    }
-
-    if(onSuccess) {
-      onSuccess();
-    } else {
-      router.push("/home");
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="flex flex-col items-center bg-secondary p-5 gap-2 w-[450px] rounded-lg">
-        <Heading className="mb-2">Faça login para continuar</Heading>
+      <section className="relative flex flex-col items-center bg-surface text-text p-4 gap-4 w-full rounded-lg">
+        <Heading className="mb-1">Login</Heading>
+
+        <X
+          onClick={onClose}
+          className="absolute cursor-pointer transition-transform duration-200 hover:rotate-[90deg] top-1 right-1 w-5 h-5 md:w-6 md:h-6 md:top-2 md:right-2"
+        />
+
         <Input
           type="email"
           {...register("email", {
@@ -74,9 +96,26 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
           <Text className={errorClassStyle}>{errors.password.message}</Text>
         )}
 
-        <Button variant="primary" type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
-        </Button>
+        <div className="flex flex-col text-center items-center gap-3 justify-around sm:flex-row">
+          <Button variant="primary" type="submit" disabled={loading}>
+            Entrar
+          </Button>
+
+          {loading && <Spinner />}
+
+          {hasSignupButtonForm && (
+            <>
+              <Text size="xs">ou</Text>
+
+              <Button
+                variant="primary"
+                onClick={onOpenSignup}
+              >
+                Cadastre-se
+              </Button>
+            </>
+          )}
+        </div>
 
         {error && <Text className={errorClassStyle}>{error}</Text>}
       </section>

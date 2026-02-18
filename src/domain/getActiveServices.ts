@@ -1,7 +1,7 @@
 import { sql } from "@/lib/db";
-import { Service } from "@/types/listServices";
+import { ServiceEntity } from "@/types/serviceEntity";
 
-export async function getActiveServices(): Promise<Service[]> {
+export async function getActiveServices(): Promise<ServiceEntity[]> {
   const services = (await sql`
     SELECT
       id,
@@ -12,11 +12,12 @@ export async function getActiveServices(): Promise<Service[]> {
       is_active,
       image_url,
       tag,
+      details,
       created_at
     FROM services
     WHERE is_active = true
     ORDER BY created_at DESC
-  `) as Service[];
+  `) as ServiceEntity[];
 
   return services;
 }
