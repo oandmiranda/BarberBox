@@ -1,11 +1,12 @@
 export type ServiceUiProps = {
-  imageUrl: string;
-  imageAlt: string;
   name: string;
-  description?: string;
+  description?: string | null;
   durationMinutes: number;
   price: string;
-  tag?: "premium";
+  details?: string | null;
+  imageUrl: string;
+  imageAlt: string;
+  tag?: string;
   onClick?: () => void;
 };
 

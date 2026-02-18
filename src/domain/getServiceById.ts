@@ -28,6 +28,7 @@ export async function getServiceById(id: string): Promise<ServiceEntity | null> 
     id: data.id,
     name: data.name,
     description: data.description,
+    details: data.details,
     price: data.price,
     duration_minutes: data.duration_minutes,
     image_url: data.image_url,

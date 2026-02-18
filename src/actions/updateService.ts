@@ -22,6 +22,11 @@ export async function updateService(
       ? descriptionRaw
       : null;
 
+  const detailsRaw = formData.get("details") as string | null
+  const details = detailsRaw && detailsRaw.trim() !== ""
+      ? detailsRaw
+      : null;
+
   const duration = Number(formData.get("duration"));
   const price = Number(formData.get("price"));
   
@@ -44,6 +49,7 @@ export async function updateService(
       description = ${description},
       duration_minutes = ${duration},
       price = ${price},
+      details = ${details},
       image_url = ${image_url}
     WHERE id = ${serviceId}
   `;

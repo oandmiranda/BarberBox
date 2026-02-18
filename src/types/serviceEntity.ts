@@ -4,6 +4,7 @@ export type ServiceEntity = {
   description: string | null;
   duration_minutes: number;
   price: string;
+  details: string | null;
   is_active?: boolean;
   image_url: string;
   created_at?: Date;

@@ -12,6 +12,7 @@ export async function getActiveServices(): Promise<ServiceEntity[]> {
       is_active,
       image_url,
       tag,
+      details,
       created_at
     FROM services
     WHERE is_active = true

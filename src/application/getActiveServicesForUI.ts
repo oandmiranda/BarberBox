@@ -1,6 +1,5 @@
 import { getActiveServices } from "@/domain/getActiveServices";
 
-
 const getActiveServicesForUI = async () => {
   // chama o domain 
   const servicesEntity = await getActiveServices();
@@ -12,6 +11,7 @@ const getActiveServicesForUI = async () => {
     imageAlt: service.name,
     name: service.name,
     description: service.description,
+    details: service.details,
     durationMinutes: service.duration_minutes,
     price: service.price,
     tag: service.tag
