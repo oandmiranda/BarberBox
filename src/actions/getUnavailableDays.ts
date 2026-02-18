@@ -1,15 +1,16 @@
-"use server"
+"use server";
 
 import { unstable_noStore as noStore } from "next/cache";
 import { TIME_SLOTS } from "../domain/timeSlots";
 import { allBarbers } from "../domain/allBarbers";
 import { getAllAppointmentsBetweenPeriod } from "../domain/auth/getAllApointmentsBetweenPeriod";
+import { toZonedTime } from "date-fns-tz";
 
 function formatDay(date: Date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`; // dia LOCAL
+  return `${y}-${m}-${d}`;
 }
 
 function formatTime(date: Date) {
@@ -27,20 +28,21 @@ export async function getUnavailableDays(
   const barbers = await allBarbers();
   const totalBarbers = barbers.length;
 
-  // busca todos os agendamentos do período de uma vez
-  const appointments = await getAllAppointmentsBetweenPeriod(startDate, endDate);
-  for (const appt of appointments) {
-  console.log("RAW FROM DB:", appt.startTime);
-  console.log("AS DATE:", new Date(appt.startTime));
-}
+  const appointments = await getAllAppointmentsBetweenPeriod(
+    startDate,
+    endDate
+  );
 
-  // mapa: { "2026-01-24": { "09:00": 2, "10:00": 3 } }
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
-    const date = new Date(appt.startTime);
-    const dayKey = formatDay(date);
-    const timeKey = formatTime(date);
+    const zonedDate = toZonedTime(
+      appt.startTime,
+      "America/Sao_Paulo"
+    );
+
+    const dayKey = formatDay(zonedDate);
+    const timeKey = formatTime(zonedDate);
 
     if (!slotsMap[dayKey]) {
       slotsMap[dayKey] = {};

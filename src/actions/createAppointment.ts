@@ -1,5 +1,6 @@
 "use server";
 
+import { fromZonedTime } from "date-fns-tz";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { sql } from "@/lib/db";
 
@@ -11,19 +12,18 @@ function parseDateTime(date: string, time: string): Date | null {
   const [day, month, year] = date.split("/");
   const [hour, minute] = time.split(":");
 
-  if (!day || !month || !year || !hour || !minute) return null;
+  if (!day || !month || !year || !hour || !minute) {
+    return null;
+  }
 
-  const parsed = new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    Number(hour),
-    Number(minute),
-    0,
-    0
+  const formatted = `${year}-${month}-${day}T${hour}:${minute}:00`;
+
+  const utcDate = fromZonedTime(
+    formatted,
+    "America/Sao_Paulo"
   );
 
-  return isNaN(parsed.getTime()) ? null : parsed;
+  return isNaN(utcDate.getTime()) ? null : utcDate;
 }
 
 export async function createAppointment(
