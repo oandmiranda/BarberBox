@@ -47,7 +47,7 @@ An online appointment scheduling system for barbershops, focused on clean archit
   <img src="./assets/readme/img/step-7.png" alt="" width="900" />
 </p>
 
-### Highliths
+### Highlights
 
   •	Route protection
   •	User registration and login
@@ -68,6 +68,7 @@ Thanks to visiting me and good coding!
 
 
   
+
 
 
 
