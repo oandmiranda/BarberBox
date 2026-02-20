@@ -1,7 +1,7 @@
 ## 🎥 BarberBox
 Um sistema de agendamento online para barbearias, focado em arquitetura limpa, organização estrutural e experiência do usuário.
 
-### 🛠️ Tech Stack
+### 🛠️ Tech Stack:
 - React
 - Next.js
 - TypeScript
@@ -10,7 +10,7 @@ Um sistema de agendamento online para barbearias, focado em arquitetura limpa, o
 - JWT
 - Git
 
-### Como usar
+### Como usar:
 
 ### 1 - O usuário pode opcionalmente criar uma conta a partir de qualquer parte do sistema.
 <p align="center">
@@ -47,7 +47,7 @@ Um sistema de agendamento online para barbearias, focado em arquitetura limpa, o
   <img src="./assets/readme/img/step-7.png" alt="" width="900" />
 </p>
 
-### Destaques
+### Destaques:
 
 - Cadastro e login de usuários
 - Agendamento de horários
@@ -57,16 +57,17 @@ Um sistema de agendamento online para barbearias, focado em arquitetura limpa, o
 - Filtragem nos serviços
 
 
-### Link
+### Link:
 - https://barberbox-eight.vercel.app/home
 
-### Autor
+### Autor:
 #### - Anderson Miranda 
 
 Obrigado por visitar e bom código!
 
 
   
+
 
 
 
