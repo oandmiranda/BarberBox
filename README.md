@@ -29,22 +29,22 @@ An online appointment scheduling system for barbershops, focused on clean archit
 
 ### 4 - Choose an available day, time slot, and barber.
 <p align="center">
-  <img src="./assets/readme/img/step-5.png" alt="" width="900" />
+  <img src="./assets/readme/img/step-4.png" alt="" width="900" />
 </p>
 
 ### 5 - Review the appointment summary and details before finalizing.
 <p align="center">
-  <img src="./assets/readme/img/step-6.png" alt="" width="900" />
+  <img src="./assets/readme/img/step-5.png" alt="" width="900" />
 </p>
 
 ### 6 - The system will require you to log in if you haven’t done so by this point in the flow.
 <p align="center">
-  <img src="./assets/readme/img/step-7.png" alt="" width="900" />
+  <img src="./assets/readme/img/step-6.png" alt="" width="900" />
 </p>
 
 ### 7 - After completing the process, the appointment will be successfully scheduled.
 <p align="center">
-  <img src="./assets/readme/img/step-8.png" alt="" width="900" />
+  <img src="./assets/readme/img/step-7.png" alt="" width="900" />
 </p>
 
 ### Highliths
@@ -67,5 +67,6 @@ Thanks to visiting me and good coding!
 
 
   
+
 
 
