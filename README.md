@@ -49,13 +49,14 @@ An online appointment scheduling system for barbershops, focused on clean archit
 
 ### Highliths
 
-- Proteção de rotas
-- Cadastro e login de usuários
-- Agendamento de horários
-- Validação de conflitos de horário
-- Tratamento de datas com conversão adequada
-- Fluxo de agendamento com feedback
-- Filtragem nos serviços
+  •	Route protection
+  •	User registration and login
+	•	Appointment scheduling
+	•	Time slot conflict validation
+	•	Proper date handling and conversion
+	•	Appointment flow with user feedback
+	•	Service filtering
+
 
 ### Link
 - https://barberbox-eight.vercel.app/home
@@ -67,6 +68,7 @@ Thanks to visiting me and good coding!
 
 
   
+
 
 
 
