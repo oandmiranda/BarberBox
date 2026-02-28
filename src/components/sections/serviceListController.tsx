@@ -41,7 +41,7 @@ export default function ServiceListController({ services }: Props) {
   return (
     <>
       <Heading size="xl">Nossos Serviços</Heading>
-      <div className="flex flex-wrap gap-4 mb-3">
+      <div className="flex flex-wrap gap-4 mb-3 scroll-mt-[160px]" id="services">
         <Button
           variant="primary"
           onClick={() =>
