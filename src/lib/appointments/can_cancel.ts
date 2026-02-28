@@ -1,12 +1,16 @@
 export function canCancelAppointment(
-  status: "SCHEDULE" | "CANCELED",
+  status: "SCHEDULED" | "CANCELED",
   startTime: Date,
   now: Date
 ): boolean {
-  if (status !== "SCHEDULE") return false
+  if (status !== "SCHEDULED") return false;
 
-  const fourHoursInMs = 4 * 60 * 60 * 1000
-  const difference = startTime.getTime() - now.getTime()
+  const fourHoursInMs = 4 * 60 * 60 * 1000;
+  const difference = startTime.getTime() - now.getTime();
 
-  return difference >= fourHoursInMs
+  // Já passou do horário
+  if (difference <= 0) return false;
+
+  // Pode cancelar somente se faltar 4h ou mais
+  return difference >= fourHoursInMs;
 }

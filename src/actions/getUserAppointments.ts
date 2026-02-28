@@ -21,9 +21,11 @@ const rows = await sql`
     a.start_time,
     a.end_time,
     a.status,
+    a.client_id,
     u.image_url AS barber_image_url,
     u.name AS barber_name,
-    s.name AS service_name
+    s.name AS service_name,
+    s.image_url AS service_image_url
   FROM appointments a
   JOIN users u 
     ON u.id = a.barber_id
@@ -38,12 +40,14 @@ const rows = await sql`
   const appointments: Appointment[] = (rows as RawAppointmentRow[]).map(
     (row) => ({
       id: row.id,
+      client_id: row.client_id,
       start_time: new Date(row.start_time),
       end_time: new Date(row.end_time),
       status: row.status,
       barber_image_url: row.barber_image_url,
       barber_name: row.barber_name,
       service_name: row.service_name,
+      service_image_url: row.service_image_url,
     }),
   );
 

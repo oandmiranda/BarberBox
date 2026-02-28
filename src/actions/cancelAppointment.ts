@@ -1,18 +1,18 @@
-"use server"
+"use server";
 
-import { canCancelAppointment } from "@/lib/appointments/can_cancel"
-import { sql } from "@/lib/db"
+import { canCancelAppointment } from "@/lib/appointments/can_cancel";
+import { sql } from "@/lib/db";
 
 export async function cancelAppointment(
   appointmentId: string,
-  clientId: string
+  clientId: string,
 ) {
   if (!appointmentId) {
-    throw new Error("Appointment ID is required")
+    throw new Error("Appointment ID is required");
   }
 
   if (!clientId) {
-    throw new Error("Client not authenticated")
+    throw new Error("Client not authenticated");
   }
 
   // Buscar agendamento
@@ -21,30 +21,26 @@ export async function cancelAppointment(
     FROM appointments
     WHERE id = ${appointmentId}
     LIMIT 1
-  `
+  `;
 
   if (rows.length === 0) {
-    throw new Error("Appointment not found")
+    throw new Error("Appointment not found");
   }
 
-  const appointment = rows[0]
+  const appointment = rows[0];
 
   // Verificar dono
   if (appointment.client_id !== clientId) {
-    throw new Error("Unauthorized")
+    throw new Error("Unauthorized");
   }
 
-  const startTime = new Date(appointment.start_time)
-  const now = new Date()
+  const startTime = new Date(appointment.start_time);
+  const now = new Date();
 
-  const allowed = canCancelAppointment(
-    appointment.status,
-    startTime,
-    now
-  )
+  const allowed = canCancelAppointment(appointment.status, startTime, now);
 
   if (!allowed) {
-    throw new Error("Cancellation window expired or invalid status")
+    throw new Error("Cancellation window expired or invalid status");
   }
 
   // Atualizar banco
@@ -52,7 +48,7 @@ export async function cancelAppointment(
     UPDATE appointments
     SET status = 'CANCELED'
     WHERE id = ${appointmentId}
-  `
+  `;
 
-  return { success: true }
+  return { success: true };
 }

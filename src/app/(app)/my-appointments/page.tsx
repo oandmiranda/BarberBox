@@ -1,10 +1,15 @@
 import { getUserAppointments } from "@/actions/getUserAppointments";
 import MyAppointmentsClient from "./myAppointmentsClient";
 import { redirect } from "next/navigation";
-import { Heading } from "lucide-react";
-import Text from "@/components/ui/text";
+import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 
 export default async function MyAppointments() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/home");
+  }
+
   try {
     const allAppointments = await getUserAppointments();
 
@@ -19,12 +24,5 @@ export default async function MyAppointments() {
     } else {
       console.error("Unknown error:", error);
     }
-
-    return (
-      <section>
-        <Heading>{`Algo deu errado :(`}</Heading>
-        <Text>Por favor tente novamente.</Text>
-      </section>
-    );
   }
 }

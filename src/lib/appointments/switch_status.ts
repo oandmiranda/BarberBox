@@ -1,5 +1,5 @@
-export type BaseStatus = "SCHEDULE" | "CANCELED"
-export type ResolvedStatus = "SCHEDULE" | "CANCELED" | "COMPLETED"
+export type BaseStatus = "SCHEDULED" | "CANCELED"
+export type ResolvedStatus = "SCHEDULED" | "CANCELED" | "COMPLETED"
 
 type Appointment = {
   status: BaseStatus
@@ -18,5 +18,5 @@ export function switchAppointmentStatus(
     return "COMPLETED"
   }
 
-  return "SCHEDULE"
+  return "SCHEDULED"
 }
