@@ -4,12 +4,14 @@ import { logoutUser } from "@/actions/logout";
 import { ArrowDown, CalendarSearch, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Text from "./text";
 
 type Props = {
   label: string;
+  currentUserEmail: string;
 };
 
-export default function UserButton({ label }: Props) {
+export default function UserButton({ label, currentUserEmail }: Props) {
   const [showMenu, setShowMenu] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -100,12 +102,13 @@ export default function UserButton({ label }: Props) {
             </button>
             <form action={logoutUser}>
               <button
-                className="flex items-center gap-2 text-left text-red-400 hover:text-red-300 transition-colors"
+                className="flex items-center gap-2 text-left text-red-400 hover:text-red-300 transition-colors border-b border-zinc-500 pb-2 w-full"
               >
                 <LogOut size={15} />
                 Sair
               </button>
             </form>
+            <Text size="xs" className="italic text-">{currentUserEmail}</Text>
           </div>
         </div>
       )}
