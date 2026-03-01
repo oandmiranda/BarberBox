@@ -141,7 +141,7 @@ const Navbar = ({ currentUser }: Props) => {
           </div>
         ) : (
           <>
-            <UserButton label={currentUser.name} />
+            <UserButton label={currentUser.name} currentUserEmail={currentUser.email} />
           </>
         )}
       </nav>
