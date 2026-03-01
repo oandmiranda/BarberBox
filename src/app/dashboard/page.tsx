@@ -7,7 +7,7 @@ export default async function Dashboard() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect("/login")
+    redirect("/home")
   }
 
   if (user.role === "BARBER" || user.role === "ADMIN") {

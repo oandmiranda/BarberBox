@@ -5,7 +5,7 @@ import ServiceListClient from "./serviceListClient";
 import { ServiceUiWithID } from "@/types/ui/serviceProps";
 import Modal from "./modal";
 import Heading from "../ui/heading";
-import Button from "../ui/button";
+import FilterButton from "../ui/filterButton";
 
 type Props = {
   services: ServiceUiWithID[];
@@ -41,37 +41,22 @@ export default function ServiceListController({ services }: Props) {
   return (
     <>
       <Heading size="xl">Nossos Serviços</Heading>
-      <div className="flex flex-wrap gap-4 mb-3 scroll-mt-[160px]" id="services">
-        <Button
-          variant="primary"
+      <div className="flex flex-wrap gap-4 mb-3">
+        <FilterButton
+          label="Mais agendados"
           onClick={() =>
             setActiveCategory((prev) =>
               prev === "most_booked" ? null : "most_booked",
             )
           }
-          style="white"
-        >
-          Mais agendados
-        </Button>
-
-        <Button
-          variant="primary"
+        />
+        <FilterButton
+          label="Premium"
           onClick={() =>
-            setActiveCategory((prev) =>
-              prev === "premium" ? null : "premium",
-            )
+            setActiveCategory((prev) => (prev === "premium" ? null : "premium"))
           }
-          style="white"
-        >
-          Premium
-        </Button>
-         <Button
-          variant="primary"
-          onClick={() => setActiveCategory(null)}
-          style="white"
-        >
-          Todos
-        </Button>
+        />
+        <FilterButton label="Todos" onClick={() => setActiveCategory(null)} />
       </div>
       <ServiceListClient
         services={visibleServices}

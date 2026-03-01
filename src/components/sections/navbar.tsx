@@ -10,6 +10,8 @@ import LoginModal from "./loginModal";
 import SignupModal from "./signupModal";
 import MessageModal from "../ui/messageModal";
 import BurgerMenu from "../ui/burgerMenu";
+import { User } from "lucide-react";
+import UserButton from "../ui/userButton";
 import { UserCheck } from "lucide-react";
 import { useIsHome } from "@/hook/useIsHome";
 
@@ -35,6 +37,12 @@ const Navbar = ({ currentUser }: Props) => {
   const servicesLink = isHome ? "#services" : "/#services";
   const aboutLink = isHome ? "#about_us" : "/#about_us";
   const contactLink = isHome ? "#contacts" : "/#contacts";
+
+    // Login → abrir cadastro
+  const handleOpenSignup = () => {
+    setOpenLoginModal(false);
+    setOpenSignupModal(true);
+  };
 
   const handleSignupSuccess = () => {
     setOpenSignupModal(false);
@@ -122,44 +130,33 @@ const Navbar = ({ currentUser }: Props) => {
         </div>
 
         {!currentUser ? (
-          <div className="justify-self-end flex gap-4 font-body">
+          <div className="justify-self-end flex items-center gap-2 font-body">
             <Button
               variant="primary"
               onClick={() => setOpenLoginModal(true)}
               autoWidth
+              icon={<User size={15} />}
             >
-              Login
-            </Button>
-
-            <Button
-              variant="primary"
-              onClick={() => {
-                const current =
-                  window.location.pathname + window.location.search;
-                setOpenSignupModal(true);
-                sessionStorage.setItem("signupReturnTo", current);
-              }}
-              autoWidth
-            >
-              Signup
+              Entrar
             </Button>
           </div>
         ) : (
-          <div className="justify-self-end flex items-center gap-2 font-body">
-            <UserCheck color="#c7dee4"/>
-            Olá,
-            <strong>{`${currentUser.name}`}</strong>
-          </div>
+          <>
+            <UserButton label={currentUser.name} />
+          </>
         )}
       </nav>
 
       {openLoginModal && (
         <LoginModal
+          title="Faça Login ou Cadastre-se"
           onClose={() => setOpenLoginModal(false)}
           onSuccess={() => {
             setOpenLoginModal(false);
             setShowLoginSuccess(true);
           }}
+          hasSignupButtonForm
+          onOpenSignup={handleOpenSignup}
         />
       )}
 

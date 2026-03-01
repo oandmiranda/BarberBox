@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { addDays, startOfWeek, isSameDay, format } from "date-fns";
+import { addDays, isSameDay, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Heading from "../ui/heading";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -21,10 +21,9 @@ export default function Calendar({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const MIN_WEEK_START = startOfWeek(today, { weekStartsOn: 1 });
-  const [weekStart, setWeekStart] = useState(
-    startOfWeek(new Date(), { weekStartsOn: 1 }),
-  );
+  const MIN_WEEK_START = today;
+
+  const [weekStart, setWeekStart] = useState(today);
 
   const visibleDays = useWidthWindow();
   const days = Array.from({ length: visibleDays }).map((_, i) =>
