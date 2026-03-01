@@ -12,7 +12,6 @@ import MessageModal from "../ui/messageModal";
 import BurgerMenu from "../ui/burgerMenu";
 import { User } from "lucide-react";
 import UserButton from "../ui/userButton";
-import { UserCheck } from "lucide-react";
 import { useIsHome } from "@/hook/useIsHome";
 
 type Props = {
