@@ -25,6 +25,8 @@ type ContentSectionProps = {
   imageSizes?: string;
   hasButton?: boolean;
   href?: string;
+  className?: string;
+  id?: string;
 };
 
 const ContentSection = ({
@@ -40,13 +42,16 @@ const ContentSection = ({
   imageLeft,
   imageSizes,
   hasButton,
-  href
+  href,
+  className,
+  id
 }: ContentSectionProps) => {
   const hasImage = imageSrc;
 
   return (
     <section
-      className={`flex flex-col gap-4 mx-auto w-full md:max-w-3xl md:flex-row md:justify-between ${imageLeft ? "flex-row-reverse" : "flex-row"}`}
+      id={id}
+      className={`flex flex-col gap-4 mx-auto w-full md:max-w-3xl md:flex-row md:justify-between ${imageLeft ? "flex-row-reverse" : "flex-row"} ${className}`}
     >
       {/* text */}
       <div className="flex flex-col justify-between gap-1">

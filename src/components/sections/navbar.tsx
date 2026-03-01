@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/button";
 import Logo from "../domain/logo";
@@ -12,6 +12,8 @@ import MessageModal from "../ui/messageModal";
 import BurgerMenu from "../ui/burgerMenu";
 import { User } from "lucide-react";
 import UserButton from "../ui/userButton";
+import { UserCheck } from "lucide-react";
+import { useIsHome } from "@/hook/useIsHome";
 
 type Props = {
   currentUser: CurrentUser | null;
@@ -19,7 +21,7 @@ type Props = {
 
 const Navbar = ({ currentUser }: Props) => {
   const router = useRouter();
-  const pathname = usePathname();
+  const isHome = useIsHome();
   const searchParams = useSearchParams();
 
   // sempre derive valores do searchParams
@@ -32,8 +34,6 @@ const Navbar = ({ currentUser }: Props) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
-
-  const isHome = pathname === "/home";
   const servicesLink = isHome ? "#services" : "/#services";
   const aboutLink = isHome ? "#about_us" : "/#about_us";
   const contactLink = isHome ? "#contacts" : "/#contacts";
@@ -60,8 +60,8 @@ const Navbar = ({ currentUser }: Props) => {
     newParams.delete("auth");
 
     const query = newParams.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname);
-  }, [authFlow, currentUser, pathname, router, searchParams]);
+    router.replace(query ? `/home?${query}` : "/home");
+  }, [authFlow, currentUser, router, searchParams]);
 
   useEffect(() => {
     const shouldOpen = sessionStorage.getItem("afterSignupOpenLogin");
@@ -70,7 +70,7 @@ const Navbar = ({ currentUser }: Props) => {
       setOpenLoginModal(true);
       sessionStorage.removeItem("afterSignupOpenLogin");
     }
-  }, [pathname]);
+  }, [isHome]);
 
   // handle scroll
   useEffect(() => {

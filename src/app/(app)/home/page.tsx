@@ -24,8 +24,8 @@ export default function HomePage() {
         <Highlights />
         <BarberImagesSection />
         <ServiceList />
-        <section id="about_us">
           <ContentSection
+            id="about_us"
             badge="Sobre nós"
             titleSize="xl"
             badgeIcon={Store}
@@ -42,8 +42,8 @@ export default function HomePage() {
             ]}
             imageSrc="/assets/images/barbershop/barbershop2.png"
             imageAlt="Barbearia por dentro"
+            className="scroll-mt-[200px]"
           />
-        </section>
 
         <GridImagesSection />
         <ContentSection
