@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/button";
 import Logo from "../domain/logo";
@@ -10,7 +10,9 @@ import LoginModal from "./loginModal";
 import SignupModal from "./signupModal";
 import MessageModal from "../ui/messageModal";
 import BurgerMenu from "../ui/burgerMenu";
-import { UserCheck } from "lucide-react";
+import { User } from "lucide-react";
+import UserButton from "../ui/userButton";
+import { useIsHome } from "@/hook/useIsHome";
 
 type Props = {
   currentUser: CurrentUser | null;
@@ -18,7 +20,7 @@ type Props = {
 
 const Navbar = ({ currentUser }: Props) => {
   const router = useRouter();
-  const pathname = usePathname();
+  const isHome = useIsHome();
   const searchParams = useSearchParams();
 
   // sempre derive valores do searchParams
@@ -31,11 +33,15 @@ const Navbar = ({ currentUser }: Props) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
-
-  const isHome = pathname === "/home";
   const servicesLink = isHome ? "#services" : "/#services";
   const aboutLink = isHome ? "#about_us" : "/#about_us";
   const contactLink = isHome ? "#contacts" : "/#contacts";
+
+    // Login → abrir cadastro
+  const handleOpenSignup = () => {
+    setOpenLoginModal(false);
+    setOpenSignupModal(true);
+  };
 
   const handleSignupSuccess = () => {
     setOpenSignupModal(false);
@@ -53,8 +59,8 @@ const Navbar = ({ currentUser }: Props) => {
     newParams.delete("auth");
 
     const query = newParams.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname);
-  }, [authFlow, currentUser, pathname, router, searchParams]);
+    router.replace(query ? `/home?${query}` : "/home");
+  }, [authFlow, currentUser, router, searchParams]);
 
   useEffect(() => {
     const shouldOpen = sessionStorage.getItem("afterSignupOpenLogin");
@@ -63,7 +69,7 @@ const Navbar = ({ currentUser }: Props) => {
       setOpenLoginModal(true);
       sessionStorage.removeItem("afterSignupOpenLogin");
     }
-  }, [pathname]);
+  }, [isHome]);
 
   // handle scroll
   useEffect(() => {
@@ -123,44 +129,33 @@ const Navbar = ({ currentUser }: Props) => {
         </div>
 
         {!currentUser ? (
-          <div className="justify-self-end flex gap-4 font-body">
+          <div className="justify-self-end flex items-center gap-2 font-body">
             <Button
               variant="primary"
               onClick={() => setOpenLoginModal(true)}
               autoWidth
+              icon={<User size={15} />}
             >
-              Login
-            </Button>
-
-            <Button
-              variant="primary"
-              onClick={() => {
-                const current =
-                  window.location.pathname + window.location.search;
-                setOpenSignupModal(true);
-                sessionStorage.setItem("signupReturnTo", current);
-              }}
-              autoWidth
-            >
-              Signup
+              Entrar
             </Button>
           </div>
         ) : (
-          <div className="justify-self-end flex items-center gap-2 font-body">
-            <UserCheck color="#c7dee4"/>
-            Olá,
-            <strong>{`${currentUser.name}`}</strong>
-          </div>
+          <>
+            <UserButton label={currentUser.name} />
+          </>
         )}
       </nav>
 
       {openLoginModal && (
         <LoginModal
+          title="Faça Login ou Cadastre-se"
           onClose={() => setOpenLoginModal(false)}
           onSuccess={() => {
             setOpenLoginModal(false);
             setShowLoginSuccess(true);
           }}
+          hasSignupButtonForm
+          onOpenSignup={handleOpenSignup}
         />
       )}
 

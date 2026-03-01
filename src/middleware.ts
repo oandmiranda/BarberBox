@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 
-const PROTECTED_PREFIXES = ["/dashboard", "/profile", "/admin"];
+const PROTECTED_PREFIXES = ["/dashboard", "/profile", "/admin", "/my-appointments"];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

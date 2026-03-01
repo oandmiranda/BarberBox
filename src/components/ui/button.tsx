@@ -1,3 +1,4 @@
+import { baseButtonClasses } from "@/lib/ui/classes";
 import Link from "next/link";
 
 type ButtonStyle = "default" | "transparent" | "white";
@@ -23,14 +24,7 @@ type ButtonProps =
     });
 
 const Button = (props: ButtonProps) => {
-  const baseClasses = `  
-  flex items-center justify-center 
-  text-xs
-  p-3 transition-all duration-200 ease-in-out
-  hover:shadow-md
-  hover:translate-y-[1px]
-  active:scale-[0.98]
-  `;
+  const baseClasses = baseButtonClasses;
 
   const widthClass = props.widthFull
     ? "w-full"
@@ -53,7 +47,7 @@ const Button = (props: ButtonProps) => {
       "bg-brandPrimary hover:bg-brandPrimary/90 focus:outline-none focus:ring-2 focus:ring-brandPrimary/40 text-white rounded-full",
     transparent:
       "bg-transparent text-text border border-black/20 hover:bg-black/10 rounded-full",
-    white: "bg-gray-300 text-blue hover:bg-gray-200 rounded-md",
+    white: "bg-gray-300 text-blue hover:bg-gray-200 rounded-full",
   };
 
   // default style

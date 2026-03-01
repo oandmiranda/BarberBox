@@ -13,6 +13,7 @@ import { X } from "lucide-react";
 import Spinner from "../ui/spinner";
 
 export type LoginFormProps = {
+  title?: string;
   hasSignupButtonForm?: boolean;
   onSuccess?: () => void;
   onClose: () => void;
@@ -20,6 +21,7 @@ export type LoginFormProps = {
 };
 
 const LoginForm = ({
+  title = "Login",
   hasSignupButtonForm,
   onSuccess,
   onClose,
@@ -63,7 +65,7 @@ const LoginForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <section className="relative flex flex-col items-center bg-surface text-text p-4 gap-4 w-full rounded-lg">
-        <Heading className="mb-1">Login</Heading>
+        <Heading className="mb-1">{title}</Heading>
 
         <X
           onClick={onClose}

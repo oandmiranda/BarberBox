@@ -32,9 +32,14 @@ export default async function ScheduleSuccessPage() {
         serviceName={appointment.service_name}
         barberName={appointment.barber_name}
       >
-        <Button variant="link" href="/home" widthFull>
-          Voltar para Home
-        </Button>
+        <div className="flex flex-col gap-2 w-full">
+          <Button variant="link" href="/my-appointments" widthFull>
+            Meus Agendamentos
+          </Button>
+          <Button variant="link" href="/home" style="white" widthFull>
+            Voltar para Home
+          </Button>
+        </div>
       </AppointmentCard>
     </BackgroundSection>
   );

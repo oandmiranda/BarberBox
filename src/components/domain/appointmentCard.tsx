@@ -28,7 +28,7 @@ export default function AppointmentCard({
 
   return (
     <div
-      className={`relative flex flex-col justify-center items-center gap-4 bg-surface text-text rounded-xl min-w-0 w-full h-auto p-5 sm:gap-7 sm:min-h-[250px]`}
+      className={`relative flex flex-col justify-around items-center gap-4 bg-surface text-text rounded-xl min-w-0 w-full h-auto p-5 sm:gap-7 sm:min-h-[250px]`}
     >
       {icon && (
         <div className="absolute -top-[47px] w-[90px] h-[90px]">
