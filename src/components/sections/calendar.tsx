@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDays, isSameDay, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Heading from "../ui/heading";
@@ -25,6 +25,14 @@ export default function Calendar({
 
   const [weekStart, setWeekStart] = useState(today);
 
+  useEffect(() => {
+    if (selectedDate) {
+      const normalized = new Date(selectedDate);
+      normalized.setHours(0, 0, 0, 0);
+      setWeekStart(normalized);
+    }
+  }, [selectedDate]);
+
   const visibleDays = useWidthWindow();
   const days = Array.from({ length: visibleDays }).map((_, i) =>
     addDays(weekStart, i),
@@ -44,7 +52,12 @@ export default function Calendar({
   const prevWeek = () => {
     setWeekStart((current) => {
       const previous = addDays(current, -visibleDays);
-      return previous < MIN_WEEK_START ? current : previous;
+
+      if (previous <= MIN_WEEK_START) {
+        return MIN_WEEK_START;
+      }
+
+      return previous;
     });
   };
 
@@ -92,6 +105,7 @@ export default function Calendar({
                 onClick={() => !disabled && onSelectDate(day)}
                 className={`
               min-w-[72px] rounded-xl text-center transition p-1 sm:px-3 sm:py-2
+              ${today && isSameDay(day, today) ? "bg-secondary text-black/80" : ""} 
               ${selected ? "bg-brandPrimary text-white" : "bg-neutral-100"}
               ${disabled ? "opacity-40 bg-gray-300 cursor-not-allowed text-gray-500" : ""}
             `}
