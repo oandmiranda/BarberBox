@@ -23,8 +23,11 @@ export default function MyAppointmentsClient({
 }: MyAppointmentsClientProps) {
   // Estado local que começa com os dados vindos do servidor
   const [appointmentsState, setAppointmentsState] = useState(appointments);
-  const [showCancelMessageSuccess, setShowCancelMessageSuccess] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<"SCHEDULED" | "CANCELED" | "COMPLETED" | null>(null);
+  const [showCancelMessageSuccess, setShowCancelMessageSuccess] =
+    useState(false);
+  const [activeCategory, setActiveCategory] = useState<
+    "SCHEDULED" | "CANCELED" | "COMPLETED" | null
+  >(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const filteredCategory = activeCategory
@@ -32,6 +35,13 @@ export default function MyAppointmentsClient({
         (appointment) => appointment.status === activeCategory,
       )
     : appointmentsState;
+
+  const shouldShowEmptyMessage =
+    activeCategory && filteredCategory.length === 0;
+
+  const hasScheduledAppointments = appointmentsState.some(
+    (appointment) => appointment.status === "SCHEDULED",
+  );
 
   // mappers
   const statusLabel: Record<string, string> = {
@@ -70,12 +80,16 @@ export default function MyAppointmentsClient({
       <div className="flex flex-col gap-4">
         <Heading>{`Meus Agendamentos`}</Heading>
         <Text>{`Você tem ${appointmentsState.length} agendamento(s) no seu histórico.`}</Text>
-        <Text size="xs">
-          Se você tiver agendamentos marcados, você pode cancelar até{" "}
-          <strong className="text-red-500">
-            4 horas antes do horário agendado.
-          </strong>
-        </Text>
+
+        {hasScheduledAppointments && (
+          <Text size="xs">
+            Você pode cancelar agendamentos futuros, mas lembre-se de que só é
+            possível cancelar até{" "}
+            <strong className="text-red-500">
+              4 horas antes do horário agendado.
+            </strong>
+          </Text>
+        )}
       </div>
 
       {!appointmentsState.length && (
@@ -88,8 +102,8 @@ export default function MyAppointmentsClient({
       )}
 
       {appointmentsState.length > 0 && (
-        <>
-          <div className="flex gap-2">
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-wrap gap-2">
             <FilterButton
               label="Todos"
               onClick={() => {
@@ -124,7 +138,12 @@ export default function MyAppointmentsClient({
               }
             />
           </div>
-        </>
+          {shouldShowEmptyMessage && (
+            <Text>
+              Nenhum agendamento encontrado para o filtro selecionado.
+            </Text>
+          )}
+        </div>
       )}
 
       <div className="mx-auto max-w-[1200px] min-w-0 w-full grid grid-cols-1 gap-x-4 gap-y-5 md:px-6 md:grid-cols-2 xl:grid-cols-3">
