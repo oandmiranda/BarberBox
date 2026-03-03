@@ -6,6 +6,8 @@ import { allBarbers } from "../domain/allBarbers";
 import { getAllAppointmentsBetweenPeriod } from "../domain/auth/getAllApointmentsBetweenPeriod";
 import { toZonedTime } from "date-fns-tz";
 
+const TZ = "America/Sao_Paulo";
+
 function formatDay(date: Date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -28,6 +30,9 @@ export async function getUnavailableDays(
   const barbers = await allBarbers();
   const totalBarbers = barbers.length;
 
+  const startZoned = toZonedTime(startDate, TZ);
+  const endZoned = toZonedTime(endDate, TZ);
+
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
     endDate
@@ -36,10 +41,7 @@ export async function getUnavailableDays(
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
-    const zonedDate = toZonedTime(
-      appt.startTime,
-      "America/Sao_Paulo"
-    );
+    const zonedDate = toZonedTime(appt.startTime, TZ);
 
     const dayKey = formatDay(zonedDate);
     const timeKey = formatTime(zonedDate);
@@ -57,13 +59,13 @@ export async function getUnavailableDays(
 
   const unavailableDays: Date[] = [];
 
-  const currentDate = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth(),
-    startDate.getDate()
-  );
+  const currentDate = new Date(startZoned);
+  currentDate.setHours(0, 0, 0, 0);
 
-  while (currentDate <= endDate) {
+  const endDateNormalized = new Date(endZoned);
+  endDateNormalized.setHours(23, 59, 59, 999);
+
+  while (currentDate <= endDateNormalized) {
     const dayKey = formatDay(currentDate);
 
     let allSlotsFull = true;

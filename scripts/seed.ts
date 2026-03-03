@@ -8,6 +8,7 @@ dotenv.config({
 
 import { neon } from "@neondatabase/serverless";
 import { TIME_SLOTS } from "@/domain/timeSlots";
+import { parseDateTime } from "@/actions/parseDateTime";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -17,7 +18,8 @@ if (!databaseUrl) {
 
 const sql = neon(databaseUrl);
 
-const timeSlots = TIME_SLOTS;
+const OCCUPANCY_RATE = 0.7;
+const TOTAL_DAYS = 60;
 
 function generateNextDays(totalDays: number) {
   const dates: Date[] = [];
@@ -33,28 +35,30 @@ function generateNextDays(totalDays: number) {
   return dates;
 }
 
+function formatToBR(date: Date): string {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 async function seed() {
-  const OCCUPANCY_RATE = 0.7; // 70%
-  const TOTAL_DAYS = 60; // próximos 60 dias
+  await sql`DELETE FROM appointments`;
 
   const barbers = await sql`
     SELECT id FROM users WHERE role = 'BARBER'
   `;
+
   const clients = await sql`
     SELECT id FROM users WHERE role = 'CLIENT'
   `;
+
   const services = await sql`
     SELECT id, duration_minutes FROM services
   `;
 
-  if (
-    barbers.length === 0 ||
-    clients.length === 0 ||
-    services.length === 0
-  ) {
-    throw new Error(
-      "Barbers, clients or services are empty. Check the database."
-    );
+  if (!barbers.length || !clients.length || !services.length) {
+    throw new Error("Dados insuficientes para seed.");
   }
 
   const dates = generateNextDays(TOTAL_DAYS);
@@ -63,14 +67,13 @@ async function seed() {
 
   for (const barber of barbers) {
     for (const baseDate of dates) {
-      for (const time of timeSlots) {
+      const dateString = formatToBR(baseDate);
 
+      for (const time of TIME_SLOTS) {
         if (Math.random() > OCCUPANCY_RATE) continue;
 
-        const [hour, minute] = time.split(":").map(Number);
-
-        const start = new Date(baseDate);
-        start.setHours(hour, minute, 0, 0);
+        const start = parseDateTime(dateString, time);
+        if (!start) continue;
 
         const randomService =
           services[Math.floor(Math.random() * services.length)];
@@ -78,9 +81,9 @@ async function seed() {
         const randomClient =
           clients[Math.floor(Math.random() * clients.length)];
 
-        const end = new Date(start);
-        end.setMinutes(
-          start.getMinutes() + randomService.duration_minutes
+        const end = new Date(
+          start.getTime() +
+            randomService.duration_minutes * 60000
         );
 
         await sql`
