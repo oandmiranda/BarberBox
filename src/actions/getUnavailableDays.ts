@@ -59,14 +59,13 @@ export async function getUnavailableDays(
 
   const unavailableDays: Date[] = [];
 
-  // Iteração  baseada no timezone da barbearia
-  const currentDate = new Date(
-    startZoned.getFullYear(),
-    startZoned.getMonth(),
-    startZoned.getDate()
-  );
+  const currentDate = new Date(startZoned);
+  currentDate.setHours(0, 0, 0, 0);
 
-  while (currentDate <= endZoned) {
+  const endDateNormalized = new Date(endZoned);
+  endDateNormalized.setHours(23, 59, 59, 999);
+
+  while (currentDate <= endDateNormalized) {
     const dayKey = formatDay(currentDate);
 
     let allSlotsFull = true;
