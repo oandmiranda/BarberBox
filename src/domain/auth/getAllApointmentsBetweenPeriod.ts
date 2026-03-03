@@ -1,16 +1,20 @@
+import { fromZonedTime } from "date-fns-tz";
 import { sql } from "@/lib/db";
 
-type AppointmentProps = {
-  startTime: Date;
-  barberId: string;
-};
+const TZ = "America/Sao_Paulo";
 
-export async function getAllAppointmentsBetweenPeriod(startDate: Date, endDate: Date): Promise<AppointmentProps[]> {
+export async function getAllAppointmentsBetweenPeriod(
+  startDate: Date,
+  endDate: Date
+) {
+  const startUTC = fromZonedTime(startDate, TZ);
+  const endUTC = fromZonedTime(endDate, TZ);
+
   const result = await sql`
     SELECT start_time, barber_id
     FROM appointments
-    WHERE start_time >= ${startDate}
-      AND start_time <= ${endDate}
+    WHERE start_time >= ${startUTC}
+      AND start_time <= ${endUTC}
       AND status = 'SCHEDULED'
   `;
 
