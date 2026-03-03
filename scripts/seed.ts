@@ -7,7 +7,6 @@ dotenv.config({
 });
 
 import { neon } from "@neondatabase/serverless";
-import { fromZonedTime } from "date-fns-tz";
 import { TIME_SLOTS } from "@/domain/timeSlots";
 import { parseDateTime } from "@/actions/parseDateTime";
 
@@ -20,8 +19,6 @@ if (!databaseUrl) {
 const sql = neon(databaseUrl);
 
 const timeSlots = TIME_SLOTS;
-
-const BARBERSHOP_TIMEZONE = "America/Sao_Paulo";
 
 function generateNextDays(totalDays: number) {
   const dates: Date[] = [];
@@ -46,10 +43,6 @@ function formatToBR(date: Date): string {
 }
 
 async function seed() {
-  await sql`DELETE FROM appointments`;
-
-  const OCCUPANCY_RATE = 0.7;
-  const TOTAL_DAYS = 60;
   await sql`DELETE FROM appointments`;
 
   const OCCUPANCY_RATE = 0.7;
@@ -97,9 +90,6 @@ async function seed() {
         const randomClient =
           clients[Math.floor(Math.random() * clients.length)];
 
-        const end = new Date(
-          start.getTime() +
-            randomService.duration_minutes * 60000
         const end = new Date(
           start.getTime() +
             randomService.duration_minutes * 60000
