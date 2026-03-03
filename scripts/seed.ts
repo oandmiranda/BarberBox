@@ -24,9 +24,16 @@ function generateNextDays(totalDays: number) {
   const today = new Date();
 
   for (let i = 0; i < totalDays; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    date.setHours(0, 0, 0, 0);
+    const date = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + i,
+      0,
+      0,
+      0,
+      0
+    );
+
     dates.push(date);
   }
 
@@ -34,8 +41,10 @@ function generateNextDays(totalDays: number) {
 }
 
 async function seed() {
+  await sql`DELETE FROM appointments`;
+
   const OCCUPANCY_RATE = 0.7; // 70%
-  const TOTAL_DAYS = 60; // próximos 60 dias
+  const TOTAL_DAYS = 60;
 
   const barbers = await sql`
     SELECT id FROM users WHERE role = 'BARBER'
@@ -64,13 +73,20 @@ async function seed() {
   for (const barber of barbers) {
     for (const baseDate of dates) {
       for (const time of timeSlots) {
-
         if (Math.random() > OCCUPANCY_RATE) continue;
 
         const [hour, minute] = time.split(":").map(Number);
 
-        const start = new Date(baseDate);
-        start.setHours(hour, minute, 0, 0);
+        // cria exatamente como o front criaria (horário local Brasil)
+        const start = new Date(
+          baseDate.getFullYear(),
+          baseDate.getMonth(),
+          baseDate.getDate(),
+          hour,
+          minute,
+          0,
+          0
+        );
 
         const randomService =
           services[Math.floor(Math.random() * services.length)];
@@ -80,7 +96,7 @@ async function seed() {
 
         const end = new Date(start);
         end.setMinutes(
-          start.getMinutes() + randomService.duration_minutes
+          end.getMinutes() + randomService.duration_minutes
         );
 
         await sql`
