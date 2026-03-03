@@ -9,6 +9,7 @@ dotenv.config({
 import { neon } from "@neondatabase/serverless";
 import { fromZonedTime } from "date-fns-tz";
 import { TIME_SLOTS } from "@/domain/timeSlots";
+import { parseDateTime } from "@/actions/parseDateTime";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -36,21 +37,19 @@ function generateNextDays(totalDays: number) {
   return dates;
 }
 
-function formatDateForTimezone(
-  baseDate: Date,
-  hour: number,
-  minute: number
-) {
-  const year = baseDate.getFullYear();
-  const month = String(baseDate.getMonth() + 1).padStart(2, "0");
-  const day = String(baseDate.getDate()).padStart(2, "0");
-  const hh = String(hour).padStart(2, "0");
-  const mm = String(minute).padStart(2, "0");
+function formatToBR(date: Date): string {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
 
-  return `${year}-${month}-${day}T${hh}:${mm}:00`;
+  return `${day}/${month}/${year}`;
 }
 
 async function seed() {
+  await sql`DELETE FROM appointments`;
+
+  const OCCUPANCY_RATE = 0.7;
+  const TOTAL_DAYS = 60;
   await sql`DELETE FROM appointments`;
 
   const OCCUPANCY_RATE = 0.7;
@@ -82,23 +81,15 @@ async function seed() {
 
   for (const barber of barbers) {
     for (const baseDate of dates) {
+      const dateString = formatToBR(baseDate);
+
       for (const time of timeSlots) {
         if (Math.random() > OCCUPANCY_RATE) continue;
 
-        const [hour, minute] = time.split(":").map(Number);
+        // usa a MESMA regra da server action
+        const start = parseDateTime(dateString, time);
 
-        // cria string local da barbearia
-        const formatted = formatDateForTimezone(
-          baseDate,
-          hour,
-          minute
-        );
-
-        // converte explicitamente de America/Sao_Paulo para UTC
-        const start = fromZonedTime(
-          formatted,
-          BARBERSHOP_TIMEZONE
-        );
+        if (!start) continue;
 
         const randomService =
           services[Math.floor(Math.random() * services.length)];
@@ -106,6 +97,9 @@ async function seed() {
         const randomClient =
           clients[Math.floor(Math.random() * clients.length)];
 
+        const end = new Date(
+          start.getTime() +
+            randomService.duration_minutes * 60000
         const end = new Date(
           start.getTime() +
             randomService.duration_minutes * 60000

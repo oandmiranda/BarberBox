@@ -1,30 +1,14 @@
 "use server";
 
-import { fromZonedTime } from "date-fns-tz";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { sql } from "@/lib/db";
+import { parseDateTime } from "./parseDateTime";
 
 type ActionResult =
   | { ok: true }
   | { ok: false; error: string };
 
-function parseDateTime(date: string, time: string): Date | null {
-  const [day, month, year] = date.split("/");
-  const [hour, minute] = time.split(":");
-
-  if (!day || !month || !year || !hour || !minute) {
-    return null;
-  }
-
-  const formatted = `${year}-${month}-${day}T${hour}:${minute}:00`;
-
-  const utcDate = fromZonedTime(
-    formatted,
-    "America/Sao_Paulo"
-  );
-
-  return isNaN(utcDate.getTime()) ? null : utcDate;
-}
+const parseDateAndTime = parseDateTime;
 
 export async function createAppointment(
   _: unknown,
@@ -50,7 +34,7 @@ export async function createAppointment(
     return { ok: false, error: "INVALID_INPUT" };
   }
 
-  const startTime = parseDateTime(date, time);
+  const startTime = parseDateAndTime(date, time);
   if (!startTime) {
     return { ok: false, error: "INVALID_DATETIME" };
   }
