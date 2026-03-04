@@ -22,7 +22,7 @@ function formatTime(date: Date) {
 
 export async function getUnavailableDays(
   startDate: Date,
-  endDate: Date,
+  endDate: Date
 ): Promise<Date[]> {
   noStore();
 
@@ -31,16 +31,23 @@ export async function getUnavailableDays(
 
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
-    endDate,
+    endDate
   );
 
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
+    console.log("APPT RAW:", appt.startTime);
+
     const zoned = toZonedTime(appt.startTime, TZ);
+
+    console.log("APPT ZONED:", zoned);
 
     const dayKey = formatDay(zoned);
     const timeKey = formatTime(zoned);
+
+    console.log("DAY KEY:", dayKey);
+    console.log("TIME KEY:", timeKey);
 
     if (!slotsMap[dayKey]) {
       slotsMap[dayKey] = {};
@@ -80,8 +87,8 @@ export async function getUnavailableDays(
         new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
-          currentDate.getDate(),
-        ),
+          currentDate.getDate()
+        )
       );
     }
 

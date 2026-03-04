@@ -34,30 +34,38 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
     string[]
   > | null>(null);
 
-  useEffect(() => {
-    async function loadUnavailableDays() {
-      setLoading(true);
+ useEffect(() => {
+  async function loadUnavailableDays() {
+    setLoading(true);
 
-      const startDate = new Date();
-      startDate.setHours(0, 0, 0, 0);
+    const today = new Date();
 
-      const endDate = new Date(
-        startDate.getFullYear(),
-        startDate.getMonth() + 1,
-        0,
-      );
-      endDate.setHours(23, 59, 59, 999);
+    const startDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
 
-      const days = await getUnavailableDays(startDate, endDate);
+    const endDate = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999
+    );
 
-      setUnavailableDays(days);
-      setLoading(false);
-    }
+    const days = await getUnavailableDays(startDate, endDate);
 
-    if (selectedServiceId) {
-      loadUnavailableDays();
-    }
-  }, [selectedServiceId]);
+    setUnavailableDays(days);
+    setLoading(false);
+  }
+
+  if (selectedServiceId) {
+    loadUnavailableDays();
+  }
+}, [selectedServiceId]);
 
   // quando a data muda → busca horários e reseta dependências
   useEffect(() => {
