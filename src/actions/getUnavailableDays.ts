@@ -8,6 +8,9 @@ import { toZonedTime } from "date-fns-tz";
 
 const TZ = "America/Sao_Paulo";
 
+console.log("AQUIIIIIIIIIIIIIIIIIIIIIIII: SERVER TZ:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+console.log("NOW:", new Date());
+
 function formatDay(date: Date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
