@@ -46,6 +46,7 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
         startDate.getMonth() + 1,
         0,
       );
+      endDate.setHours(23, 59, 59, 999);
 
       const days = await getUnavailableDays(startDate, endDate);
 
