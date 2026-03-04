@@ -22,7 +22,7 @@ function formatTime(date: Date) {
 
 export async function getUnavailableDays(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Promise<Date[]> {
   noStore();
 
@@ -31,7 +31,7 @@ export async function getUnavailableDays(
 
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
-    endDate
+    endDate,
   );
 
   const slotsMap: Record<string, Record<string, number>> = {};
@@ -76,7 +76,13 @@ export async function getUnavailableDays(
     }
 
     if (allSlotsFull) {
-      unavailableDays.push(new Date(currentDate));
+      unavailableDays.push(
+        new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate(),
+        ),
+      );
     }
 
     currentDate.setDate(currentDate.getDate() + 1);
