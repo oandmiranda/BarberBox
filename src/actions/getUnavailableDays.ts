@@ -30,9 +30,6 @@ export async function getUnavailableDays(
   const barbers = await allBarbers();
   const totalBarbers = barbers.length;
 
-  const startZoned = toZonedTime(startDate, TZ);
-  const endZoned = toZonedTime(endDate, TZ);
-
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
     endDate
@@ -59,10 +56,10 @@ export async function getUnavailableDays(
 
   const unavailableDays: Date[] = [];
 
-  const currentDate = new Date(startZoned);
+  const currentDate = toZonedTime(startDate, TZ);
   currentDate.setHours(0, 0, 0, 0);
 
-  const endDateNormalized = new Date(endZoned);
+  const endDateNormalized = toZonedTime(endDate, TZ);
   endDateNormalized.setHours(23, 59, 59, 999);
 
   while (currentDate <= endDateNormalized) {

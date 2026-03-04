@@ -25,9 +25,9 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [availableBarbers, setAvailableBarbers] = useState<BarberStatus[] | null>(
-    null,
-  );
+  const [availableBarbers, setAvailableBarbers] = useState<
+    BarberStatus[] | null
+  >(null);
   const [selectedBarber, setSelectedBarber] = useState<string | null>(null);
   const [availability, setAvailability] = useState<Record<
     string,
@@ -39,6 +39,8 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
       setLoading(true);
 
       const startDate = new Date();
+      startDate.setHours(0, 0, 0, 0);
+
       const endDate = new Date(
         startDate.getFullYear(),
         startDate.getMonth() + 1,
@@ -132,11 +134,11 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                   />
                 </div>
 
-                  <Calendar
-                    selectedDate={selectedDate}
-                    onSelectDate={setSelectedDate}
-                    unavailableDays={unavailableDays}
-                  />
+                <Calendar
+                  selectedDate={selectedDate}
+                  onSelectDate={setSelectedDate}
+                  unavailableDays={unavailableDays}
+                />
 
                 {selectedDate && (
                   <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-7">
@@ -157,15 +159,15 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                     )}
 
                     {selectedTime && selectedBarber && (
-                        <Button
-                          variant="primary"
-                          type="button"
-                          onClick={handleGoToSummary}
-                          widthFull
-                          icon={<CalendarCheck size={18}/>}
-                        >
-                          Agendar
-                        </Button>
+                      <Button
+                        variant="primary"
+                        type="button"
+                        onClick={handleGoToSummary}
+                        widthFull
+                        icon={<CalendarCheck size={18} />}
+                      >
+                        Agendar
+                      </Button>
                     )}
                   </div>
                 )}
