@@ -62,8 +62,12 @@ export default function Calendar({
   };
 
   // Cria um normalizador de data
-  const toDateKey = (date: Date) =>
-    `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const toDateKey = (date: Date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
 
   const unavailableSet = new Set(unavailableDays.map(toDateKey));
 

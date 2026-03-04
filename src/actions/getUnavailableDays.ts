@@ -8,9 +8,6 @@ import { toZonedTime } from "date-fns-tz";
 
 const TZ = "America/Sao_Paulo";
 
-console.log("AQUIIIIIIIIIIIIIIIIIIIIIIII: SERVER TZ:", Intl.DateTimeFormat().resolvedOptions().timeZone);
-console.log("NOW:", new Date());
-
 function formatDay(date: Date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -40,17 +37,10 @@ export async function getUnavailableDays(
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
-    console.log("APPT RAW:", appt.startTime);
-
     const zoned = toZonedTime(appt.startTime, TZ);
-
-    console.log("APPT ZONED:", zoned);
 
     const dayKey = formatDay(zoned);
     const timeKey = formatTime(zoned);
-
-    console.log("DAY KEY:", dayKey);
-    console.log("TIME KEY:", timeKey);
 
     if (!slotsMap[dayKey]) {
       slotsMap[dayKey] = {};
@@ -65,13 +55,15 @@ export async function getUnavailableDays(
 
   const unavailableDays: Date[] = [];
 
-  const currentDate = new Date(startDate);
-  currentDate.setHours(0, 0, 0, 0);
+  const start = toZonedTime(startDate, TZ);
+  start.setHours(0, 0, 0, 0);
 
-  const endDateNormalized = new Date(endDate);
-  endDateNormalized.setHours(23, 59, 59, 999);
+  const end = toZonedTime(endDate, TZ);
+  end.setHours(23, 59, 59, 999);
 
-  while (currentDate <= endDateNormalized) {
+  const currentDate = new Date(start);
+
+  while (currentDate <= end) {
     const dayKey = formatDay(currentDate);
 
     let allSlotsFull = true;
