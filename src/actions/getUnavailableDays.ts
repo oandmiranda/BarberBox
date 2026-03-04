@@ -4,9 +4,6 @@ import { unstable_noStore as noStore } from "next/cache";
 import { TIME_SLOTS } from "../domain/timeSlots";
 import { allBarbers } from "../domain/allBarbers";
 import { getAllAppointmentsBetweenPeriod } from "../domain/auth/getAllApointmentsBetweenPeriod";
-import { toZonedTime } from "date-fns-tz";
-
-const TZ = "America/Sao_Paulo";
 
 function formatDay(date: Date) {
   const y = date.getFullYear();
@@ -23,7 +20,7 @@ function formatTime(date: Date) {
 
 export async function getUnavailableDays(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Promise<Date[]> {
   noStore();
 
@@ -32,13 +29,13 @@ export async function getUnavailableDays(
 
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
-    endDate
+    endDate,
   );
 
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
-    const zonedDate = toZonedTime(appt.startTime, TZ);
+    const zonedDate = new Date(appt.startTime);
 
     const dayKey = formatDay(zonedDate);
     const timeKey = formatTime(zonedDate);
@@ -56,11 +53,11 @@ export async function getUnavailableDays(
 
   const unavailableDays: Date[] = [];
 
-  const currentDate = toZonedTime(startDate, TZ);
-  currentDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date(startDate);
+  currentDate.setUTCHours(0, 0, 0, 0);
 
-  const endDateNormalized = toZonedTime(endDate, TZ);
-  endDateNormalized.setHours(23, 59, 59, 999);
+  const endDateNormalized = new Date(endDate);
+  endDateNormalized.setUTCHours(23, 59, 59, 999);
 
   while (currentDate <= endDateNormalized) {
     const dayKey = formatDay(currentDate);

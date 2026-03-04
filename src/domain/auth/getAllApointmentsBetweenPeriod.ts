@@ -12,8 +12,8 @@ export async function getAllAppointmentsBetweenPeriod(
   const result = await sql`
     SELECT start_time, barber_id
     FROM appointments
-    WHERE start_time >= ${startDate}
-      AND start_time <= ${endDate}
+    WHERE start_time >= ${startDate.toISOString()}
+      AND start_time <= ${endDate.toISOString()}
       AND status = 'SCHEDULED'
   `;
 
