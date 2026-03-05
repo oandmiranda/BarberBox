@@ -6,7 +6,6 @@ import ScheduleSummaryClient from "./scheduleSummaryClient";
 import Text from "@/components/ui/text";
 import Image from "next/image";
 import AppointmentCard from "@/components/domain/appointmentCard";
-import BackgroundSection from "@/components/ui/backgroundSection";
 import { mapServiceToUI } from "@/application/mapper";
 
 type PageProps = {
@@ -41,7 +40,7 @@ const serviceEntity = await getServiceById(serviceId);
   const isAuthenticated = !!currentUser;
 
   return (
-    <BackgroundSection image="/assets/images/barbershop/barbershop4.png">
+    <section>
       <div className="flex flex-col gap-4 text-white">
         <div className="flex flex-col items-center gap-y-2 gap-x-6">
           <div className="w-full flex flex-col items-center gap-2 sm:flex-row">
@@ -99,7 +98,7 @@ const serviceEntity = await getServiceById(serviceId);
             </AppointmentCard>
         </div>
       </div>
-    </BackgroundSection>
+    </section>
   );
 };
 
