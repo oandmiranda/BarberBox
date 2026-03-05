@@ -17,7 +17,7 @@ export default function MessageModal({message, backgroundColor, icon}: MessageMo
           width={20}
           height={20}
         />
-        <Text>{message}</Text>
+        <Text className="font-body">{message}</Text>
       </div>
     </div>
   );

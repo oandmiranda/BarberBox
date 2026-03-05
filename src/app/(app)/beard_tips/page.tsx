@@ -12,7 +12,7 @@ export default function BeardTipsPage() {
 
   return (
     <section className="py-[100px] w-full min-w-0 flex flex-col items-center justify-center px-4 font-details">
-      <div className="w-full md:w-[60%] mb-5 flex flex-col flex-wrap">
+      <div className="w-full md:w-[80%] mb-5 flex flex-col flex-wrap">
         <Hero
           imageBackground="/assets/images/barbershop/shaving_man.png"
           height="h-[400px]"
@@ -21,7 +21,7 @@ export default function BeardTipsPage() {
           hasTitleCenter={true}
           titleSize="xl"
         />
-        <div className="flex flex-col font-body items-center justify-center gap-[100px] mt-8">
+        <div className="md:w-[60%] mx-auto flex flex-col font-body items-center justify-center gap-[100px] mt-8">
           <Text>
             Temos algumas dicas sobre como conseguir um barbear mais confortável
             e suave, seja você um iniciante ou um profissional. É simples:
