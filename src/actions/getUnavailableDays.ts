@@ -17,21 +17,17 @@ function formatDay(date: Date) {
 
 function formatTime(date: Date) {
   const h = String(date.getHours()).padStart(2, "0");
-  const m = String(date.getMinutes()).padStart(2, "0");
-  return `${h}:${m}`;
+  return `${h}:00`;
 }
 
 export async function getUnavailableDays(
   startDate: Date,
   endDate: Date
-): Promise<Date[]> {
+): Promise<string[]> {
   noStore();
 
   const barbers = await allBarbers();
   const totalBarbers = barbers.length;
-
-  const startZoned = toZonedTime(startDate, TZ);
-  const endZoned = toZonedTime(endDate, TZ);
 
   const appointments = await getAllAppointmentsBetweenPeriod(
     startDate,
@@ -41,10 +37,10 @@ export async function getUnavailableDays(
   const slotsMap: Record<string, Record<string, number>> = {};
 
   for (const appt of appointments) {
-    const zonedDate = toZonedTime(appt.startTime, TZ);
+    const zoned = toZonedTime(appt.startTime, TZ);
 
-    const dayKey = formatDay(zonedDate);
-    const timeKey = formatTime(zonedDate);
+    const dayKey = formatDay(zoned);
+    const timeKey = formatTime(zoned);
 
     if (!slotsMap[dayKey]) {
       slotsMap[dayKey] = {};
@@ -57,15 +53,17 @@ export async function getUnavailableDays(
     slotsMap[dayKey][timeKey]++;
   }
 
-  const unavailableDays: Date[] = [];
+  const unavailableDays: string[] = [];
 
-  const currentDate = new Date(startZoned);
-  currentDate.setHours(0, 0, 0, 0);
+  const start = toZonedTime(startDate, TZ);
+  start.setHours(0, 0, 0, 0);
 
-  const endDateNormalized = new Date(endZoned);
-  endDateNormalized.setHours(23, 59, 59, 999);
+  const end = toZonedTime(endDate, TZ);
+  end.setHours(23, 59, 59, 999);
 
-  while (currentDate <= endDateNormalized) {
+  const currentDate = new Date(start);
+
+  while (currentDate <= end) {
     const dayKey = formatDay(currentDate);
 
     let allSlotsFull = true;
@@ -80,7 +78,7 @@ export async function getUnavailableDays(
     }
 
     if (allSlotsFull) {
-      unavailableDays.push(new Date(currentDate));
+      unavailableDays.push(dayKey);
     }
 
     currentDate.setDate(currentDate.getDate() + 1);

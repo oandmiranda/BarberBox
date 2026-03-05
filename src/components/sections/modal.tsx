@@ -21,33 +21,41 @@ type ModalProps = {
 
 export default function Modal({ selectedServiceId, onClose }: ModalProps) {
   const router = useRouter();
-  const [unavailableDays, setUnavailableDays] = useState<Date[]>([]);
+
+  const [unavailableDays, setUnavailableDays] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [availableBarbers, setAvailableBarbers] = useState<BarberStatus[] | null>(
-    null,
-  );
+  const [availableBarbers, setAvailableBarbers] = useState<BarberStatus[] | null>(null);
   const [selectedBarber, setSelectedBarber] = useState<string | null>(null);
-  const [availability, setAvailability] = useState<Record<
-    string,
-    string[]
-  > | null>(null);
+  const [availability, setAvailability] = useState<Record<string, string[]> | null>(null);
 
   useEffect(() => {
     async function loadUnavailableDays() {
       setLoading(true);
 
-      const startDate = new Date();
+      const today = new Date();
+
+      const startDate = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      );
+
       const endDate = new Date(
-        startDate.getFullYear(),
-        startDate.getMonth() + 1,
+        today.getFullYear(),
+        today.getMonth() + 1,
         0,
+        23,
+        59,
+        59,
+        999
       );
 
       const days = await getUnavailableDays(startDate, endDate);
 
       setUnavailableDays(days);
+
       setLoading(false);
     }
 
@@ -56,7 +64,6 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
     }
   }, [selectedServiceId]);
 
-  // quando a data muda → busca horários e reseta dependências
   useEffect(() => {
     if (!selectedDate) return;
 
@@ -69,15 +76,17 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
 
     async function fetchAvailableTimeSlots() {
       setLoading(true);
+
       const data = await getAvailableBarbersByDate(date);
+
       setAvailability(data);
+
       setLoading(false);
     }
 
     fetchAvailableTimeSlots();
   }, [selectedDate]);
 
-  // quando o horário muda → busca barbeiros disponíveis
   useEffect(() => {
     if (!selectedDate || !selectedTime) return;
 
@@ -86,6 +95,7 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
 
     async function fetchAvailableBarbers() {
       const dateTime = buildDateTime(date, time);
+
       const barbers = await getBarbersStatusByDateTime(dateTime);
 
       setSelectedBarber(null);
@@ -105,24 +115,27 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
     const formattedDate = `${day}/${month}/${year}`;
 
     router.push(
-      `/schedule/summary?serviceId=${selectedServiceId}&date=${formattedDate}&time=${selectedTime}&barberId=${selectedBarber}`,
+      `/schedule/summary?serviceId=${selectedServiceId}&date=${formattedDate}&time=${selectedTime}&barberId=${selectedBarber}`
     );
   }
 
   return (
     <>
       {loading && <Spinner />}
+
       {selectedServiceId && (
         <div className="fixed inset-0 min-w-[240px] px-2 z-30 flex items-center justify-center">
-          {/* Overlay */}
+
           <div className="absolute inset-0 bg-black/60" />
 
-          {/* Modal */}
           <div className="overflow-auto w-full relative z-20 bg-white rounded-lg p-6 transition-all duration-300 sm:w-auto">
+
             {!loading && (
               <div
                 className={`flex flex-col gap-2 max-h-screen ${
-                  selectedDate ? "flex-row" : "flex-col items-center"
+                  selectedDate
+                    ? "flex-row"
+                    : "flex-col items-center"
                 }`}
               >
                 <div className="absolute top-2 right-2 cursor-pointer">
@@ -132,14 +145,15 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                   />
                 </div>
 
-                  <Calendar
-                    selectedDate={selectedDate}
-                    onSelectDate={setSelectedDate}
-                    unavailableDays={unavailableDays}
-                  />
+                <Calendar
+                  selectedDate={selectedDate}
+                  onSelectDate={setSelectedDate}
+                  unavailableDays={unavailableDays}
+                />
 
                 {selectedDate && (
                   <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-7">
+
                     <TimeSlots
                       selectedDate={selectedDate}
                       availability={availability}
@@ -157,20 +171,22 @@ export default function Modal({ selectedServiceId, onClose }: ModalProps) {
                     )}
 
                     {selectedTime && selectedBarber && (
-                        <Button
-                          variant="primary"
-                          type="button"
-                          onClick={handleGoToSummary}
-                          widthFull
-                          icon={<CalendarCheck size={18}/>}
-                        >
-                          Agendar
-                        </Button>
+                      <Button
+                        variant="primary"
+                        type="button"
+                        onClick={handleGoToSummary}
+                        widthFull
+                        icon={<CalendarCheck size={18} />}
+                      >
+                        Agendar
+                      </Button>
                     )}
+
                   </div>
                 )}
               </div>
             )}
+
           </div>
         </div>
       )}

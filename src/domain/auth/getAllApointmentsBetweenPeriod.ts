@@ -1,24 +1,25 @@
-import { fromZonedTime } from "date-fns-tz";
 import { sql } from "@/lib/db";
 
-const TZ = "America/Sao_Paulo";
+type AppointmentRow = {
+  start_time: Date;
+  barber_id: string;
+};
 
 export async function getAllAppointmentsBetweenPeriod(
   startDate: Date,
   endDate: Date
 ) {
-  const startUTC = fromZonedTime(startDate, TZ);
-  const endUTC = fromZonedTime(endDate, TZ);
-
   const result = await sql`
     SELECT start_time, barber_id
     FROM appointments
-    WHERE start_time >= ${startUTC}
-      AND start_time <= ${endUTC}
+    WHERE start_time >= ${startDate.toISOString()}
+      AND start_time <= ${endDate.toISOString()}
       AND status = 'SCHEDULED'
   `;
 
-  return result.map((row) => ({
+  const rows = result as AppointmentRow[];
+
+  return rows.map((row) => ({
     startTime: row.start_time,
     barberId: row.barber_id,
   }));
