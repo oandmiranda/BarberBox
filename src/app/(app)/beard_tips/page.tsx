@@ -1,10 +1,12 @@
+export const dynamic = "force-static"
+
 import Button from "@/components/ui/button";
 import ContentSection from "@/components/ui/contentSection";
 import Heading from "@/components/ui/heading";
 import Hero from "@/components/ui/hero";
 import Text from "@/components/ui/text";
 
-export default async function BeardTipsPage() {
+export default function BeardTipsPage() {
   const imagesSize = "sm:w-[240px] h-[240px] md:w-[260px] md:h-[260px]";
   const baseStyle = "flex flex-col items-center gap-2"
 
