@@ -1,24 +1,27 @@
+export const dynamic = "force-static"
+
 import Button from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import Hero from "@/components/ui/hero";
 import Text from "@/components/ui/text";
 import Image from "next/image";
 
-
-export default async function RecommendationsPage() {
+export default function RecommendationsPage() {
   const styledTitle = `border-b-2 border-secondary pb-2`;
   
   return (
     <section className="py-[100px] w-full min-w-0 flex flex-col items-center justify-center px-4 font-details">
+      <div className="w-full md:w-[80%]">
+          <Hero
+            imageBackground="/assets/images/products/shaving_products.png"
+            height="h-[400px]"
+            title="Guia de pós-barba: o toque final para uma barba saudável"
+            subtitle="Confira nossas dicas de produtos para usar em sua barba diariamente"
+            hasTitleCenter={true}
+            titleSize="xl"
+          />
+      </div>
       <div className="w-full md:w-[60%] mb-5 flex flex-col flex-wrap">
-        <Hero
-          imageBackground="/assets/images/products/shaving_products.png"
-          height="h-[400px]"
-          title="Guia de pós-barba: o toque final para uma barba saudável"
-          subtitle="Confira nossas dicas de produtos para usar em sua barba diariamente"
-          hasTitleCenter={true}
-          titleSize="xl"
-        />
         <div className="flex flex-col font-body items-center justify-center gap-6 mt-8">
           <Text>
             Fazer a barba é uma daquelas tarefas que ou você ama ou odeia. Mas,

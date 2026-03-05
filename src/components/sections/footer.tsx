@@ -1,6 +1,6 @@
 "use client"
 
-import { House, Lightbulb, Mail, Phone, ShieldCheck, Sparkle } from "lucide-react";
+import { House, Lightbulb, Mail, MapPin, Phone, ShieldCheck, Sparkle } from "lucide-react";
 import Logo from "../domain/logo";
 import Text from "../ui/text";
 import Link from "next/link";
@@ -55,6 +55,10 @@ const Footer = () => {
         <div className="flex items-center gap-2">
           <Mail size={17} />
           <Text>barberbox@gmail.com</Text>
+        </div>
+        <div className="flex items-center gap-2">
+          <MapPin size={17} />
+          <Text>Rua Miami, 297 - São Paulo/SP</Text>
         </div>
       </div>
     </section>

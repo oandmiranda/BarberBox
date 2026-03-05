@@ -27,8 +27,8 @@ export default function PremiumServicesPageClient({
   }
 
   return (
-    <section className="py-[100px] px-4 flex flex-col items-center justify-center">
-      <div className="w-full md:w-[70%] mb-5">
+    <section className="py-[100px] w-full px-4 flex flex-col items-center justify-center">
+      <div className="w-full md:w-[80%] mb-5">
         <Hero
           imageBackground="/assets/images/barbershop/barbershop.png"
           height="h-[400px]"
