@@ -1,7 +1,6 @@
 import { toZonedTime } from "date-fns-tz";
 import { getLastAppointmentByUserId } from "@/actions/getLastAppointmentByUserId";
 import AppointmentCard from "@/components/domain/appointmentCard";
-import BackgroundSection from "@/components/ui/backgroundSection";
 import Button from "@/components/ui/button";
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { redirect } from "next/navigation";
@@ -23,7 +22,7 @@ export default async function ScheduleSuccessPage() {
   });
 
   return (
-    <BackgroundSection image="/assets/images/barbershop/barbershop6.png">
+    <section>
       <AppointmentCard
         icon="/assets/icons/check.svg"
         heading="Agendamento Confirmado"
@@ -41,6 +40,6 @@ export default async function ScheduleSuccessPage() {
           </Button>
         </div>
       </AppointmentCard>
-    </BackgroundSection>
+    </section>
   );
 }
