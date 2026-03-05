@@ -10,7 +10,7 @@ import { useWidthWindow } from "@/hook/useWidthWindow";
 type Props = {
   selectedDate: Date | null;
   onSelectDate: (date: Date) => void;
-  unavailableDays: Date[];
+  unavailableDays: string[];
 };
 
 export default function Calendar({
@@ -35,13 +35,13 @@ export default function Calendar({
 
   const visibleDays = useWidthWindow();
   const days = Array.from({ length: visibleDays }).map((_, i) =>
-    addDays(weekStart, i),
+    addDays(weekStart, i)
   );
 
   const canGoBack = weekStart > MIN_WEEK_START;
 
   const visibleMonths = Array.from(
-    new Set(days.map((d) => format(d, "MMMM", { locale: ptBR }))),
+    new Set(days.map((d) => format(d, "MMMM", { locale: ptBR })))
   );
 
   const monthLabel = visibleMonths
@@ -49,6 +49,7 @@ export default function Calendar({
     .join(" — ");
 
   const nextWeek = () => setWeekStart((d) => addDays(d, visibleDays));
+
   const prevWeek = () => {
     setWeekStart((current) => {
       const previous = addDays(current, -visibleDays);
@@ -69,7 +70,7 @@ export default function Calendar({
     return `${y}-${m}-${d}`;
   };
 
-  const unavailableSet = new Set(unavailableDays.map(toDateKey));
+  const unavailableSet = new Set(unavailableDays);
 
   const isSunday = (day: Date) => {
     const d = day.getDay();
@@ -86,13 +87,14 @@ export default function Calendar({
       <Heading size="lg" fontFamily="font-body">
         {monthLabel}
       </Heading>
+
       <div className="flex items-center">
         <button
           onClick={prevWeek}
           disabled={!canGoBack}
-          className={`px-2 text-xl transition
-          ${canGoBack ? "opacity-100" : "opacity-30 cursor-not-allowed"}
-  `}
+          className={`px-2 text-xl transition ${
+            canGoBack ? "opacity-100" : "opacity-30 cursor-not-allowed"
+          }`}
         >
           <ArrowLeft className="bg-secondary p-2 rounded-full w-6 h-6" />
         </button>
@@ -104,21 +106,23 @@ export default function Calendar({
 
             return (
               <button
-                key={day.toISOString()}
+                key={toDateKey(day)}
                 disabled={disabled}
                 onClick={() => !disabled && onSelectDate(day)}
                 className={`
-              min-w-[72px] rounded-xl text-center transition p-1 sm:px-3 sm:py-2
-              ${today && isSameDay(day, today) ? "bg-secondary text-black/80" : ""} 
-              ${selected ? "bg-brandPrimary text-white" : "bg-neutral-100"}
-              ${disabled ? "opacity-40 bg-gray-300 cursor-not-allowed text-gray-500" : ""}
-            `}
+                min-w-[72px] rounded-xl text-center transition p-1 sm:px-3 sm:py-2
+                ${today && isSameDay(day, today) ? "bg-secondary text-black/80" : ""}
+                ${selected ? "bg-brandPrimary text-white" : "bg-neutral-100"}
+                ${disabled ? "opacity-40 bg-gray-300 cursor-not-allowed text-gray-500" : ""}
+              `}
               >
                 <div className="text-xs capitalize">
                   {format(day, "EEE", { locale: ptBR })}
                 </div>
 
-                <div className="text-lg font-semibold">{format(day, "d")}</div>
+                <div className="text-lg font-semibold">
+                  {format(day, "d")}
+                </div>
               </button>
             );
           })}

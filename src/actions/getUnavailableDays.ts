@@ -23,7 +23,7 @@ function formatTime(date: Date) {
 export async function getUnavailableDays(
   startDate: Date,
   endDate: Date
-): Promise<Date[]> {
+): Promise<string[]> {
   noStore();
 
   const barbers = await allBarbers();
@@ -53,7 +53,7 @@ export async function getUnavailableDays(
     slotsMap[dayKey][timeKey]++;
   }
 
-  const unavailableDays: Date[] = [];
+  const unavailableDays: string[] = [];
 
   const start = toZonedTime(startDate, TZ);
   start.setHours(0, 0, 0, 0);
@@ -78,13 +78,7 @@ export async function getUnavailableDays(
     }
 
     if (allSlotsFull) {
-      unavailableDays.push(
-        new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate()
-        )
-      );
+      unavailableDays.push(dayKey);
     }
 
     currentDate.setDate(currentDate.getDate() + 1);
