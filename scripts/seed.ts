@@ -18,7 +18,7 @@ if (!databaseUrl) {
 
 const sql = neon(databaseUrl);
 
-const OCCUPANCY_RATE = 0.7;
+const OCCUPANCY_RATE = 0.6;
 const TOTAL_DAYS = 60;
 
 function generateNextDays(totalDays: number) {
