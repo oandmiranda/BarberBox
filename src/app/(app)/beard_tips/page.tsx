@@ -1,5 +1,3 @@
-export const dynamic = "force-static"
-
 import Button from "@/components/ui/button";
 import ContentSection from "@/components/ui/contentSection";
 import Heading from "@/components/ui/heading";
