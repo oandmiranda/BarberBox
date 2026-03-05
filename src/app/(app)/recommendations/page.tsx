@@ -1,11 +1,12 @@
+export const dynamic = "force-static"
+
 import Button from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import Hero from "@/components/ui/hero";
 import Text from "@/components/ui/text";
 import Image from "next/image";
 
-
-export default async function RecommendationsPage() {
+export default function RecommendationsPage() {
   const styledTitle = `border-b-2 border-secondary pb-2`;
   
   return (
