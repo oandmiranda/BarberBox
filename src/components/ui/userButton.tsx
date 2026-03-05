@@ -5,6 +5,7 @@ import { ArrowDown, CalendarSearch, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Text from "./text";
+import MessageModal from "./messageModal";
 
 type Props = {
   label: string;
@@ -13,8 +14,17 @@ type Props = {
 
 export default function UserButton({ label, currentUserEmail }: Props) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showLogOutMessage, setShowLogOutMessage] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const handleLogOut = async () => {
+    setTimeout(async () => {
+      await logoutUser();
+    }, 3000);
+    
+    setShowLogOutMessage(true)
+  };
 
   const handleToggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -44,7 +54,12 @@ export default function UserButton({ label, currentUserEmail }: Props) {
   }, [showMenu]);
 
   return (
+    
     <div className="relative justify-self-end" ref={containerRef}>
+      { showLogOutMessage && (
+        <MessageModal backgroundColor="bg-green-600" message="Sessão encerrada com sucesso" icon="/assets/icons/check.svg"/>
+      )}
+
       <button
         onClick={handleToggleMenu}
         className="
@@ -100,14 +115,14 @@ export default function UserButton({ label, currentUserEmail }: Props) {
               <CalendarSearch size={15} />
               Meus Agendamentos
             </button>
-            <form action={logoutUser}>
+            <button onClick={handleLogOut}>
               <button
                 className="flex items-center gap-2 text-left text-red-400 hover:text-red-300 transition-colors border-b border-zinc-500 pb-2 w-full"
               >
                 <LogOut size={15} />
                 Sair
               </button>
-            </form>
+            </button>
             <Text size="xs" className="italic text-">{currentUserEmail}</Text>
           </div>
         </div>
