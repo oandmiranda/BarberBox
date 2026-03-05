@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import NavbarClient from "./navbarClient";
 
