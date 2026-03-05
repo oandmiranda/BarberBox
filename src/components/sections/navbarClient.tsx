@@ -153,9 +153,10 @@ const NavbarClient = ({ currentUser }: Props) => {
           onSuccess={() => {
             setOpenLoginModal(false);
             setShowLoginSuccess(true);
+            router.refresh();
           }}
-          hasSignupButtonForm
           onOpenSignup={handleOpenSignup}
+          hasSignupButtonForm
         />
       )}
 
