@@ -47,7 +47,7 @@ Um sistema de agendamento online para barbearias, focado em arquitetura limpa, o
   <img src="./assets/readme/img/step-7.png" alt="" width="900" />
 </p>
 
-### 7 - O sistema permite ao usuário autenticado o acesso ao histórico de agendamentos, e permite que o usuário cancele um agendamento feito em até 4 horas antes do horário marcado.
+### 7 - O sistema permite ao usuário autenticado o acesso ao histórico de agendamentos, e permite que o usuário cancele um agendamento até 4 horas antes do horário marcado.
 <p align="center">
   <img src="./assets/readme/img/step-8.png" alt="" width="900" />
 </p>
@@ -72,6 +72,7 @@ Obrigado por visitar e bom código!
 
 
   
+
 
 
 
