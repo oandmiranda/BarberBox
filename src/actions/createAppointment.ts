@@ -3,18 +3,16 @@
 import { getCurrentUser } from "@/domain/auth/getCurrentUser";
 import { sql } from "@/lib/db";
 import { parseDateTime } from "./parseDateTime";
+import { revalidatePath } from "next/cache";
 
-type ActionResult =
-  | { ok: true }
-  | { ok: false; error: string };
+type ActionResult = { ok: true } | { ok: false; error: string };
 
 const parseDateAndTime = parseDateTime;
 
 export async function createAppointment(
   _: unknown,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionResult> {
-
   const user = await getCurrentUser();
   if (!user) {
     return { ok: false, error: "NOT_AUTH" };
@@ -45,8 +43,7 @@ export async function createAppointment(
     WHERE id = ${serviceId}
   `;
 
-  const service =
-    serviceRows[0] as { duration_minutes: number } | undefined;
+  const service = serviceRows[0] as { duration_minutes: number } | undefined;
 
   if (!service) {
     return { ok: false, error: "SERVICE_NOT_FOUND" };
@@ -55,8 +52,7 @@ export async function createAppointment(
   const MS_PER_MINUTE = 60000;
 
   const endTime = new Date(
-    startTime.getTime() +
-      service.duration_minutes * MS_PER_MINUTE
+    startTime.getTime() + service.duration_minutes * MS_PER_MINUTE,
   );
 
   try {
@@ -77,13 +73,14 @@ export async function createAppointment(
         'SCHEDULED'
       )
     `;
+    revalidatePath("/my-appointments");
 
     return { ok: true };
 
   } catch {
     return {
       ok: false,
-      error: "APPOINTMENT_ALREADY_CREATED"
+      error: "APPOINTMENT_ALREADY_CREATED",
     };
   }
 }

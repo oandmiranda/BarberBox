@@ -12,7 +12,8 @@ type CardProps = {
   imageAlt: string;
   details: {
     label: string;
-    icon: React.ReactNode;
+    image?: string;
+    icon?: React.ReactNode;
   };
   metadata: {
     label: string;
@@ -81,7 +82,7 @@ const Card = ({
       )}
 
       {/* text */}
-      <div className="flex flex-col justify-between w-full gap-2  sm:p-2">
+      <div className="flex flex-col justify-between w-full gap-2 sm:p-2">
         <div className="flex items-center justify-between">
           <Heading as="h1" size="sm">
             {title}
@@ -97,13 +98,18 @@ const Card = ({
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1">
+            { details.image && (
+              <div className="relative rounded-full w-[40px] h-[40px] overflow-hidden"> 
+                <Image src={details.image} alt="" fill className="object-cover" />
+              </div>
+            )}
             <Text>{details.icon}</Text>
             <Text size="xs">{details.label}</Text>
           </div>
         </div>
 
         <div className="flex items-center justify-between">
-          <Text className={metadata.className}>
+          <Text size="xs" className={`${metadata.className} font-bold`}>
             {metadata.label}
             {metadata.icon}
           </Text>

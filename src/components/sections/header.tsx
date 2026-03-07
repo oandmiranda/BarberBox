@@ -15,7 +15,7 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <section
-      id="#home"
+      id="home"
       className={`flex items-center justify-center w-full min-h-screen bg-center bg-cover bg-no-repeat mb-6 ${className}`}
       style={
         imageBackground
