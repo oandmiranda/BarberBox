@@ -11,7 +11,7 @@ import Text from "@/components/ui/text";
 import { canCancelAppointment } from "@/lib/appointments/can_cancel";
 import { formatDateTime } from "@/lib/formatDataTime";
 import { AppointmentView } from "@/types/appointments";
-import { Check, Clock, User, X } from "lucide-react";
+import { Check, Clock, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type MyAppointmentsClientProps = {
@@ -147,7 +147,7 @@ export default function MyAppointmentsClient({
       )}
 
       <div className="mx-auto max-w-[1200px] min-w-0 w-full grid grid-cols-1 gap-x-4 gap-y-5 md:px-6 md:grid-cols-2 xl:grid-cols-3">
-        {filteredCategory.map((appointment) => {
+        {filteredCategory.map((appointment) => {          
           const now = new Date();
           const startTime = new Date(appointment.start_time);
 
@@ -190,7 +190,7 @@ export default function MyAppointmentsClient({
               }}
               details={{
                 label: `Barbeiro: ${appointment.barber_name}`,
-                icon: <User size={18} />,
+                image: appointment.barber_image_url,
               }}
               imageUrl={appointment.service_image_url}
               imageAlt="barbeiro uniformizado"

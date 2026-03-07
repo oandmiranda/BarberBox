@@ -33,6 +33,7 @@ const NavbarClient = ({ currentUser }: Props) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
+  const headerLink = isHome ? "#home" : "/#home";
   const servicesLink = isHome ? "#services" : "/#services";
   const aboutLink = isHome ? "#about_us" : "/#about_us";
   const contactLink = isHome ? "#contacts" : "/#contacts";
@@ -108,7 +109,7 @@ const NavbarClient = ({ currentUser }: Props) => {
         <div className="justify-self-start">
           <ul className="hidden gap-7 lg:flex">
             <li>
-              <Link href="/home">Home</Link>
+              <Link href={headerLink}>Home</Link>
             </li>
             <li>
               <Link href={servicesLink}>Serviços</Link>
